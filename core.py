@@ -601,8 +601,7 @@ def build(uid, force=False):
     def card(a, why_text):
         lab = a["lab"]
         bd = json.loads(a.get("cred_breakdown") or "{}")
-        badge_sym = "★" if lab == "Verified Gold" else ("✔" if lab == "Reliable Silver" else "⚠")
-        badge = f"{badge_sym} {lab} · {round(a['cred'] * 100)}"
+        badge = f"{lab} · {round(a['cred'] * 100)}"
         pl = tidy(a["plain"] or a["text"] or a["title"], 360)
         det = tidy(a["text"], 650)
         if sim(det, pl) > 0.6 or sim(det, a["title"]) > 0.8:

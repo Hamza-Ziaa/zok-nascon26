@@ -87,7 +87,7 @@
   .editor-note-card {
     margin-top: 24px;
     background: #FFFBEB;
-    border-left: 4px solid #F59E0B;
+    border-left: 4px solid #3D4ED8;
     border-radius: 0 14px 14px 0;
     padding: 16px 22px;
     font-size: 0.95rem;
@@ -219,8 +219,8 @@
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #4F46E5;
-    background: #EEF2FF;
+    color: #3D4ED8;
+    background: #E8ECFF;
     padding: 3px 10px;
     border-radius: 999px;
   }
@@ -245,7 +245,7 @@
   }
 
   .thread-tag {
-    background: #FEF3C7;
+    background: #E8ECFF;
     color: #B45309;
     font-size: 0.72rem;
     font-weight: 700;
@@ -265,7 +265,7 @@
     color: inherit;
   }
   .story-headline a:hover {
-    color: #4F46E5;
+    color: #3D4ED8;
   }
 
   .story-summary {
@@ -368,7 +368,7 @@
     color: #065F46;
   }
   .btn-action.active-more {
-    background: #FEF3C7;
+    background: #E8ECFF;
     border-color: #FDE68A;
     color: #92400E;
   }
@@ -477,7 +477,7 @@
     transition: all 0.15s ease;
   }
   .quiz-btn-opt:hover {
-    background: #EEF2FF;
+    background: #E8ECFF;
     border-color: #6366F1;
   }
 
@@ -544,7 +544,7 @@
   {% if ed.three %}
   <section class="three-things-card">
     <div class="three-things-heading">
-      <span>✦ Three Things to Know This Morning</span>
+      <span> Three Things to Know This Morning</span>
     </div>
     <div class="three-things-grid">
       {% for point in ed.three %}
@@ -573,7 +573,7 @@
           <div style="display: flex; align-items: center; gap: 8px;">
             <span class="story-source-tag">{{ s.source }} · {{ s.topic }}</span>
             {% if s.is_thread %}
-              <span class="thread-tag">★ Continuing Story</span>
+              <span class="thread-tag"> Continuing Story</span>
             {% endif %}
           </div>
           <span class="story-trust-pill {% if s.cred_score >= 80 %}trust-high{% else %}trust-medium{% endif %}">
@@ -605,7 +605,7 @@
         <details class="cred-simple-details">
           <summary>
             <span>How we checked this ({{ s.cred_score }}/100)</span>
-            <span style="font-size: 0.72rem; color: #4F46E5;">Details ▾</span>
+            <span style="font-size: 0.72rem; color: #3D4ED8;">Details ▾</span>
           </summary>
           <div class="cred-simple-body">
             <div class="cred-bar-row">
@@ -633,7 +633,7 @@
         </details>
 
         <div class="story-why-blurb">
-          ✓ {{ s.why }}
+           {{ s.why }}
         </div>
 
         <!-- Action Footer -->
@@ -642,19 +642,19 @@
             <span>Read more ▾</span>
           </button>
           <button type="button" class="btn-action" onclick="zlOne('{{ s.id }}')">
-            <span>🔊 Listen</span>
+            <span> Listen</span>
           </button>
           <button type="button" class="btn-action" onclick="markSave('{{ s.id }}', this)">
-            <span>♡ Save</span>
+            <span> Save</span>
           </button>
           <button type="button" class="btn-action" onclick="markMore('{{ s.id }}', this)">
-            <span>★ More like this</span>
+            <span> More like this</span>
           </button>
           <a href="{{ s.url }}" target="_blank" rel="noopener" class="btn-action" onclick="trackAction('{{ s.id }}', 'open')">
             <span>↗ Source</span>
           </a>
           <button type="button" class="btn-skip-ghost" onclick="skipStory('{{ s.id }}')">
-            ✕ Skip
+             Skip
           </button>
         </div>
       </article>
@@ -773,7 +773,7 @@
   function markSave(aid, btn) {
     trackAction(aid, 'save');
     btn.classList.add('active-saved');
-    btn.innerHTML = '<span>Saved ✓</span>';
+    btn.innerHTML = '<span>Saved </span>';
     btn.disabled = true;
     showToast('Story saved to your profile.');
   }
@@ -781,7 +781,7 @@
   function markMore(aid, btn) {
     trackAction(aid, 'more');
     btn.classList.add('active-more');
-    btn.innerHTML = '<span>Following Topic ★</span>';
+    btn.innerHTML = '<span>Following Topic </span>';
     btn.disabled = true;
     showToast('Zok will follow up on this developing topic tomorrow.');
   }
@@ -803,14 +803,14 @@
       btn.style.background = '#ECFDF5';
       btn.style.borderColor = '#10B981';
       btn.style.color = '#065F46';
-      btn.innerHTML += ' ✓ Correct';
+      btn.innerHTML += '  Correct';
       trackAction(aid, 'recall');
       showToast('Correct! Active recall reinforced.');
     } else {
       btn.style.background = '#FEF2F2';
       btn.style.borderColor = '#EF4444';
       btn.style.color = '#991B1B';
-      btn.innerHTML += ' ✕';
+      btn.innerHTML += ' ';
       trackAction(aid, 'miss');
     }
   }
@@ -823,7 +823,7 @@
 .zl-active{outline:3px solid #7A84F4;outline-offset:4px;border-radius:20px;transition:.3s}
 </style>
 <div class="zl-bar" id="zl-bar">
- <button onclick="zlAll()" id="zl-main">🔊 Listen to my paper</button>
+ <button onclick="zlAll()" id="zl-main"> Listen to my paper</button>
  <button onclick="zlPause()" id="zl-pp" hidden>⏸</button><button onclick="zlStop()" id="zl-stop" hidden>⏹</button>
  <select id="zl-rate" onchange="zlRate=+this.value" title="Speed"><option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select>
  <span class="zl-now" id="zl-now"></span>

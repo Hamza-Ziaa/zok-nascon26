@@ -7,823 +7,309 @@
 {% block nav_links %}
   <a href="#why">Why Zok</a>
   <a href="#how-it-works">How We Check</a>
+  <a href="#plans">Plans</a>
   <a href="#join">Get Started</a>
   <a href="/login">Sign In</a>
 {% endblock %}
 
+{% block extra_css %}
+/* ===== Landing page ===== */
+.nav-portal .zok-logo { color: #fff; }
+.nav-portal .zok-logo:hover { color: #fff; }
+.nav-portal .zok-pills { background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.35); }
+.nav-portal .zok-pills a { color: #fff; }
+.nav-portal .zok-pills a:hover { background: #fff; color: var(--accent); }
+.nav-portal .nav-hamburger svg { stroke: #fff; }
+
+/* Hero */
+.ph { position: relative; overflow: hidden; text-align: center; color: #fff; padding: 128px 20px 0;
+  background: linear-gradient(180deg, #5B7BF7 0%, #7F86F4 30%, #AE8CF0 55%, #E98FC3 80%, #F9B79C 100%); }
+.ph:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 140px; z-index: 3; pointer-events: none;
+  background: linear-gradient(rgba(227,225,251,0), #E3E1FB 85%); }
+.ph-stars, .ph-stars2 { position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 30%, transparent 75%); mask-image: linear-gradient(#000 30%, transparent 75%); }
+.ph-stars { background-image: radial-gradient(1.6px 1.6px at 40px 50px,#fff,transparent), radial-gradient(1px 1px at 130px 110px,#fff,transparent),
+  radial-gradient(1.4px 1.4px at 230px 40px,#fff,transparent), radial-gradient(1px 1px at 310px 150px,#fff,transparent);
+  background-size: 340px 210px; animation: tw 5s ease-in-out infinite; }
+.ph-stars2 { background-image: radial-gradient(1.2px 1.2px at 90px 80px,#fff,transparent), radial-gradient(1.5px 1.5px at 260px 120px,#fff,transparent),
+  radial-gradient(1px 1px at 180px 20px,#fff,transparent);
+  background-size: 290px 190px; animation: tw 7s ease-in-out infinite reverse; }
+@keyframes tw { 50% { opacity: .4; } }
+.ph-copy { position: relative; z-index: 4; max-width: 780px; margin: 0 auto; }
+.ph h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(40px, 6.2vw, 70px); line-height: 1.04; margin: 0; color: #fff; }
+.ph p.sub { margin: 18px auto 0; max-width: 560px; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.93); }
+.ph-btn { display: inline-block; margin-top: 26px; background: #fff; color: #2D3A9E; font-weight: 600; padding: 13px 32px;
+  border-radius: 999px; box-shadow: 0 12px 30px -12px rgba(30,30,110,.6); transition: .2s; }
+.ph-btn:hover { transform: translateY(-2px); color: #2D3A9E; }
+.ph-hills { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 380px; z-index: 1; }
+.ph-frame { position: relative; z-index: 2; max-width: 940px; margin: 60px auto -130px; padding: 10px; border-radius: 38px 38px 0 0;
+  background: rgba(255,255,255,.5); box-shadow: 0 30px 80px -30px rgba(40,40,130,.65);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.ph-screen { border-radius: 30px 30px 0 0; padding: 22px 24px 0; height: 430px; overflow: hidden; text-align: left; color: #14162E;
+  background: linear-gradient(160deg, #EEF0FF, #F5E9F7 60%, #FCEBE2); }
+.ph-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5B6080; margin-bottom: 16px; }
+.ph-bar b { letter-spacing: .34em; color: #14162E; font-size: 13px; }
+.ph-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+.ph-card { background: #fff; border-radius: 20px; padding: 22px; box-shadow: 0 10px 26px -18px rgba(60,60,140,.55); }
+.ph-card small { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #6c7090; }
+.ph-card h3 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.1; margin: 10px 0; }
+.ph-card p { font-size: 13.5px; color: #4b4f6d; margin: 0; }
+.ph-pill { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 600; color: #0B6B46; background: #DDF6EA; padding: 5px 12px; border-radius: 999px; }
+.ph-row { display: flex; justify-content: space-between; font-size: 13px; padding: 10px 0; border-top: 1px solid #ECEEFB; }
+.ph-row b { color: #3D4ED8; }
+.ph-news { position: absolute; z-index: 5; right: max(5%, calc(50% - 540px)); bottom: 34px; width: 190px;
+  filter: drop-shadow(0 18px 22px rgba(30,30,100,.45)); animation: phf 4.5s ease-in-out infinite; }
+@keyframes phf { 50% { transform: translateY(-12px) rotate(2deg); } }
+
+/* Sections */
+.section-calm, .trust-strip, .signup-section { padding: 84px 24px 20px; }
+.section-calm > *, .trust-inner, .plans-grid { max-width: 1060px; margin-left: auto; margin-right: auto; }
+.section-header { text-align: center; max-width: 680px; margin: 0 auto 44px; }
+.section-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.section-title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(32px, 4.6vw, 50px); line-height: 1.08; color: var(--ink); }
+.section-desc { margin-top: 14px; color: var(--ink-soft); font-size: 1.02rem; }
+.pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.pillar-card, .trust-factor-card, .plan-card, .signup-card-container {
+  background: rgba(255,255,255,.76); border: 1px solid rgba(255,255,255,.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--shadow); }
+.pillar-card { border-radius: 24px; padding: 26px; }
+.pillar-num { font-family: var(--font-serif); font-size: 34px; color: var(--accent); line-height: 1; }
+.pillar-heading { font-family: var(--font-serif); font-weight: 400; font-size: 26px; margin: 14px 0 8px; }
+.pillar-text { font-size: .93rem; color: var(--ink-soft); }
+.trust-breakdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.trust-factor-card { border-radius: 24px; padding: 26px; }
+.factor-pct { font-family: var(--font-serif); font-size: 52px; color: var(--accent); line-height: 1; }
+.factor-name { font-weight: 600; margin: 10px 0 6px; }
+.factor-summary { font-size: .9rem; color: var(--ink-soft); }
+.plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+.plan-card { border-radius: 26px; padding: 30px; display: flex; flex-direction: column; }
+.plan-card.hot { border: 2px solid var(--accent); box-shadow: 0 24px 60px -26px rgba(61,78,216,.6); }
+.plan-name { font-family: var(--font-serif); font-size: 28px; }
+.plan-price { font-family: var(--font-serif); font-size: 40px; margin: 8px 0 4px; line-height: 1; }
+.plan-price small { font-family: var(--font-sans); font-size: .85rem; color: var(--mute); }
+.plan-card ul { list-style: none; margin-top: 16px; display: grid; gap: 10px; font-size: .93rem; color: var(--ink-soft); }
+.plan-card li:before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
+.plan-note { text-align: center; font-size: .82rem; color: var(--mute); margin-top: 16px; }
+
+/* Signup wizard */
+.signup-section { padding-bottom: 20px; }
+.signup-card-container { max-width: 580px; margin: 0 auto; border-radius: 30px; padding: 34px; }
+.signup-title { font-family: var(--font-serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; color: var(--ink); margin-bottom: 6px; }
+.step-indicator { display: flex; gap: 8px; justify-content: center; margin-bottom: 26px; }
+.step-bubble { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 600; background: #fff; color: var(--mute); border: 1px solid var(--line); transition: .25s; }
+.step-bubble.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.step-content { display: none; }
+.step-content.active { display: block; animation: fadeIn .35s ease both; }
+.form-group { margin-bottom: 18px; }
+.form-label { display: block; font-size: .86rem; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.form-input, .form-textarea { width: 100%; padding: 13px 16px; border-radius: 14px; background: #fff; border: 1.5px solid rgba(20,22,46,.12);
+  font-size: 16px; transition: .2s; }
+.form-input:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61,78,216,.14); }
+.form-textarea { resize: vertical; }
+.form-hint { font-size: .8rem; color: var(--mute); margin-top: 6px; }
+.wizard-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 26px; }
+.chips-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-label { position: relative; cursor: pointer; }
+.chip-label input { position: absolute; opacity: 0; pointer-events: none; }
+.chip-label span { display: inline-block; padding: 9px 16px; border-radius: 999px; background: #fff; border: 1.5px solid var(--line);
+  font-size: .88rem; font-weight: 500; transition: .2s; }
+.chip-label input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+.time-options-grid { display: grid; gap: 10px; margin-top: 12px; }
+.time-card-radio { position: relative; display: block; cursor: pointer; background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 18px; transition: .2s; }
+.time-card-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.time-card-radio:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-light); }
+.time-num { font-weight: 700; }
+.time-desc { font-size: .84rem; color: var(--mute); }
+.calm-note { background: #E4F2F1; border: 1px solid #BFDEDB; border-radius: 14px; padding: 14px; margin-top: 20px; font-size: .85rem; color: #1C5A5F; }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .pillars-grid, .trust-breakdown-grid { grid-template-columns: repeat(2, 1fr); }
+  .plans-grid { grid-template-columns: 1fr; max-width: 460px; }
+}
+@media (max-width: 800px) {
+  .ph { padding-top: 104px; }
+  .ph-grid { grid-template-columns: 1fr; }
+  .ph-side { display: none; }
+  .ph-screen { height: 300px; padding: 16px 16px 0; }
+  .ph-news { width: 104px; right: 5%; bottom: 24px; }
+  .ph-hills { height: 300px; }
+  .ph-card h3 { font-size: 24px; }
+}
+@media (max-width: 560px) {
+  .pillars-grid, .trust-breakdown-grid { grid-template-columns: 1fr; }
+  .section-calm, .trust-strip, .signup-section { padding: 64px 16px 12px; }
+  .signup-card-container { padding: 22px 18px; border-radius: 24px; }
+  .signup-title { font-size: 1.7rem; }
+  .wizard-nav .btn { flex: 1; }
+}
+{% endblock %}
+
 {% block content %}
-<style>
-  /* ── Portal-Style Twilight & Dawn Theme ── */
-  :root {
-    --portal-sky-1: #4158D0;
-    --portal-sky-2: #6366F1;
-    --portal-sky-3: #9F7AEA;
-    --portal-sky-4: #ED93B6;
-    --portal-sky-5: #FBB084;
-    --portal-ink: #111827;
-    --portal-soft: #F9FAFB;
-  }
-
-  body {
-    background: #FAF9F6;
-    color: var(--portal-ink);
-  }
-
-  /* Nav styling on Portal gradient */
-  .nav-portal {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.5rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-portal .zok-logo {
-    color: #ffffff;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
-  }
-  .nav-portal .zok-logo span {
-    color: #FDE047;
-  }
-  .nav-portal .zok-pills {
-    background: rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    padding: 0.35rem 0.5rem;
-    border-radius: 999px;
-  }
-  .nav-portal .zok-pills a {
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 0.9rem;
-    padding: 0.45rem 1.15rem;
-    border-radius: 999px;
-    transition: all 0.2s ease;
-  }
-  .nav-portal .zok-pills a:hover {
-    background: rgba(255, 255, 255, 0.95);
-    color: #4F46E5;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  /* ── Hero Canvas ── */
-  .portal-hero {
-    position: relative;
-    min-height: 96vh;
-    padding: 140px 1.5rem 180px;
-    background: linear-gradient(180deg, 
-      #3B5BDB 0%, 
-      #5C7CFA 22%, 
-      #845EF7 48%, 
-      #CC5DE8 72%, 
-      #FA7B8E 88%, 
-      #FFA94D 100%
-    );
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: #ffffff;
-  }
-
-  /* Soft Twinkling Twilight Stars */
-  .twilight-stars {
-    position: absolute;
-    inset: 0;
-    background-image: 
-      radial-gradient(1.5px 1.5px at 15% 18%, rgba(255,255,255,0.9) 100%, transparent),
-      radial-gradient(2px 2px at 28% 12%, rgba(255,255,255,0.85) 100%, transparent),
-      radial-gradient(1.5px 1.5px at 45% 22%, rgba(255,255,255,0.7) 100%, transparent),
-      radial-gradient(2px 2px at 68% 15%, rgba(255,255,255,0.95) 100%, transparent),
-      radial-gradient(1.5px 1.5px at 82% 28%, rgba(255,255,255,0.75) 100%, transparent),
-      radial-gradient(2.5px 2.5px at 88% 10%, rgba(255,255,255,0.9) 100%, transparent),
-      radial-gradient(1.5px 1.5px at 9% 34%, rgba(255,255,255,0.6) 100%, transparent),
-      radial-gradient(1.5px 1.5px at 58% 30%, rgba(255,255,255,0.7) 100%, transparent),
-      radial-gradient(2px 2px at 35% 38%, rgba(255,255,255,0.65) 100%, transparent);
-    pointer-events: none;
-    opacity: 0.85;
-  }
-
-  /* Mountain Silhouette Horizon */
-  .portal-horizon {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 180px;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  /* Hero Typography */
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1.1rem;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
-    backdrop-filter: blur(8px);
-  }
-  .hero-eyebrow .dot {
-    width: 7px;
-    height: 7px;
-    background: #4ADE80;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #4ADE80;
-  }
-
-  .hero-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.4rem, 5.4vw, 4.4rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    max-width: 860px;
-    margin: 0 auto 1.25rem;
-    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.18);
-  }
-  .hero-title em {
-    font-style: italic;
-    font-weight: 400;
-    background: linear-gradient(135deg, #FFF6E5 0%, #FFFFFF 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1rem, 1.8vw, 1.22rem);
-    color: rgba(255, 255, 255, 0.92);
-    max-width: 640px;
-    margin: 0 auto 2.2rem;
-    line-height: 1.65;
-    font-weight: 400;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-  }
-
-  .hero-cta-group {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 3.5rem;
-    z-index: 5;
-  }
-  .btn-portal-white {
-    background: #FFFFFF;
-    color: #1E1B4B;
-    padding: 0.85rem 2rem;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-    transition: all 0.25s ease;
-  }
-  .btn-portal-white:hover {
-    background: #FAF5FF;
-    color: #4F46E5;
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-  }
-  .btn-portal-ghost {
-    background: rgba(255, 255, 255, 0.18);
-    color: #FFFFFF;
-    padding: 0.85rem 1.8rem;
-    border-radius: 999px;
-    font-weight: 500;
-    font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
-  }
-  .btn-portal-ghost:hover {
-    background: rgba(255, 255, 255, 0.3);
-    color: #FFFFFF;
-    transform: translateY(-1px);
-  }
-
-  /* ── Floating Mockup Card (Inspired by Portal Reference) ── */
-  .portal-preview-frame {
-    position: relative;
-    z-index: 10;
-    width: min(940px, 94vw);
-    background: rgba(255, 255, 255, 0.38);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 28px;
-    padding: 14px;
-    box-shadow: 
-      0 35px 80px -15px rgba(23, 16, 60, 0.35),
-      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
-  .preview-inner-canvas {
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 32px 36px 36px;
-    color: var(--portal-ink);
-    text-align: left;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    position: relative;
-    overflow: hidden;
-  }
-  .preview-topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #F1F5F9;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-  }
-  .preview-badge-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #ECFDF5;
-    color: #065F46;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    border: 1px solid #A7F3D0;
-  }
-  .preview-meta {
-    font-size: 0.82rem;
-    color: #64748B;
-    font-weight: 500;
-  }
-
-  .preview-body-grid {
-    display: grid;
-    grid-template-columns: 1fr 220px;
-    gap: 32px;
-    align-items: center;
-  }
-  @media (max-width: 768px) {
-    .preview-body-grid { grid-template-columns: 1fr; }
-    .newspaper-mascot { display: none; }
-  }
-
-  .preview-article-card {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-  }
-  .preview-topic-tag {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #4F46E5;
-    margin-bottom: 8px;
-    display: block;
-  }
-  .preview-article-title {
-    font-family: var(--font-serif);
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #0F172A;
-    line-height: 1.35;
-    margin-bottom: 10px;
-  }
-  .preview-article-summary {
-    font-size: 0.92rem;
-    color: #475569;
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .preview-trust-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #E2E8F0;
-    font-size: 0.8rem;
-    color: #059669;
-    font-weight: 600;
-  }
-
-  /* Newspaper Mascot Illustration (Replacing the robot from Portal image!) */
-  .newspaper-mascot {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    background: linear-gradient(135deg, #EEF2FF 0%, #FAF5FF 100%);
-    border: 1px dashed #C7D2FE;
-    border-radius: 16px;
-    text-align: center;
-  }
-  .newspaper-mascot-art {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 6px 12px rgba(79,70,229,0.15));
-  }
-  .newspaper-mascot-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #3730A3;
-  }
-  .newspaper-mascot-caption {
-    font-size: 0.7rem;
-    color: #6366F1;
-  }
-
-  /* ── Value Propositions Section ── */
-  .section-calm {
-    padding: 100px 1.5rem;
-    max-width: 1120px;
-    margin: 0 auto;
-  }
-  .section-header {
-    text-align: center;
-    max-width: 680px;
-    margin: 0 auto 60px;
-  }
-  .section-tag {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #6366F1;
-    margin-bottom: 12px;
-    display: block;
-  }
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
-    color: #0F172A;
-    line-height: 1.25;
-    margin-bottom: 16px;
-  }
-  .section-desc {
-    font-size: 1.05rem;
-    color: #64748B;
-    line-height: 1.65;
-  }
-
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 28px;
-  }
-  .pillar-card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 20px;
-    padding: 32px 28px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: all 0.25s ease;
-  }
-  .pillar-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-    border-color: #CBD5E1;
-  }
-  .pillar-icon-box {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  .pillar-icon-blue { background: #EEF2FF; color: #4F46E5; }
-  .pillar-icon-green { background: #ECFDF5; color: #059669; }
-  .pillar-icon-purple { background: #FAF5FF; color: #9333EA; }
-  .pillar-icon-amber { background: #FFFBEB; color: #D97706; }
-
-  .pillar-heading {
-    font-family: var(--font-serif);
-    font-size: 1.22rem;
-    font-weight: 700;
-    color: #0F172A;
-    margin-bottom: 10px;
-  }
-  .pillar-text {
-    font-size: 0.92rem;
-    color: #64748B;
-    line-height: 1.6;
-  }
-
-  /* ── How Trust Works (Simple Human Explanations) ── */
-  .trust-strip {
-    background: #F8FAFC;
-    border-top: 1px solid #E2E8F0;
-    border-bottom: 1px solid #E2E8F0;
-    padding: 80px 1.5rem;
-  }
-  .trust-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-  }
-  .trust-breakdown-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-  }
-  .trust-factor-card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .factor-pct {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #4F46E5;
-    margin-bottom: 4px;
-    font-family: var(--font-serif);
-  }
-  .factor-name {
-    font-size: 0.98rem;
-    font-weight: 600;
-    color: #0F172A;
-    margin-bottom: 8px;
-  }
-  .factor-summary {
-    font-size: 0.85rem;
-    color: #64748B;
-    line-height: 1.55;
-  }
-
-  /* ── 4-Step Onboarding Form ── */
-  .signup-section {
-    padding: 90px 1.5rem;
-    background: linear-gradient(180deg, #FAF9F6 0%, #EEF2FF 100%);
-  }
-  .signup-card-container {
-    max-width: 680px;
-    margin: 0 auto;
-    background: #FFFFFF;
-    border-radius: 24px;
-    border: 1px solid #E2E8F0;
-    box-shadow: 0 16px 40px -10px rgba(79, 70, 229, 0.1);
-    padding: 44px 40px;
-  }
-  @media (max-width: 640px) {
-    .signup-card-container { padding: 28px 20px; }
-  }
-
-  .step-indicator {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    margin-bottom: 36px;
-  }
-  .step-indicator::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #E2E8F0;
-    z-index: 1;
-    transform: translateY(-50%);
-  }
-  .step-bubble {
-    position: relative;
-    z-index: 2;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    border: 2px solid #E2E8F0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #64748B;
-    transition: all 0.2s ease;
-  }
-  .step-bubble.active {
-    background: #4F46E5;
-    border-color: #4F46E5;
-    color: #FFFFFF;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
-  }
-
-  .step-content {
-    display: none;
-  }
-  .step-content.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  .form-label {
-    display: block;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #1E293B;
-    margin-bottom: 8px;
-  }
-  .form-hint {
-    font-size: 0.8rem;
-    color: #64748B;
-    margin-top: 4px;
-  }
-  .form-input, .form-textarea, .form-select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1.5px solid #CBD5E1;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    background: #FAF9F6;
-    transition: all 0.2s ease;
-  }
-  .form-input:focus, .form-textarea:focus, .form-select:focus {
-    background: #FFFFFF;
-    border-color: #4F46E5;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-    outline: none;
-  }
-
-  /* Checkbox Chips */
-  .chips-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .chip-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F8FAFC;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 10px 14px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #334155;
-    transition: all 0.18s ease;
-  }
-  .chip-label:hover {
-    border-color: #CBD5E1;
-    background: #F1F5F9;
-  }
-  .chip-label input[type="checkbox"]:checked + span {
-    font-weight: 600;
-    color: #4F46E5;
-  }
-  .chip-label:has(input[type="checkbox"]:checked) {
-    border-color: #4F46E5;
-    background: #EEF2FF;
-  }
-
-  /* Reading time radio options */
-  .time-options-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 12px;
-  }
-  @media (max-width: 600px) {
-    .time-options-grid { grid-template-columns: 1fr; }
-  }
-  .time-card-radio {
-    position: relative;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 14px;
-    padding: 18px 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: #FAF9F6;
-  }
-  .time-card-radio:hover {
-    border-color: #CBD5E1;
-  }
-  .time-card-radio input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-  }
-  .time-card-radio:has(input[type="radio"]:checked) {
-    border-color: #4F46E5;
-    background: #EEF2FF;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
-  }
-  .time-num {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #0F172A;
-    margin-bottom: 2px;
-  }
-  .time-desc {
-    font-size: 0.78rem;
-    color: #64748B;
-  }
-
-  .wizard-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 28px;
-    padding-top: 20px;
-    border-top: 1px solid #E2E8F0;
-  }
-</style>
-
-<!-- ── HERO SECTION (Portal-Style Dawn Gradient & Hills) ── -->
-<style>
-.ph{position:relative;overflow:hidden;text-align:center;color:#fff;padding:150px 20px 0;
- background:linear-gradient(180deg,#5B7CFA 0%,#7A84F4 28%,#A98AF0 52%,#E78FC0 78%,#F8B49B 100%)}
-.ph-stars{position:absolute;inset:0;opacity:.9;pointer-events:none;
- background-image:radial-gradient(1.6px 1.6px at 40px 50px,#fff,transparent),radial-gradient(1px 1px at 130px 110px,#fff,transparent),
- radial-gradient(1.4px 1.4px at 230px 40px,#fff,transparent),radial-gradient(1px 1px at 310px 150px,#fff,transparent),radial-gradient(1.2px 1.2px at 80px 170px,#fff,transparent);
- background-size:340px 210px;-webkit-mask-image:linear-gradient(#000 30%,transparent 75%);mask-image:linear-gradient(#000 30%,transparent 75%)}
-.ph-copy{position:relative;z-index:3;max-width:760px;margin:0 auto}
-.ph h1{font-family:var(--font-serif,Georgia,serif);font-weight:500;font-size:clamp(34px,5.4vw,60px);line-height:1.08;margin:0;letter-spacing:-.01em}
-.ph p{margin:18px auto 0;max-width:560px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.92)}
-.ph-btn{display:inline-block;margin-top:28px;background:#fff;color:#33376e;font-weight:600;padding:13px 30px;border-radius:999px;box-shadow:0 10px 30px -10px rgba(30,30,90,.5);transition:.2s}
-.ph-btn:hover{transform:translateY(-2px)}
-.ph-frame{position:relative;z-index:2;max-width:940px;margin:70px auto -90px;padding:10px;border-radius:38px 38px 0 0;
- background:rgba(255,255,255,.55);box-shadow:0 30px 80px -30px rgba(40,30,110,.6);backdrop-filter:blur(8px)}
-.ph-screen{border-radius:30px 30px 0 0;padding:22px 24px 0;height:420px;overflow:hidden;text-align:left;color:#1C1B19;
- background:linear-gradient(160deg,#EEF0FF,#F6E9F5 60%,#FDEBDD)}
-.ph-bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#6b6b80;margin-bottom:16px}
-.ph-bar b{font-family:var(--font-serif,Georgia,serif);letter-spacing:.3em;color:#1C1B19;font-size:15px}
-.ph-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
-.ph-card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 24px -16px rgba(60,50,120,.5)}
-.ph-card small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7a7a90}
-.ph-card h3{font-family:var(--font-serif,Georgia,serif);font-size:23px;line-height:1.15;margin:8px 0;font-weight:600}
-.ph-card p{font-size:13.5px;color:#4b4b5c;margin:0;max-width:none}
-.ph-pill{display:inline-block;margin-top:12px;font-size:12px;font-weight:600;color:#0b6b46;background:#DDF6EA;padding:4px 12px;border-radius:999px}
-.ph-row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-top:1px solid #eee}.ph-row b{color:#0b6b46}
-.ph-hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:230px;z-index:1}
-.ph-news{position:absolute;z-index:4;right:max(4%,calc(50% - 560px));bottom:20px;width:190px;filter:drop-shadow(0 18px 24px rgba(30,20,80,.45));animation:phf 4.5s ease-in-out infinite}
-@keyframes phf{50%{transform:translateY(-14px) rotate(2deg)}}
-@media(max-width:800px){.ph-grid{grid-template-columns:1fr}.ph-news{width:120px;right:4%}.ph-screen{height:360px}}
-</style>
+<!-- ── HERO ── -->
 <section class="ph">
- <div class="ph-stars"></div>
- <div class="ph-copy">
-  <h1>Your beautiful morning paper.<br>From scattered news to one clear page.</h1>
-  <p>Zok gathers verified news that matters to you, scores every story for trust, and hands you one finished paper a day. Read it online, listen to it, or print it as a PDF.</p>
-  <a href="#join" class="ph-btn">Make my paper</a>
- </div>
- <div class="ph-frame"><div class="ph-screen">
-  <div class="ph-bar"><b>ZOK</b><span>Sample edition · made for you</span><span>5 min · 8 stories</span></div>
-  <div class="ph-grid">
-   <div class="ph-card"><small>Sample · Technology</small><h3>How a new chip standard could cut your phone's energy use</h3>
-    <p>Chipmakers agreed on one shared design rule. Devices could run longer on one charge.</p><span class="ph-pill">✔ Verified · scored by Zok</span></div>
-   <div class="ph-card"><small>How we checked it</small>
-    <div class="ph-row"><span>Other outlets agree</span><b>3</b></div><div class="ph-row"><span>Publisher trust</span><b>High</b></div>
-    <div class="ph-row"><span>Clickbait</span><b>None</b></div><div class="ph-row"><span>Listen to it</span><b>🔊</b></div></div>
-  </div></div></div>
- <svg class="ph-hills" viewBox="0 0 1440 230" preserveAspectRatio="none" aria-hidden="true">
-  <path fill="#3B6E78" d="M0 120C160 70 260 80 380 110S600 60 760 100 1040 70 1200 100 1380 90 1440 110V230H0Z"/>
-  <path fill="#244B57" d="M0 170C200 130 340 140 520 165S860 130 1040 160 1330 140 1440 160V230H0Z"/></svg>
- <svg class="ph-news" viewBox="0 0 220 260" aria-hidden="true"><g transform="rotate(-8 110 130)">
-  <rect x="30" y="20" width="160" height="210" rx="9" fill="#FBF8F1" stroke="#1C1B19" stroke-width="3"/>
-  <text x="110" y="62" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="30" letter-spacing="4" fill="#1C1B19">ZOK</text>
-  <line x1="44" y1="74" x2="176" y2="74" stroke="#1C1B19" stroke-width="2.5"/>
-  <rect x="44" y="86" width="72" height="50" rx="4" fill="#F2A65A"/>
-  <g stroke="#1C1B19" stroke-width="3" stroke-linecap="round" opacity=".5"><path d="M126 92h50M126 104h50M126 116h40M126 128h50M44 152h132M44 166h132M44 180h100M44 194h132M44 208h80"/></g>
-  <circle cx="178" cy="212" r="15" fill="#2E9E6B"/><path d="M171 212l5 5 9-10" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+  <div class="ph-stars"></div><div class="ph-stars2"></div>
+
+  <svg class="ph-hills" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <symbol id="pk" viewBox="-24 0 48 90"><path d="M0 0L14 34H-14Z M0 20L18 58H-18Z M0 44L24 90H-24Z"/></symbol>
+    </defs>
+    <path fill="#8A8FE4" opacity=".55" d="M0 300C160 250 300 270 460 300S760 240 960 280 1200 230 1440 270V460H0Z"/>
+    <path fill="#5F78BE" d="M520 330C700 270 860 300 1020 270S1300 250 1440 290V460H520Z"/>
+    <path fill="#3B6E7B" d="M0 250C120 215 240 235 360 290S560 380 700 400V460H0Z"/>
+    <path fill="#244B5C" d="M0 340C140 310 280 340 420 400S600 440 720 450V460H0Z"/>
+    <path fill="#2C5568" d="M900 460C1000 400 1160 390 1300 410S1420 400 1440 395V460Z"/>
+    <g fill="#244B5C">
+      <use href="#pk" x="24" y="176" width="34" height="72"/>
+      <use href="#pk" x="70" y="170" width="28" height="62"/>
+      <use href="#pk" x="118" y="168" width="38" height="78"/>
+      <use href="#pk" x="190" y="186" width="26" height="56"/>
+      <use href="#pk" x="1330" y="340" width="34" height="72"/>
+      <use href="#pk" x="1380" y="350" width="28" height="60"/>
+    </g>
+  </svg>
+
+  <div class="ph-copy">
+    <h1>Your beautiful morning paper.<br>From scattered news to one clear page.</h1>
+    <p class="sub">Zok gathers verified news that matters to you, scores every story for trust, and hands you one finished paper a day. Read it online, listen to it, or print it as a PDF.</p>
+    <a href="#join" class="ph-btn">Make my paper</a>
+  </div>
+
+  <div class="ph-frame">
+    <div class="ph-screen">
+      <div class="ph-bar"><b>ZOK</b><span>Today's paper</span><span>5 min read</span></div>
+      <div class="ph-grid">
+        <div class="ph-card">
+          <small>Sample story · Technology</small>
+          <h3>New chip standard promises longer battery life</h3>
+          <p>Chipmakers agreed on one shared design rule. Phones and laptops could run longer on a single charge.</p>
+          <span class="ph-pill">Verified · confirmed by 3 outlets</span>
+        </div>
+        <div class="ph-card ph-side">
+          <small>How we checked it</small>
+          <div class="ph-row"><span>Other outlets agree</span><b>3</b></div>
+          <div class="ph-row"><span>Publisher record</span><b>High</b></div>
+          <div class="ph-row"><span>Clickbait</span><b>None</b></div>
+          <div class="ph-row"><span>Trust score</span><b>91 / 100</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="ph-news" viewBox="0 0 220 260" aria-hidden="true">
+    <g transform="rotate(-8 110 130)">
+      <rect x="30" y="20" width="160" height="210" rx="9" fill="#FBF8F1" stroke="#14162E" stroke-width="3"/>
+      <text x="110" y="62" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="30" letter-spacing="4" fill="#14162E">ZOK</text>
+      <line x1="44" y1="74" x2="176" y2="74" stroke="#14162E" stroke-width="2.5"/>
+      <rect x="44" y="86" width="72" height="50" rx="4" fill="#F2A25C"/>
+      <g stroke="#14162E" stroke-width="3" stroke-linecap="round" opacity=".5"><path d="M126 92h50M126 104h50M126 116h40M126 128h50M44 152h132M44 166h132M44 180h100M44 194h132M44 208h80"/></g>
+    </g>
+  </svg>
 </section>
 
-<!-- ── WHY PEOPLE SUBSCRIBE TO ZOK ── -->
+<!-- ── WHY ZOK ── -->
 <section id="why" class="section-calm">
   <div class="section-header">
     <span class="section-tag">A Different Way to Read News</span>
     <h2 class="section-title">A feed never ends. A newspaper does.</h2>
-    <p class="section-desc">
-      Social apps make money when you doomscroll for hours. Zok does the opposite: it gives you the most verified stories you need today, and then lets you get on with your life.
-    </p>
+    <p class="section-desc">Social apps make money when you doomscroll for hours. Zok does the opposite: it gives you the most verified stories you need today, and then lets you get on with your life.</p>
   </div>
-
   <div class="pillars-grid">
     <div class="pillar-card">
-      <div class="pillar-icon-box pillar-icon-blue">☕</div>
-      <h3 class="pillar-heading">It Has an End</h3>
-      <p class="pillar-text">
-        Pick your morning reading time — 5, 10, or 20 minutes. Once you finish those stories, you're done for the day. No endless scrolling.
-      </p>
+      <div class="pillar-num">01</div>
+      <h3 class="pillar-heading">It has an end</h3>
+      <p class="pillar-text">Pick your morning reading time: 5, 10, or 20 minutes. Once you finish those stories, you're done for the day. No endless scrolling.</p>
     </div>
-
     <div class="pillar-card">
-      <div class="pillar-icon-box pillar-icon-green">🛡</div>
-      <h3 class="pillar-heading">Transparent Verification</h3>
-      <p class="pillar-text">
-        Every story is scored 0–100 based on publisher trust, corroboration across independent newsrooms, and real evidence. Clickbait is removed.
-      </p>
+      <div class="pillar-num">02</div>
+      <h3 class="pillar-heading">Checked, not guessed</h3>
+      <p class="pillar-text">Every story is scored 0 to 100 on publisher record, confirmation by independent newsrooms, and real evidence. Clickbait is removed.</p>
     </div>
-
     <div class="pillar-card">
-      <div class="pillar-icon-box pillar-icon-purple">🧠</div>
-      <h3 class="pillar-heading">Learns Over Time</h3>
-      <p class="pillar-text">
-        Zok watches what you read, what you save, and which stories you spend time with. The more you use it, the smarter tomorrow's edition becomes.
-      </p>
+      <div class="pillar-num">03</div>
+      <h3 class="pillar-heading">Learns over time</h3>
+      <p class="pillar-text">Zok notices what you read, save and skip, and how long you stay with a story. The more you use it, the better tomorrow's paper fits you.</p>
     </div>
-
     <div class="pillar-card">
-      <div class="pillar-icon-box pillar-icon-amber">🧭</div>
-      <h3 class="pillar-heading">Outside Your Lane</h3>
-      <p class="pillar-text">
-        Algorithms love filter bubbles. Zok deliberately includes one highly-confirmed story every morning from a topic you usually ignore.
-      </p>
+      <div class="pillar-num">04</div>
+      <h3 class="pillar-heading">Outside your lane</h3>
+      <p class="pillar-text">Algorithms love filter bubbles. Zok adds one well-confirmed story each morning from a topic you usually skip.</p>
     </div>
   </div>
 </section>
 
-<!-- ── HOW WE CHECK EVERY STORY ── -->
+<!-- ── HOW WE CHECK ── -->
 <section id="how-it-works" class="trust-strip">
   <div class="trust-inner">
-    <div class="section-header" style="margin-bottom: 20px;">
+    <div class="section-header">
       <span class="section-tag">How We Check The News</span>
       <h2 class="section-title">The 4-Pillar Credibility Standard</h2>
-      <p class="section-desc">
-        We never guess. Every headline is evaluated through an open, transparent credibility engine before it enters your paper.
-      </p>
+      <p class="section-desc">We never guess. Every headline passes an open, transparent credibility check before it enters your paper.</p>
     </div>
-
     <div class="trust-breakdown-grid">
       <div class="trust-factor-card">
         <div class="factor-pct">35%</div>
-        <div class="factor-name">Publisher Trust</div>
-        <p class="factor-summary">
-          We prioritize newsrooms with strict editorial standards and fact-checking records — such as Reuters, BBC, Dawn, Associated Press, and DW.
-        </p>
+        <div class="factor-name">Publisher record</div>
+        <p class="factor-summary">Newsrooms with strict editorial standards and fact-checking history, such as Reuters, BBC, Dawn, AP and DW.</p>
       </div>
-
       <div class="trust-factor-card">
         <div class="factor-pct">30%</div>
-        <div class="factor-name">Independent Sources</div>
-        <p class="factor-summary">
-          A major story is checked against multiple news organizations. If only one blog is claiming it, the score drops until corroborated.
-        </p>
+        <div class="factor-name">Independent confirmation</div>
+        <p class="factor-summary">A story is matched against other newsrooms. If only one outlet reports it, the score drops until others confirm.</p>
       </div>
-
       <div class="trust-factor-card">
         <div class="factor-pct">20%</div>
-        <div class="factor-name">Real Evidence & Quotes</div>
-        <p class="factor-summary">
-          We scan for named officials, official statements, court documents, and statistical surveys, while heavily penalizing clickbait and rumors.
-        </p>
+        <div class="factor-name">Real evidence</div>
+        <p class="factor-summary">Named officials, statements, documents and data raise the score. Clickbait and rumours lower it.</p>
       </div>
-
       <div class="trust-factor-card">
         <div class="factor-pct">15%</div>
-        <div class="factor-name">Freshness & Attribution</div>
-        <p class="factor-summary">
-          Stories must be under 48 hours old with a working canonical link, transparent bylines, and zero dead redirects.
-        </p>
+        <div class="factor-name">Freshness and attribution</div>
+        <p class="factor-summary">Under 48 hours old, with a working link and clear attribution.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 4-STEP ONBOARDING SIGNUP ── -->
+<!-- ── PLANS ── -->
+<section id="plans" class="section-calm">
+  <div class="section-header">
+    <span class="section-tag">Plans</span>
+    <h2 class="section-title">Start free. Upgrade when it becomes your habit.</h2>
+  </div>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">PKR 0</div>
+      <ul><li>5-minute daily paper</li><li>Trust score on every story</li><li>Last 7 papers</li></ul>
+    </div>
+    <div class="plan-card hot">
+      <div class="plan-name">Plus</div>
+      <div class="plan-price">PKR 999 <small>/ month</small></div>
+      <ul><li>10 and 20-minute papers</li><li>Verified-only mode</li><li>Print-ready PDF broadsheet</li><li>Audio edition: listen to your paper</li><li>Full archive</li></ul>
+    </div>
+    <div class="plan-card">
+      <div class="plan-name">Business</div>
+      <div class="plan-price">PKR 4,999 <small>/ month</small></div>
+      <ul><li>Industry watch for your company</li><li>Shared team paper</li><li>Market and competitor alerts</li></ul>
+    </div>
+  </div>
+  <p class="plan-note">Planned pricing for the demo. Payments are the next step.</p>
+</section>
+
+<!-- ── 4-STEP SIGNUP ── -->
 <section id="join" class="signup-section">
   <div class="signup-card-container">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: #0F172A; margin-bottom: 6px;">
-        Get your personal morning paper
-      </h2>
-      <p style="font-size: 0.9rem; color: #64748B;">
-        Takes 30 seconds. Tailored to your career and interests.
-      </p>
+    <div style="text-align:center; margin-bottom:22px;">
+      <h2 class="signup-title">Get your personal morning paper</h2>
+      <p style="font-size:.9rem; color:var(--mute);">Takes 30 seconds. Tailored to your career and interests.</p>
     </div>
 
     {% if err %}
-      <a href="/login" style="font-weight:600;text-decoration:underline">Go to Log in →</a>
-      <div class="alert-error">{{ err }}</div>
+      <div class="alert-error">{{ err }} <a href="/login">Go to Log in →</a></div>
     {% endif %}
 
-    <!-- Step Progress Bubbles -->
     <div class="step-indicator">
       <div class="step-bubble active" id="bubble-1">1</div>
       <div class="step-bubble" id="bubble-2">2</div>
@@ -852,17 +338,17 @@
         </div>
       </div>
 
-      <!-- Step 2: About You / Bio -->
+      <!-- Step 2: About You -->
       <div class="step-content" id="step-2">
         <div class="form-group">
           <label class="form-label">What is your profession or role?</label>
           <input type="text" name="work" class="form-input" placeholder="e.g. AI Researcher, Financial Analyst, Doctor, Founder">
-          <p class="form-hint">Zok uses this to spot technical terms and relevant industry dispatches.</p>
+          <p class="form-hint">Zok uses this to find relevant industry news.</p>
         </div>
         <div class="form-group">
-          <label class="form-label">Brief bio / what do you care about?</label>
-          <textarea name="bio" class="form-textarea" rows="3" placeholder="e.g. I work on generative AI systems and follow semiconductor supply chains, energy policy, and regional economics."></textarea>
-          <p class="form-hint">The more specific you are, the sharper your morning paper will be.</p>
+          <label class="form-label">Brief bio: what do you care about?</label>
+          <textarea name="bio" class="form-textarea form-input" rows="3" placeholder="e.g. I work on AI systems and follow chips, energy policy and regional economics."></textarea>
+          <p class="form-hint">The more specific you are, the sharper your paper will be.</p>
         </div>
         <div class="wizard-nav">
           <button type="button" class="btn btn-outline" onclick="prevStep(2)">← Back</button>
@@ -870,41 +356,22 @@
         </div>
       </div>
 
-      <!-- Step 3: Preferred Sources & Topics -->
+      <!-- Step 3: Sources & Topics -->
       <div class="step-content" id="step-3">
         <div class="form-group">
-          <label class="form-label">Preferred Newsrooms</label>
-          <p class="form-hint" style="margin-bottom: 8px;">Select outlets you trust most:</p>
+          <label class="form-label">Preferred newsrooms</label>
+          <p class="form-hint" style="margin:0 0 10px;">Select outlets you trust most:</p>
           <div class="chips-grid">
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="Reuters" checked>
-              <span>Reuters</span>
-            </label>
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="BBC" checked>
-              <span>BBC News</span>
-            </label>
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="Dawn" checked>
-              <span>Dawn</span>
-            </label>
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="Financial Times">
-              <span>Financial Times</span>
-            </label>
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="Al Jazeera">
-              <span>Al Jazeera</span>
-            </label>
-            <label class="chip-label">
-              <input type="checkbox" name="preferred_sources" value="TechCrunch">
-              <span>TechCrunch</span>
-            </label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="Reuters" checked><span>Reuters</span></label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="BBC" checked><span>BBC News</span></label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="Dawn" checked><span>Dawn</span></label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="Financial Times"><span>Financial Times</span></label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="Al Jazeera"><span>Al Jazeera</span></label>
+            <label class="chip-label"><input type="checkbox" name="preferred_sources" value="TechCrunch"><span>TechCrunch</span></label>
           </div>
         </div>
-
-        <div class="form-group" style="margin-top: 24px;">
-          <label class="form-label">Core Topics</label>
+        <div class="form-group" style="margin-top:24px;">
+          <label class="form-label">Core topics</label>
           <div class="chips-grid">
             {% for key, label in topics.items() %}
               <label class="chip-label">
@@ -914,80 +381,74 @@
             {% endfor %}
           </div>
         </div>
-
         <div class="wizard-nav">
           <button type="button" class="btn btn-outline" onclick="prevStep(3)">← Back</button>
           <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next: Reading Time →</button>
         </div>
       </div>
 
-      <!-- Step 4: Reading Length -->
+      <!-- Step 4: Reading length -->
       <div class="step-content" id="step-4">
         <div class="form-group">
           <label class="form-label">How long do you want to read each morning?</label>
           <p class="form-hint">Zok limits the number of stories so your paper always finishes on time.</p>
-          
           <div class="time-options-grid">
             <label class="time-card-radio">
               <input type="radio" name="minutes" value="5" checked>
               <div class="time-num">5 min</div>
-              <div class="time-desc">~8 verified stories · Quick morning scan</div>
+              <div class="time-desc">About 8 verified stories · a quick scan</div>
             </label>
             <label class="time-card-radio">
               <input type="radio" name="minutes" value="10">
               <div class="time-num">10 min</div>
-              <div class="time-desc">~15 stories · Balanced overview</div>
+              <div class="time-desc">About 15 stories · a balanced overview</div>
             </label>
             <label class="time-card-radio">
               <input type="radio" name="minutes" value="20">
               <div class="time-num">20 min</div>
-              <div class="time-desc">Full 20-story broadsheet · Deep dive</div>
+              <div class="time-desc">The full 20-story paper · a deep dive</div>
             </label>
           </div>
         </div>
-
-        <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; padding: 14px; margin-top: 20px; font-size: 0.85rem; color: #065F46;">
-          🌿 <strong>Zero spam guarantee:</strong> Your edition is generated once a day at dawn. No mid-day notification spam.
-        </div>
-
+        <div class="calm-note"><strong>No spam, ever.</strong> Your paper is made once a day. No mid-day notifications.</div>
         <div class="wizard-nav">
           <button type="button" class="btn btn-outline" onclick="prevStep(4)">← Back</button>
-          <button type="submit" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
-            Create My Morning Paper →
-          </button>
+          <button type="submit" class="btn btn-primary" style="padding:.85rem 1.6rem;">Create my paper →</button>
         </div>
       </div>
     </form>
   </div>
 </section>
-
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  function nextStep(current) {
-    if (current === 1) {
-      const name = document.querySelector('input[name="name"]').value.trim();
-      const email = document.querySelector('input[name="email"]').value.trim();
-      const pw = document.querySelector('input[name="password"]').value;
-      if (!name || !email || !pw) {
-        showToast('Please fill in your name, email, and password.');
-        return;
-      }
-    }
-    document.getElementById(`step-${current}`).classList.remove('active');
-    document.getElementById(`bubble-${current}`).classList.remove('active');
-    
-    document.getElementById(`step-${current + 1}`).classList.add('active');
-    document.getElementById(`bubble-${current + 1}`).classList.add('active');
+  function showStep(n) {
+    document.querySelectorAll('.step-content').forEach(function (s) { s.classList.remove('active'); });
+    document.querySelectorAll('.step-bubble').forEach(function (b) { b.classList.remove('active'); });
+    document.getElementById('step-' + n).classList.add('active');
+    document.getElementById('bubble-' + n).classList.add('active');
   }
 
-  function prevStep(current) {
-    document.getElementById(`step-${current}`).classList.remove('active');
-    document.getElementById(`bubble-${current}`).classList.remove('active');
-    
-    document.getElementById(`step-${current - 1}`).classList.add('active');
-    document.getElementById(`bubble-${current - 1}`).classList.add('active');
+  function nextStep(current) {
+    if (current === 1) {
+      var name = document.querySelector('input[name="name"]').value.trim();
+      var email = document.querySelector('input[name="email"]').value.trim();
+      var pw = document.querySelector('input[name="password"]').value;
+      if (!name || !email || !pw) { showToast('Please fill in your name, email, and password.'); return; }
+      if (pw.length < 6) { showToast('Password needs at least 6 characters.'); return; }
+    }
+    showStep(current + 1);
   }
+
+  function prevStep(current) { showStep(current - 1); }
+
+  /* Enter key moves to the next step instead of submitting early */
+  document.getElementById('signup-form').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA') return;
+    var active = document.querySelector('.step-content.active');
+    var id = parseInt(active.id.replace('step-', ''), 10);
+    if (id < 4) { e.preventDefault(); nextStep(id); }
+  });
 </script>
 {% endblock %}

@@ -2,80 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#5B7BF7">
   <title>{% block title %}ZOK{% endblock %} — Your Morning Paper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  /* ===== ZOK THEME v2: dusk sky + land ===== */
-:root{
-  --accent:#3D4ED8; --accent-light:#E8ECFF; --gold:#2F6F7A; --green:#0F7B5A;
-  --ink:#14162E; --mute:#5B6080; --ink-soft:#3F4468; --line:#DDE0F5; --line-subtle:#ECEEFB;
-  --paper:#E3E1FB; --radius:20px;
-  --shadow:0 12px 32px -16px rgba(50,60,150,.35); --shadow-lg:0 24px 60px -24px rgba(50,60,150,.45);
-  --font-serif:'Instrument Serif','Libre Baskerville',Georgia,serif;
-}
-html{-webkit-text-size-adjust:100%}
-body{background:linear-gradient(180deg,#E3E1FB 0%,#EEDFF4 35%,#F8DCE4 65%,#FBD9C9 100%);background-color:#FBD9C9;overflow-x:hidden}
-h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spacing:-.01em}
-.story-headline{font-size:1.5rem;line-height:1.15}
-.zok-logo{font-family:var(--font-sans)!important;font-weight:600!important;font-size:1.05rem!important;letter-spacing:.38em!important;text-transform:uppercase}
-.zok-nav.nav-solid{background:rgba(238,238,255,.72);border-bottom:1px solid rgba(255,255,255,.7)}
-.section-calm,.trust-strip,.signup-section{background:transparent!important}
-.pillar-card,.trust-factor-card,.signup-card-container{background:rgba(255,255,255,.74)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.9)!important;box-shadow:var(--shadow)}
-.pillar-icon-purple,.pillar-icon-amber{display:none!important}
-.zok-land{position:relative;margin-top:64px;line-height:0}
-.zok-land svg{display:block;width:100%;height:clamp(150px,22vw,260px)}
-.zok-footer{background:#1F3B4D!important;color:#C9D3F0!important;text-align:center;padding:6px 20px 36px;border:0!important;margin:0!important}
-.zok-footer a,.zok-footer strong{color:#fff!important}
-@media(max-width:640px){
-  .zok-nav{padding:.9rem 1.1rem}
-  .story-actions-footer a,.story-actions-footer button{flex:1 1 calc(50% - 8px);justify-content:center;text-align:center;min-height:42px}
-  .zl-bar{bottom:max(12px,env(safe-area-inset-bottom))!important}.zl-now{display:none!important}
-  .signup-card-container{padding:1.25rem!important}
-}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Design Tokens ── */
+    /* ── Design Tokens: dusk sky + land ── */
     :root {
-      --sky-top: #D4C5F9;
-      --sky-mid: #8FB4F8;
-      --sky-warm: #F5C08B;
-      --paper: #FAFAFA;
+      --sky-top: #5B7BF7;
+      --sky-mid: #AE8CF0;
+      --sky-warm: #F9B79C;
+      --paper: #E3E1FB;
       --card: #FFFFFF;
-      --ink: #1a1a2e;
-      --mute: #6b7280;
-      --accent: #4f46e5;
-      --accent-light: #eef2ff;
-      --gold: #d97706;
-      --green: #059669;
-      --red: #dc2626;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
-      --shadow-lg: 0 4px 24px rgba(0,0,0,.10);
-      --font-serif: 'Libre Baskerville', Georgia, serif;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --ink: #14162E;
+      --ink-soft: #3F4468;
+      --mute: #5B6080;
+      --accent: #3D4ED8;
+      --accent-dark: #3340B8;
+      --accent-light: #E8ECFF;
+      --teal: #2F6F7A;
+      --gold: #2F6F7A;
+      --green: #0F7B5A;
+      --red: #C0392B;
+      --line: #DDE0F5;
+      --line-subtle: #ECEEFB;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 12px 32px -16px rgba(50,60,150,.35);
+      --shadow-lg: 0 24px 60px -24px rgba(50,60,150,.45);
+      --font-serif: 'Instrument Serif', 'Libre Baskerville', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       --serif: var(--font-serif);
       --sans: var(--font-sans);
       --display: var(--font-serif);
-      --line: #E2E8F0;
-      --line-subtle: #F1F5F9;
-      --ink-soft: #475569;
       --transition: .25s cubic-bezier(.4,0,.2,1);
     }
 
-
     /* ── Base ── */
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
       font-family: var(--font-sans);
       color: var(--ink);
-      background: var(--paper);
+      background: linear-gradient(180deg, #E3E1FB 0%, #EEDFF4 35%, #F8DCE4 65%, #FBD9C9 100%);
+      background-color: #FBD9C9;
       line-height: 1.6;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -85,6 +61,8 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
     button, input, select, textarea {
       font-family: inherit; font-size: inherit; border: none; outline: none;
     }
+    h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -.01em; }
+    .story-headline { font-family: var(--font-serif); font-weight: 400; font-size: 1.5rem; line-height: 1.15; }
 
     /* ── Nav ── */
     .zok-nav {
@@ -94,26 +72,26 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
     }
     .zok-nav.nav-solid {
       position: sticky; top: 0;
-      background: rgba(255,255,255,.85);
+      background: rgba(238,238,255,.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,0,0,.06);
+      border-bottom: 1px solid rgba(255,255,255,.7);
     }
     .zok-logo {
-      font-family: var(--font-serif);
-      font-weight: 700; font-size: 1.5rem;
-      color: var(--ink); letter-spacing: -0.02em;
+      font-family: var(--font-sans);
+      font-weight: 600; font-size: 1.05rem;
+      letter-spacing: .38em; text-transform: uppercase;
+      color: var(--ink);
     }
-    .zok-logo span { color: var(--accent); }
+    .zok-logo:hover { color: var(--ink); }
     .zok-pills {
-      display: flex; gap: .5rem; align-items: center;
-      background: rgba(255,255,255,.35);
+      display: flex; gap: .35rem; align-items: center;
+      background: rgba(255,255,255,.4);
       border-radius: 999px; padding: .3rem;
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
-    .nav-solid .zok-pills {
-      background: rgba(0,0,0,.04);
-    }
+    .nav-solid .zok-pills { background: rgba(255,255,255,.55); }
     .zok-pills a {
       padding: .45rem 1rem;
       border-radius: 999px;
@@ -121,43 +99,48 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
       color: var(--ink); transition: all var(--transition);
       white-space: nowrap;
     }
-    .zok-pills a:hover,
-    .zok-pills a.active {
+    .zok-pills a:hover, .zok-pills a.active {
       background: var(--card);
       box-shadow: 0 1px 4px rgba(0,0,0,.08);
       color: var(--accent);
     }
     .nav-hamburger {
       display: none; background: none; cursor: pointer;
-      width: 36px; height: 36px; border-radius: 8px;
+      width: 40px; height: 40px; border-radius: 10px;
       align-items: center; justify-content: center;
     }
-    .nav-hamburger svg { width: 22px; height: 22px; stroke: var(--ink); }
+    .nav-hamburger svg { width: 24px; height: 24px; stroke: var(--ink); }
 
     /* ── Mobile Nav ── */
     @media (max-width: 640px) {
-      .zok-nav { padding: 1rem 1.25rem; }
+      .zok-nav { padding: .9rem 1.1rem; }
       .zok-pills { display: none; }
       .zok-pills.open {
-        display: flex; flex-direction: column;
+        display: flex; flex-direction: column; align-items: stretch;
         position: absolute; top: 100%; right: 1rem;
         background: var(--card); border-radius: var(--radius);
         box-shadow: var(--shadow-lg); padding: .5rem;
-        min-width: 160px;
+        min-width: 180px;
       }
+      .zok-pills.open a { padding: .7rem 1rem; }
       .nav-hamburger { display: flex; }
     }
 
     /* ── Main ── */
     .zok-main { min-height: 100vh; }
 
-    /* ── Footer ── */
+    /* ── Land (mountains) + Footer: pages end on land, not white ── */
+    .zok-land { position: relative; margin-top: 64px; line-height: 0; }
+    .zok-land svg { display: block; width: 100%; height: clamp(150px, 22vw, 260px); }
     .zok-footer {
-      text-align: center; padding: 3rem 1.5rem;
-      color: var(--mute); font-size: .85rem;
+      background: #1F3B4D;
+      color: #C9D3F0;
+      text-align: center;
+      padding: 6px 20px 36px;
+      font-size: .85rem;
     }
-    .zok-footer a { color: var(--mute); }
-    .zok-footer a:hover { color: var(--accent); }
+    .zok-footer strong { color: #fff; letter-spacing: .3em; }
+    .zok-footer a { color: #fff; }
 
     /* ── Cards ── */
     .card {
@@ -173,58 +156,41 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
 
     /* ── Buttons ── */
     .btn {
-      display: inline-flex; align-items: center; gap: .5rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
       padding: .7rem 1.5rem; border-radius: 999px;
       font-weight: 600; font-size: .9rem;
       cursor: pointer; transition: all var(--transition);
-      border: none;
+      border: none; min-height: 42px;
     }
-    .btn-primary {
-      background: var(--accent); color: #fff;
-    }
+    .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover {
-      background: #4338ca; color: #fff;
+      background: var(--accent-dark); color: #fff;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(79,70,229,.3);
+      box-shadow: 0 8px 18px -8px rgba(61,78,216,.55);
     }
     .btn-outline {
-      background: transparent;
-      border: 1.5px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.6);
+      border: 1.5px solid rgba(20,22,46,.14);
       color: var(--ink);
     }
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-light);
-    }
-    .btn-ghost {
-      background: transparent; color: var(--mute);
-      padding: .5rem .75rem; font-size: .8rem;
-    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .btn-ghost { background: transparent; color: var(--mute); padding: .5rem .75rem; font-size: .8rem; }
     .btn-ghost:hover { color: var(--accent); background: var(--accent-light); }
-    .btn-sm { padding: .4rem 1rem; font-size: .8rem; }
+    .btn-sm { padding: .4rem 1rem; font-size: .8rem; min-height: 36px; }
 
     /* ── Forms ── */
-    .form-field {
-      display: flex; flex-direction: column; gap: .4rem;
-    }
-    .form-field label {
-      font-size: .85rem; font-weight: 600; color: var(--ink);
-    }
-    .form-field input,
-    .form-field textarea,
-    .form-field select {
-      padding: .7rem 1rem;
-      border: 1.5px solid rgba(0,0,0,.1);
+    .form-field { display: flex; flex-direction: column; gap: .4rem; }
+    .form-field label { font-size: .85rem; font-weight: 600; color: var(--ink); }
+    .form-field input, .form-field textarea, .form-field select {
+      padding: .75rem 1rem;
+      border: 1.5px solid rgba(20,22,46,.12);
       border-radius: var(--radius-sm);
-      background: var(--paper);
+      background: #fff;
       transition: border-color var(--transition), box-shadow var(--transition);
     }
-    .form-field input:focus,
-    .form-field textarea:focus,
-    .form-field select:focus {
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79,70,229,.1);
+      box-shadow: 0 0 0 3px rgba(61,78,216,.14);
     }
     .form-field textarea { resize: vertical; min-height: 100px; }
 
@@ -257,24 +223,14 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
       letter-spacing: .04em;
     }
     .tag-topic { background: var(--accent-light); color: var(--accent); }
-    .tag-thread { background: #fef3c7; color: var(--gold); }
-    .tag-source { background: #f3f4f6; color: var(--mute); }
+    .tag-thread { background: #E3F1F2; color: var(--teal); }
+    .tag-source { background: #F0F1F8; color: var(--mute); }
 
     /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .animate-fade-up {
-      animation: fadeUp .6s cubic-bezier(.4,0,.2,1) both;
-    }
-    .animate-fade-in {
-      animation: fadeIn .5s ease both;
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .animate-fade-up { animation: fadeUp .6s cubic-bezier(.4,0,.2,1) both; }
+    .animate-fade-in { animation: fadeIn .5s ease both; }
     .delay-1 { animation-delay: .1s; }
     .delay-2 { animation-delay: .2s; }
     .delay-3 { animation-delay: .3s; }
@@ -289,25 +245,32 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
       opacity: 0; transition: all .35s cubic-bezier(.4,0,.2,1);
       z-index: 9999; pointer-events: none;
     }
-    .toast.show {
-      opacity: 1; transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── Error ── */
     .alert-error {
-      background: #fef2f2; border: 1px solid #fecaca;
+      background: #FDF1F0; border: 1px solid #F5C6C1;
       color: var(--red); padding: .75rem 1rem;
       border-radius: var(--radius-sm); font-size: .85rem;
       margin-bottom: 1rem;
     }
+    .alert-error a { font-weight: 600; text-decoration: underline; color: var(--red); }
 
     /* ── Responsive helpers ── */
     @media (max-width: 768px) {
       .hide-mobile { display: none !important; }
       .card { padding: 1.25rem; }
     }
-    @media (min-width: 769px) {
-      .hide-desktop { display: none !important; }
+    @media (min-width: 769px) { .hide-desktop { display: none !important; } }
+
+    /* ── Phone polish (Android) ── */
+    @media (max-width: 640px) {
+      .story-actions-footer a, .story-actions-footer button {
+        flex: 1 1 calc(50% - 8px); justify-content: center; text-align: center; min-height: 42px;
+      }
+      .zl-bar { bottom: max(12px, env(safe-area-inset-bottom)) !important; }
+      .zl-now { display: none !important; }
+      .toast { bottom: max(1rem, env(safe-area-inset-bottom)); }
     }
 
     {% block extra_css %}{% endblock %}
@@ -331,7 +294,6 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
       <a href="/paper.pdf" target="_blank">PDF Broadsheet</a>
       <a href="/logout">Log out</a>
       {% endblock %}
-
     </div>
   </nav>
   {% endblock %}
@@ -340,25 +302,30 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
     {% block content %}{% endblock %}
   </main>
 
-{% block footer %}
-<div class="zok-land" aria-hidden="true">
- <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
-  <defs><symbol id="pn" viewBox="-24 0 48 90"><path d="M0 0L14 34H-14Z M0 20L18 58H-18Z M0 44L24 90H-24Z"/></symbol></defs>
-  <path fill="#A7A5E8" opacity=".6" d="M0 150C140 95 260 110 400 140S640 70 800 120 1080 80 1240 120 1380 100 1440 120V260H0Z"/>
-  <path fill="#6C7FC0" d="M0 185C180 140 300 150 460 178S760 130 940 168 1260 140 1440 170V260H0Z"/>
-  <path fill="#3D6A7B" d="M0 220C160 190 320 195 480 215S820 185 1000 212 1300 195 1440 210V260H0Z"/>
-  <path fill="#1F3B4D" d="M0 240C240 224 520 236 800 230S1250 222 1440 232V260H0Z"/>
-  <g fill="#2B5160">
-   <use href="#pn" x="40" y="150" width="34" height="72"/><use href="#pn" x="82" y="162" width="26" height="56"/>
-   <use href="#pn" x="1320" y="146" width="36" height="76"/><use href="#pn" x="1370" y="160" width="26" height="56"/>
-   <use href="#pn" x="1405" y="170" width="22" height="46"/></g>
- </svg>
-</div>
-<footer class="zok-footer">
-  <p><strong>ZOK</strong> · Your morning, simplified.</p>
-  <p style="opacity:.6;font-size:.8rem;margin-top:6px">Built for NaSCon '26</p>
-</footer>
-{% endblock %}
+  {% block footer %}
+  <div class="zok-land" aria-hidden="true">
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <defs>
+        <symbol id="pn" viewBox="-24 0 48 90"><path d="M0 0L14 34H-14Z M0 20L18 58H-18Z M0 44L24 90H-24Z"/></symbol>
+      </defs>
+      <path fill="#A7A5E8" opacity=".6" d="M0 150C140 95 260 110 400 140S640 70 800 120 1080 80 1240 120 1380 100 1440 120V260H0Z"/>
+      <path fill="#6C7FC0" d="M0 185C180 140 300 150 460 178S760 130 940 168 1260 140 1440 170V260H0Z"/>
+      <path fill="#3D6A7B" d="M0 220C160 190 320 195 480 215S820 185 1000 212 1300 195 1440 210V260H0Z"/>
+      <path fill="#1F3B4D" d="M0 240C240 224 520 236 800 230S1250 222 1440 232V260H0Z"/>
+      <g fill="#2B5160">
+        <use href="#pn" x="40" y="150" width="34" height="72"/>
+        <use href="#pn" x="82" y="162" width="26" height="56"/>
+        <use href="#pn" x="1320" y="146" width="36" height="76"/>
+        <use href="#pn" x="1370" y="160" width="26" height="56"/>
+        <use href="#pn" x="1405" y="170" width="22" height="46"/>
+      </g>
+    </svg>
+  </div>
+  <footer class="zok-footer">
+    <p><strong>ZOK</strong> &nbsp;·&nbsp; Your morning, simplified.</p>
+    <p style="opacity:.6;font-size:.8rem;margin-top:6px">Built for NaSCon '26</p>
+  </footer>
+  {% endblock %}
 
   <div class="toast" id="toast"></div>
 
@@ -373,7 +340,7 @@ h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spaci
     /* Close mobile nav on link click */
     document.querySelectorAll('.zok-pills a').forEach(a => {
       a.addEventListener('click', () => {
-      document.querySelector('.zok-pills')?.classList.remove('open');
+        document.querySelector('.zok-pills')?.classList.remove('open');
       });
     });
   </script>
