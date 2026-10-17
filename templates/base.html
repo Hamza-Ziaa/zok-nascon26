@@ -7,6 +7,34 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  /* ===== ZOK THEME v2: dusk sky + land ===== */
+:root{
+  --accent:#3D4ED8; --accent-light:#E8ECFF; --gold:#2F6F7A; --green:#0F7B5A;
+  --ink:#14162E; --mute:#5B6080; --ink-soft:#3F4468; --line:#DDE0F5; --line-subtle:#ECEEFB;
+  --paper:#E3E1FB; --radius:20px;
+  --shadow:0 12px 32px -16px rgba(50,60,150,.35); --shadow-lg:0 24px 60px -24px rgba(50,60,150,.45);
+  --font-serif:'Instrument Serif','Libre Baskerville',Georgia,serif;
+}
+html{-webkit-text-size-adjust:100%}
+body{background:linear-gradient(180deg,#E3E1FB 0%,#EEDFF4 35%,#F8DCE4 65%,#FBD9C9 100%);background-color:#FBD9C9;overflow-x:hidden}
+h1,h2,.story-headline{font-family:var(--font-serif);font-weight:400;letter-spacing:-.01em}
+.story-headline{font-size:1.5rem;line-height:1.15}
+.zok-logo{font-family:var(--font-sans)!important;font-weight:600!important;font-size:1.05rem!important;letter-spacing:.38em!important;text-transform:uppercase}
+.zok-nav.nav-solid{background:rgba(238,238,255,.72);border-bottom:1px solid rgba(255,255,255,.7)}
+.section-calm,.trust-strip,.signup-section{background:transparent!important}
+.pillar-card,.trust-factor-card,.signup-card-container{background:rgba(255,255,255,.74)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.9)!important;box-shadow:var(--shadow)}
+.pillar-icon-purple,.pillar-icon-amber{display:none!important}
+.zok-land{position:relative;margin-top:64px;line-height:0}
+.zok-land svg{display:block;width:100%;height:clamp(150px,22vw,260px)}
+.zok-footer{background:#1F3B4D!important;color:#C9D3F0!important;text-align:center;padding:6px 20px 36px;border:0!important;margin:0!important}
+.zok-footer a,.zok-footer strong{color:#fff!important}
+@media(max-width:640px){
+  .zok-nav{padding:.9rem 1.1rem}
+  .story-actions-footer a,.story-actions-footer button{flex:1 1 calc(50% - 8px);justify-content:center;text-align:center;min-height:42px}
+  .zl-bar{bottom:max(12px,env(safe-area-inset-bottom))!important}.zl-now{display:none!important}
+  .signup-card-container{padding:1.25rem!important}
+}
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -289,7 +317,7 @@
 <body>
   {% block nav %}
   <nav class="zok-nav {% block nav_class %}nav-solid{% endblock %}">
-    <a href="/" class="zok-logo">z<span>o</span>k</a>
+    <a href="/" class="zok-logo">ZOK</a>
     <button class="nav-hamburger" onclick="document.querySelector('.zok-pills').classList.toggle('open')" aria-label="Menu">
       <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
@@ -312,11 +340,25 @@
     {% block content %}{% endblock %}
   </main>
 
-  {% block footer %}
-  <footer class="zok-footer">
-    <p>Made with care by <strong>ZOK</strong> · Your morning, simplified.</p>
-  </footer>
-  {% endblock %}
+{% block footer %}
+<div class="zok-land" aria-hidden="true">
+ <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+  <defs><symbol id="pn" viewBox="-24 0 48 90"><path d="M0 0L14 34H-14Z M0 20L18 58H-18Z M0 44L24 90H-24Z"/></symbol></defs>
+  <path fill="#A7A5E8" opacity=".6" d="M0 150C140 95 260 110 400 140S640 70 800 120 1080 80 1240 120 1380 100 1440 120V260H0Z"/>
+  <path fill="#6C7FC0" d="M0 185C180 140 300 150 460 178S760 130 940 168 1260 140 1440 170V260H0Z"/>
+  <path fill="#3D6A7B" d="M0 220C160 190 320 195 480 215S820 185 1000 212 1300 195 1440 210V260H0Z"/>
+  <path fill="#1F3B4D" d="M0 240C240 224 520 236 800 230S1250 222 1440 232V260H0Z"/>
+  <g fill="#2B5160">
+   <use href="#pn" x="40" y="150" width="34" height="72"/><use href="#pn" x="82" y="162" width="26" height="56"/>
+   <use href="#pn" x="1320" y="146" width="36" height="76"/><use href="#pn" x="1370" y="160" width="26" height="56"/>
+   <use href="#pn" x="1405" y="170" width="22" height="46"/></g>
+ </svg>
+</div>
+<footer class="zok-footer">
+  <p><strong>ZOK</strong> · Your morning, simplified.</p>
+  <p style="opacity:.6;font-size:.8rem;margin-top:6px">Built for NaSCon '26</p>
+</footer>
+{% endblock %}
 
   <div class="toast" id="toast"></div>
 
