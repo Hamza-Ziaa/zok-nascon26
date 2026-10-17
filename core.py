@@ -59,6 +59,8 @@ TIER = {
     "TechCrunch": 0.75
 }
 
+TRUSTED_SOURCES = set(TIER) | {"Financial Times"}
+
 PK = re.compile(r"pakistan|karachi|lahore|islamabad|peshawar|quetta|punjab|sindh|khyber|balochistan|rupee|PSX|SBP|nawaz|shehbaz|imran|dar", re.I)
 HEDGE = re.compile(r"\b(reportedly|allegedly|sources say|rumou?rs?|unconfirmed|it is said|claims?|purported|insiders say|speculation)\b", re.I)
 BAIT = re.compile(r"(shocking|you won'?t believe|must see|jaw-dropping|goes viral|secret revealed|won't tell you|unbelievable|mind-blowing)", re.I)
