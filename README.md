@@ -1,4 +1,5 @@
-# ZOK (ذوق) — Your Calm Morning Paper
+# ZOK (ذوق) 
+Your Calm Morning Paper
 
 ### *"A feed never ends. A newspaper does."*
 
