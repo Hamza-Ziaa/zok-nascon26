@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In — ZOK{% endblock %}
+
+{% block nav_class %}nav-portal{% endblock %}
+
+{% block nav_links %}
+  <a href="/">Home</a>
+  <a href="/#why">Why Zok</a>
+  <a href="/#join">Get Started</a>
+{% endblock %}
+
+{% block content %}
+<style>
+  .login-portal-hero {
+    position: relative;
+    min-height: 92vh;
+    padding: 120px 1.5rem 60px;
+    background: linear-gradient(180deg, 
+      #3B5BDB 0%, 
+      #5C7CFA 25%, 
+      #845EF7 55%, 
+      #CC5DE8 80%, 
+      #FA7B8E 100%
+    );
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .twilight-stars-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(1.5px 1.5px at 20% 20%, rgba(255,255,255,0.85) 100%, transparent),
+      radial-gradient(2px 2px at 70% 15%, rgba(255,255,255,0.9) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 40% 30%, rgba(255,255,255,0.7) 100%, transparent),
+      radial-gradient(2px 2px at 85% 35%, rgba(255,255,255,0.8) 100%, transparent);
+    pointer-events: none;
+  }
+
+  .login-card-portal {
+    position: relative;
+    z-index: 10;
+    width: min(440px, 94vw);
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 44px 38px;
+    box-shadow: 0 25px 60px -15px rgba(20, 16, 50, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    text-align: left;
+  }
+
+  .login-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4F46E5;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .login-title {
+    font-family: var(--font-serif);
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .login-subtitle {
+    font-size: 0.92rem;
+    color: #64748B;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .inp-clean {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #CBD5E1;
+    background: #FAF9F6;
+    font-size: 0.95rem;
+    color: #0F172A;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+  }
+  .inp-clean:focus {
+    background: #FFFFFF;
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+  }
+</style>
+
+<section class="login-portal-hero">
+  <div class="twilight-stars-bg"></div>
+
+  <div class="login-card-portal animate-fade-up">
+    <span class="login-eyebrow">Subscriber Access</span>
+    <h1 class="login-title">Your paper is waiting.</h1>
+    <p class="login-subtitle">
+      Sign in to read today's personal morning edition and check your reading mirror.
+    </p>
+
+    {% if err %}
+      <div class="alert-error">{{ err }}</div>
+    {% endif %}
+
+    <form method="POST" action="/login">
+      <div class="form-field" style="margin-bottom: 16px;">
+        <label style="font-size: 0.85rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Email address</label>
+        <input name="email" type="email" required placeholder="sarah@example.com" class="inp-clean">
+      </div>
+
+      <div class="form-field" style="margin-bottom: 20px;">
+        <label style="font-size: 0.85rem; font-weight: 600; color: #1E293B; margin-bottom: 6px;">Password</label>
+        <input name="password" type="password" required placeholder="••••••••" class="inp-clean">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; justify-content: center;">
+        Open Today's Paper →
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 24px; font-size: 0.88rem; color: #64748B;">
+      New to ZOK? <a href="/#join" style="color: #4F46E5; font-weight: 600;">Get your morning paper</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

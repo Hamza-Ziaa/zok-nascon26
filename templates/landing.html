@@ -1,179 +1,1011 @@
 {% extends "base.html" %}
 
-{% block title %}Zok — The Personal Morning Broadside{% endblock %}
+{% block title %}ZOK — Your Calm Morning Paper{% endblock %}
+
+{% block nav_class %}nav-portal{% endblock %}
+
+{% block nav_links %}
+  <a href="#why">Why Zok</a>
+  <a href="#how-it-works">How We Check</a>
+  <a href="#join">Get Started</a>
+  <a href="/login">Sign In</a>
+{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+<style>
+  /* ── Portal-Style Twilight & Dawn Theme ── */
+  :root {
+    --portal-sky-1: #4158D0;
+    --portal-sky-2: #6366F1;
+    --portal-sky-3: #9F7AEA;
+    --portal-sky-4: #ED93B6;
+    --portal-sky-5: #FBB084;
+    --portal-ink: #111827;
+    --portal-soft: #F9FAFB;
+  }
 
-    <!-- Top Minimal Navigation Bar (Inspired by DUNA & Portal) -->
-    <nav class="flex items-center justify-between py-6 mb-12 sm:mb-16">
-        <div class="flex items-center gap-3">
-            <span class="font-playfair text-2xl font-bold tracking-tight text-ink-900">ZOK</span>
-            <span class="text-stone-300">/</span>
-            <span class="font-newsreader italic text-xl text-ink-600">ذوق</span>
+  body {
+    background: #FAF9F6;
+    color: var(--portal-ink);
+  }
+
+  /* Nav styling on Portal gradient */
+  .nav-portal {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-portal .zok-logo {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-portal .zok-logo span {
+    color: #FDE047;
+  }
+  .nav-portal .zok-pills {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 0.35rem 0.5rem;
+    border-radius: 999px;
+  }
+  .nav-portal .zok-pills a {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+  .nav-portal .zok-pills a:hover {
+    background: rgba(255, 255, 255, 0.95);
+    color: #4F46E5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  /* ── Hero Canvas ── */
+  .portal-hero {
+    position: relative;
+    min-height: 96vh;
+    padding: 140px 1.5rem 180px;
+    background: linear-gradient(180deg, 
+      #3B5BDB 0%, 
+      #5C7CFA 22%, 
+      #845EF7 48%, 
+      #CC5DE8 72%, 
+      #FA7B8E 88%, 
+      #FFA94D 100%
+    );
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  /* Soft Twinkling Twilight Stars */
+  .twilight-stars {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(1.5px 1.5px at 15% 18%, rgba(255,255,255,0.9) 100%, transparent),
+      radial-gradient(2px 2px at 28% 12%, rgba(255,255,255,0.85) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 45% 22%, rgba(255,255,255,0.7) 100%, transparent),
+      radial-gradient(2px 2px at 68% 15%, rgba(255,255,255,0.95) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 82% 28%, rgba(255,255,255,0.75) 100%, transparent),
+      radial-gradient(2.5px 2.5px at 88% 10%, rgba(255,255,255,0.9) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 9% 34%, rgba(255,255,255,0.6) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 58% 30%, rgba(255,255,255,0.7) 100%, transparent),
+      radial-gradient(2px 2px at 35% 38%, rgba(255,255,255,0.65) 100%, transparent);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  /* Mountain Silhouette Horizon */
+  .portal-horizon {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 180px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Hero Typography */
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .hero-eyebrow .dot {
+    width: 7px;
+    height: 7px;
+    background: #4ADE80;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #4ADE80;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 860px;
+    margin: 0 auto 1.25rem;
+    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.18);
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, #FFF6E5 0%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.8vw, 1.22rem);
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 640px;
+    margin: 0 auto 2.2rem;
+    line-height: 1.65;
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+    z-index: 5;
+  }
+  .btn-portal-white {
+    background: #FFFFFF;
+    color: #1E1B4B;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    transition: all 0.25s ease;
+  }
+  .btn-portal-white:hover {
+    background: #FAF5FF;
+    color: #4F46E5;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+  }
+  .btn-portal-ghost {
+    background: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    padding: 0.85rem 1.8rem;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+  }
+  .btn-portal-ghost:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+
+  /* ── Floating Mockup Card (Inspired by Portal Reference) ── */
+  .portal-preview-frame {
+    position: relative;
+    z-index: 10;
+    width: min(940px, 94vw);
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 28px;
+    padding: 14px;
+    box-shadow: 
+      0 35px 80px -15px rgba(23, 16, 60, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .preview-inner-canvas {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 32px 36px 36px;
+    color: var(--portal-ink);
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .preview-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ECFDF5;
+    color: #065F46;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid #A7F3D0;
+  }
+  .preview-meta {
+    font-size: 0.82rem;
+    color: #64748B;
+    font-weight: 500;
+  }
+
+  .preview-body-grid {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .preview-body-grid { grid-template-columns: 1fr; }
+    .newspaper-mascot { display: none; }
+  }
+
+  .preview-article-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+  }
+  .preview-topic-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #4F46E5;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .preview-article-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+  .preview-article-summary {
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .preview-trust-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #E2E8F0;
+    font-size: 0.8rem;
+    color: #059669;
+    font-weight: 600;
+  }
+
+  /* Newspaper Mascot Illustration (Replacing the robot from Portal image!) */
+  .newspaper-mascot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: linear-gradient(135deg, #EEF2FF 0%, #FAF5FF 100%);
+    border: 1px dashed #C7D2FE;
+    border-radius: 16px;
+    text-align: center;
+  }
+  .newspaper-mascot-art {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 6px 12px rgba(79,70,229,0.15));
+  }
+  .newspaper-mascot-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #3730A3;
+  }
+  .newspaper-mascot-caption {
+    font-size: 0.7rem;
+    color: #6366F1;
+  }
+
+  /* ── Value Propositions Section ── */
+  .section-calm {
+    padding: 100px 1.5rem;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 60px;
+  }
+  .section-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6366F1;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: #0F172A;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 1.05rem;
+    color: #64748B;
+    line-height: 1.65;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 28px;
+  }
+  .pillar-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: all 0.25s ease;
+  }
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    border-color: #CBD5E1;
+  }
+  .pillar-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .pillar-icon-blue { background: #EEF2FF; color: #4F46E5; }
+  .pillar-icon-green { background: #ECFDF5; color: #059669; }
+  .pillar-icon-purple { background: #FAF5FF; color: #9333EA; }
+  .pillar-icon-amber { background: #FFFBEB; color: #D97706; }
+
+  .pillar-heading {
+    font-family: var(--font-serif);
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 10px;
+  }
+  .pillar-text {
+    font-size: 0.92rem;
+    color: #64748B;
+    line-height: 1.6;
+  }
+
+  /* ── How Trust Works (Simple Human Explanations) ── */
+  .trust-strip {
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
+    padding: 80px 1.5rem;
+  }
+  .trust-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .trust-breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .trust-factor-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .factor-pct {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4F46E5;
+    margin-bottom: 4px;
+    font-family: var(--font-serif);
+  }
+  .factor-name {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #0F172A;
+    margin-bottom: 8px;
+  }
+  .factor-summary {
+    font-size: 0.85rem;
+    color: #64748B;
+    line-height: 1.55;
+  }
+
+  /* ── 4-Step Onboarding Form ── */
+  .signup-section {
+    padding: 90px 1.5rem;
+    background: linear-gradient(180deg, #FAF9F6 0%, #EEF2FF 100%);
+  }
+  .signup-card-container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border-radius: 24px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 16px 40px -10px rgba(79, 70, 229, 0.1);
+    padding: 44px 40px;
+  }
+  @media (max-width: 640px) {
+    .signup-card-container { padding: 28px 20px; }
+  }
+
+  .step-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .step-indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #E2E8F0;
+    z-index: 1;
+    transform: translateY(-50%);
+  }
+  .step-bubble {
+    position: relative;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748B;
+    transition: all 0.2s ease;
+  }
+  .step-bubble.active {
+    background: #4F46E5;
+    border-color: #4F46E5;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+  }
+
+  .step-content {
+    display: none;
+  }
+  .step-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1E293B;
+    margin-bottom: 8px;
+  }
+  .form-hint {
+    font-size: 0.8rem;
+    color: #64748B;
+    margin-top: 4px;
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: #FAF9F6;
+    transition: all 0.2s ease;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    background: #FFFFFF;
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+  }
+
+  /* Checkbox Chips */
+  .chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .chip-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #334155;
+    transition: all 0.18s ease;
+  }
+  .chip-label:hover {
+    border-color: #CBD5E1;
+    background: #F1F5F9;
+  }
+  .chip-label input[type="checkbox"]:checked + span {
+    font-weight: 600;
+    color: #4F46E5;
+  }
+  .chip-label:has(input[type="checkbox"]:checked) {
+    border-color: #4F46E5;
+    background: #EEF2FF;
+  }
+
+  /* Reading time radio options */
+  .time-options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  @media (max-width: 600px) {
+    .time-options-grid { grid-template-columns: 1fr; }
+  }
+  .time-card-radio {
+    position: relative;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #FAF9F6;
+  }
+  .time-card-radio:hover {
+    border-color: #CBD5E1;
+  }
+  .time-card-radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+  .time-card-radio:has(input[type="radio"]:checked) {
+    border-color: #4F46E5;
+    background: #EEF2FF;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
+  }
+  .time-num {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 2px;
+  }
+  .time-desc {
+    font-size: 0.78rem;
+    color: #64748B;
+  }
+
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #E2E8F0;
+  }
+</style>
+
+<!-- ── HERO SECTION (Portal-Style Dawn Gradient & Hills) ── -->
+<section class="portal-hero">
+  <div class="twilight-stars"></div>
+
+  <div class="hero-eyebrow animate-fade-in">
+    <span class="dot"></span>
+    NaSCon '26 AI Hackathon · FAST-NUCES Silver Jubilee
+  </div>
+
+  <h1 class="hero-title animate-fade-up">
+    Your calm morning paper.<br>
+    <em>From noise to clarity.</em>
+  </h1>
+
+  <p class="hero-subtitle animate-fade-up delay-1">
+    No infinite doomscrolling. Zok gathers verified dispatches from the world's most trusted newsrooms, removes clickbait, and gives you one finished paper every morning.
+  </p>
+
+  <div class="hero-cta-group animate-fade-up delay-2">
+    <a href="#join" class="btn btn-portal-white">Read Today's Paper</a>
+    <a href="#why" class="btn btn-portal-ghost">See How It Works</a>
+  </div>
+
+  <!-- Floating App Mockup (With Morning Newspaper Art instead of robot) -->
+  <div class="portal-preview-frame animate-fade-up delay-3">
+    <div class="preview-inner-canvas">
+      <div class="preview-topbar">
+        <div class="preview-badge-pill">
+          ● Verified Morning Edition · Issue #001
         </div>
-        <div class="flex items-center gap-6">
-            <span class="hidden md:inline font-meta-label text-[11px] text-ink-600">NaSCon '26 Silver Jubilee Edition</span>
-            <a href="#onboard" class="btn-pill-primary text-xs">
-                Compose Edition &rarr;
-            </a>
+        <div class="preview-meta">
+          5-minute read · Verified by 4 Independent Outlets
         </div>
-    </nav>
+      </div>
 
+      <div class="preview-body-grid">
+        <div class="preview-article-card">
+          <span class="preview-topic-tag">Technology & Science</span>
+          <h2 class="preview-article-title">
+            Global Chip Standard Finalized for Next-Generation Computing
+          </h2>
+          <p class="preview-article-summary">
+            Leading semiconductor laboratories and manufacturers announced a unified interconnect standard today. The agreement guarantees lower latency and significant energy efficiency improvements across high-performance computing clusters.
+          </p>
+          <div class="preview-trust-bar">
+            <span>✔ Verified 94/100</span>
+            <span>· Corroborated by Reuters, BBC & Dawn</span>
+            <span>· 0% Clickbait</span>
+          </div>
+        </div>
 
-    <!-- Hero Section (Inspired by DUNA & Portal) -->
-    <header class="text-center max-w-3xl mx-auto mb-16 sm:mb-20 pt-4">
-        <p class="font-meta-label text-ink-600 mb-4 tracking-[0.22em]">
-            Autonomous Morning Intelligence
+        <!-- Illustrated Newspaper & Morning Mascot -->
+        <div class="newspaper-mascot">
+          <svg class="newspaper-mascot-art" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="22" width="64" height="60" rx="8" fill="#FFFFFF" stroke="#4F46E5" stroke-width="3"/>
+            <rect x="26" y="32" width="28" height="6" rx="2" fill="#4F46E5"/>
+            <rect x="26" y="44" width="48" height="3" rx="1.5" fill="#94A3B8"/>
+            <rect x="26" y="52" width="48" height="3" rx="1.5" fill="#94A3B8"/>
+            <rect x="26" y="60" width="34" height="3" rx="1.5" fill="#94A3B8"/>
+            <rect x="26" y="68" width="42" height="3" rx="1.5" fill="#CBD5E1"/>
+            <!-- Coffee cup -->
+            <rect x="66" y="30" width="12" height="10" rx="3" fill="#F59E0B"/>
+            <path d="M78 33 C81 33 81 37 78 37" stroke="#F59E0B" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="newspaper-mascot-label">Your Morning Paper</div>
+          <div class="newspaper-mascot-caption">Finished in 5 minutes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG Horizon Silhouette of Mountain Ridges -->
+  <svg class="portal-horizon" preserveAspectRatio="none" viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 120 C320 80 540 140 840 95 C1140 50 1320 110 1440 85 L1440 180 L0 180 Z" fill="#FAF9F6"/>
+    <path opacity="0.4" d="M0 135 C380 95 620 160 920 115 C1220 70 1360 130 1440 105 L1440 180 L0 180 Z" fill="#F1F5F9"/>
+  </svg>
+</section>
+
+<!-- ── WHY PEOPLE SUBSCRIBE TO ZOK ── -->
+<section id="why" class="section-calm">
+  <div class="section-header">
+    <span class="section-tag">A Different Way to Read News</span>
+    <h2 class="section-title">A feed never ends. A newspaper does.</h2>
+    <p class="section-desc">
+      Social apps make money when you doomscroll for hours. Zok does the opposite: it gives you the most verified stories you need today, and then lets you get on with your life.
+    </p>
+  </div>
+
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-icon-box pillar-icon-blue">☕</div>
+      <h3 class="pillar-heading">It Has an End</h3>
+      <p class="pillar-text">
+        Pick your morning reading time — 5, 10, or 20 minutes. Once you finish those stories, you're done for the day. No endless scrolling.
+      </p>
+    </div>
+
+    <div class="pillar-card">
+      <div class="pillar-icon-box pillar-icon-green">🛡</div>
+      <h3 class="pillar-heading">Transparent Verification</h3>
+      <p class="pillar-text">
+        Every story is scored 0–100 based on publisher trust, corroboration across independent newsrooms, and real evidence. Clickbait is removed.
+      </p>
+    </div>
+
+    <div class="pillar-card">
+      <div class="pillar-icon-box pillar-icon-purple">🧠</div>
+      <h3 class="pillar-heading">Learns Over Time</h3>
+      <p class="pillar-text">
+        Zok watches what you read, what you save, and which stories you spend time with. The more you use it, the smarter tomorrow's edition becomes.
+      </p>
+    </div>
+
+    <div class="pillar-card">
+      <div class="pillar-icon-box pillar-icon-amber">🧭</div>
+      <h3 class="pillar-heading">Outside Your Lane</h3>
+      <p class="pillar-text">
+        Algorithms love filter bubbles. Zok deliberately includes one highly-confirmed story every morning from a topic you usually ignore.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW WE CHECK EVERY STORY ── -->
+<section id="how-it-works" class="trust-strip">
+  <div class="trust-inner">
+    <div class="section-header" style="margin-bottom: 20px;">
+      <span class="section-tag">How We Check The News</span>
+      <h2 class="section-title">The 4-Pillar Credibility Standard</h2>
+      <p class="section-desc">
+        We never guess. Every headline is evaluated through an open, transparent credibility engine before it enters your paper.
+      </p>
+    </div>
+
+    <div class="trust-breakdown-grid">
+      <div class="trust-factor-card">
+        <div class="factor-pct">35%</div>
+        <div class="factor-name">Publisher Trust</div>
+        <p class="factor-summary">
+          We prioritize newsrooms with strict editorial standards and fact-checking records — such as Reuters, BBC, Dawn, Associated Press, and DW.
         </p>
-        <h1 class="font-editorial-heading text-5xl sm:text-6xl md:text-7xl font-bold text-ink-900 tracking-tight mb-6">
-            The morning paper,<br class="hidden sm:block">
-            finite by design.
-        </h1>
-        <p class="font-editorial-body text-xl sm:text-2xl text-ink-700 max-w-2xl mx-auto leading-relaxed mb-8">
-            Social media brings everything into an infinite feed. The news copied it. People scroll for forty minutes and still cannot name three things they learned.
+      </div>
+
+      <div class="trust-factor-card">
+        <div class="factor-pct">30%</div>
+        <div class="factor-name">Independent Sources</div>
+        <p class="factor-summary">
+          A major story is checked against multiple news organizations. If only one blog is claiming it, the score drops until corroborated.
         </p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-            <a href="#onboard" class="btn-pill-primary text-sm px-6 py-3">
-                Commission your paper
-            </a>
-            <a href="/edition/ayesha" class="btn-pill-secondary text-sm px-6 py-3">
-                Examine live broadside &rarr;
-            </a>
+      </div>
+
+      <div class="trust-factor-card">
+        <div class="factor-pct">20%</div>
+        <div class="factor-name">Real Evidence & Quotes</div>
+        <p class="factor-summary">
+          We scan for named officials, official statements, court documents, and statistical surveys, while heavily penalizing clickbait and rumors.
+        </p>
+      </div>
+
+      <div class="trust-factor-card">
+        <div class="factor-pct">15%</div>
+        <div class="factor-name">Freshness & Attribution</div>
+        <p class="factor-summary">
+          Stories must be under 48 hours old with a working canonical link, transparent bylines, and zero dead redirects.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4-STEP ONBOARDING SIGNUP ── -->
+<section id="join" class="signup-section">
+  <div class="signup-card-container">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h2 style="font-family: var(--font-serif); font-size: 1.8rem; color: #0F172A; margin-bottom: 6px;">
+        Get your personal morning paper
+      </h2>
+      <p style="font-size: 0.9rem; color: #64748B;">
+        Takes 30 seconds. Tailored to your career and interests.
+      </p>
+    </div>
+
+    {% if err %}
+      <div class="alert-error">{{ err }}</div>
+    {% endif %}
+
+    <!-- Step Progress Bubbles -->
+    <div class="step-indicator">
+      <div class="step-bubble active" id="bubble-1">1</div>
+      <div class="step-bubble" id="bubble-2">2</div>
+      <div class="step-bubble" id="bubble-3">3</div>
+      <div class="step-bubble" id="bubble-4">4</div>
+    </div>
+
+    <form id="signup-form" action="/signup" method="POST">
+      <!-- Step 1: Account -->
+      <div class="step-content active" id="step-1">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="name" class="form-input" placeholder="e.g. Sarah Khan" required>
         </div>
-    </header>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-input" placeholder="sarah@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Create Password</label>
+          <input type="password" name="password" class="form-input" placeholder="At least 6 characters" required>
+        </div>
+        <div class="wizard-nav">
+          <span></span>
+          <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next: About You →</button>
+        </div>
+      </div>
 
+      <!-- Step 2: About You / Bio -->
+      <div class="step-content" id="step-2">
+        <div class="form-group">
+          <label class="form-label">What is your profession or role?</label>
+          <input type="text" name="work" class="form-input" placeholder="e.g. AI Researcher, Financial Analyst, Doctor, Founder">
+          <p class="form-hint">Zok uses this to spot technical terms and relevant industry dispatches.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Brief bio / what do you care about?</label>
+          <textarea name="bio" class="form-textarea" rows="3" placeholder="e.g. I work on generative AI systems and follow semiconductor supply chains, energy policy, and regional economics."></textarea>
+          <p class="form-hint">The more specific you are, the sharper your morning paper will be.</p>
+        </div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-outline" onclick="prevStep(2)">← Back</button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next: Sources & Topics →</button>
+        </div>
+      </div>
 
-    <!-- ── 1. THE COMMISSION REGISTRY (COGNITIVE ONBOARDING) ──────────── -->
-    <section id="onboard" class="broadsheet-canvas max-w-2xl mx-auto p-8 sm:p-12 mb-20 scroll-mt-12">
-        <div class="border-b border-stone-200/80 pb-5 mb-8">
-            <span class="font-meta-label text-ink-400 block mb-1">Subscriber Calibration</span>
-            <h2 class="font-playfair text-2xl sm:text-3xl font-bold text-ink-900">
-                Calibrate Your Morning Edition
-            </h2>
-            <p class="font-editorial-body text-sm text-ink-600 mt-1">
-                Describe your focus in one sentence. Our vector engine synthesizes today's global and local wire into a custom edition.
-            </p>
+      <!-- Step 3: Preferred Sources & Topics -->
+      <div class="step-content" id="step-3">
+        <div class="form-group">
+          <label class="form-label">Preferred Newsrooms</label>
+          <p class="form-hint" style="margin-bottom: 8px;">Select outlets you trust most:</p>
+          <div class="chips-grid">
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="Reuters" checked>
+              <span>Reuters</span>
+            </label>
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="BBC" checked>
+              <span>BBC News</span>
+            </label>
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="Dawn" checked>
+              <span>Dawn</span>
+            </label>
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="Financial Times">
+              <span>Financial Times</span>
+            </label>
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="Al Jazeera">
+              <span>Al Jazeera</span>
+            </label>
+            <label class="chip-label">
+              <input type="checkbox" name="preferred_sources" value="TechCrunch">
+              <span>TechCrunch</span>
+            </label>
+          </div>
         </div>
 
-        <form action="/onboard" method="POST" class="space-y-6">
-            <!-- Name -->
-            <div>
-                <label for="name" class="block font-meta-label text-ink-700 mb-1.5">
-                    Subscriber Name
-                </label>
-                <input type="text" id="name" name="name" required placeholder="e.g., Tariq Mehmood"
-                       class="w-full bg-stone-50/50 border border-stone-200 px-4 py-3 rounded text-ink-900 font-editorial-body text-base focus:outline-none focus:border-ink-900 transition-colors">
-            </div>
-
-            <!-- Natural Context -->
-            <div>
-                <label for="context" class="block font-meta-label text-ink-700 mb-1.5">
-                    Professional Focus & Curiosity
-                </label>
-                <textarea id="context" name="context" rows="3" required placeholder="e.g., Software engineer in Islamabad building autonomous systems; tracking central bank digital currencies and cricket analytics."
-                          class="w-full bg-stone-50/50 border border-stone-200 px-4 py-3 rounded text-ink-900 font-editorial-body text-base focus:outline-none focus:border-ink-900 transition-colors resize-none"></textarea>
-                <p class="font-inter text-[11px] text-ink-400 mt-1.5">
-                    Parsed into a 200-dimensional interest vector via TF-IDF & Gemini Flash.
-                </p>
-            </div>
-
-            <!-- Reading Budget -->
-            <div>
-                <label class="block font-meta-label text-ink-700 mb-2">
-                    Reading Time Budget
-                </label>
-                <div class="grid grid-cols-3 gap-3">
-                    <label class="border border-stone-200 bg-stone-50/40 p-3.5 text-center rounded cursor-pointer hover:border-ink-900 transition-all flex flex-col items-center">
-                        <input type="radio" name="reading_budget" value="5" class="accent-ink-900 mb-1">
-                        <span class="font-inter text-xs font-semibold text-ink-900">5 Minutes</span>
-                        <span class="font-inter text-[10px] text-ink-400 mt-0.5">3 Concise Briefs</span>
-                    </label>
-                    <label class="border-2 border-ink-900 bg-white p-3.5 text-center rounded cursor-pointer transition-all flex flex-col items-center shadow-sm">
-                        <input type="radio" name="reading_budget" value="10" checked class="accent-ink-900 mb-1">
-                        <span class="font-inter text-xs font-semibold text-ink-900">10 Minutes</span>
-                        <span class="font-inter text-[10px] text-ink-600 mt-0.5">5 Balanced Stories</span>
-                    </label>
-                    <label class="border border-stone-200 bg-stone-50/40 p-3.5 text-center rounded cursor-pointer hover:border-ink-900 transition-all flex flex-col items-center">
-                        <input type="radio" name="reading_budget" value="20" class="accent-ink-900 mb-1">
-                        <span class="font-inter text-xs font-semibold text-ink-900">20 Minutes</span>
-                        <span class="font-inter text-[10px] text-ink-400 mt-0.5">8 In-Depth Dispatches</span>
-                    </label>
-                </div>
-            </div>
-
-            <button type="submit" class="w-full btn-pill-primary py-3.5 text-sm mt-4 font-medium tracking-wide">
-                Synthesize Morning Edition &rarr;
-            </button>
-        </form>
-    </section>
-
-
-    <!-- ── 2. PRE-SEEDED PERSONAS (JUDGES DIRECT ACCESS) ─────────────── -->
-    <section class="max-w-4xl mx-auto mb-20">
-        <div class="text-center mb-10">
-            <span class="font-meta-label text-ink-400 tracking-[0.2em]">Live Demonstrations</span>
-            <h3 class="font-editorial-heading text-3xl font-bold text-ink-900 mt-1">
-                Calibrated Seed Profiles
-            </h3>
-            <p class="font-editorial-body text-base text-ink-600 mt-1">
-                Notice how the same news wire generates completely distinct lead stories, hierarchies, and crossword entities.
-            </p>
+        <div class="form-group" style="margin-top: 24px;">
+          <label class="form-label">Core Topics</label>
+          <div class="chips-grid">
+            {% for key, label in topics.items() %}
+              <label class="chip-label">
+                <input type="checkbox" name="topics" value="{{ key }}" {% if key in ['world', 'technology', 'business'] %}checked{% endif %}>
+                <span>{{ label }}</span>
+              </label>
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Persona 1 -->
-            <a href="/edition/ayesha" class="broadsheet-canvas p-7 block group hover:-translate-y-1 transition-all">
-                <span class="font-meta-label text-ink-400 block mb-2">01 / Artificial Intelligence</span>
-                <h4 class="font-playfair text-xl font-bold text-ink-900 group-hover:text-terracotta transition-colors mb-1">
-                    Dr. Ayesha Malik
-                </h4>
-                <p class="font-inter text-xs text-ink-600 mb-3">AI Researcher, NUST Islamabad</p>
-                <p class="font-editorial-body text-sm text-ink-700 leading-relaxed mb-6">
-                    Sovereign compute grids, neuromorphic processors, open-weights benchmarks, and cricket biomechanics.
-                </p>
-                <span class="font-inter text-xs font-semibold text-ink-900 group-hover:underline inline-flex items-center gap-1">
-                    Examine Edition &rarr;
-                </span>
-            </a>
-
-            <!-- Persona 2 -->
-            <a href="/edition/hamza" class="broadsheet-canvas p-7 block group hover:-translate-y-1 transition-all">
-                <span class="font-meta-label text-ink-400 block mb-2">02 / Sovereign Finance</span>
-                <h4 class="font-playfair text-xl font-bold text-ink-900 group-hover:text-terracotta transition-colors mb-1">
-                    Hamza Khan
-                </h4>
-                <p class="font-inter text-xs text-ink-600 mb-3">Fintech Founder, Karachi</p>
-                <p class="font-editorial-body text-sm text-ink-700 leading-relaxed mb-6">
-                    Raast international rails, central bank reserve diversification, and venture capital reallocation into physical tech.
-                </p>
-                <span class="font-inter text-xs font-semibold text-ink-900 group-hover:underline inline-flex items-center gap-1">
-                    Examine Edition &rarr;
-                </span>
-            </a>
-
-            <!-- Persona 3 -->
-            <a href="/edition/zara" class="broadsheet-canvas p-7 block group hover:-translate-y-1 transition-all">
-                <span class="font-meta-label text-ink-400 block mb-2">03 / Environmental Policy</span>
-                <h4 class="font-playfair text-xl font-bold text-ink-900 group-hover:text-terracotta transition-colors mb-1">
-                    Zara Ahmed
-                </h4>
-                <p class="font-inter text-xs text-ink-600 mb-3">Climate Journalist, Lahore</p>
-                <p class="font-editorial-body text-sm text-ink-700 leading-relaxed mb-6">
-                    Karakoram glacial moraine telemetry, solid-state sodium battery grids, and algorithmic serendipity ethics.
-                </p>
-                <span class="font-inter text-xs font-semibold text-ink-900 group-hover:underline inline-flex items-center gap-1">
-                    Examine Edition &rarr;
-                </span>
-            </a>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-outline" onclick="prevStep(3)">← Back</button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next: Reading Time →</button>
         </div>
-    </section>
+      </div>
 
+      <!-- Step 4: Reading Length -->
+      <div class="step-content" id="step-4">
+        <div class="form-group">
+          <label class="form-label">How long do you want to read each morning?</label>
+          <p class="form-hint">Zok limits the number of stories so your paper always finishes on time.</p>
+          
+          <div class="time-options-grid">
+            <label class="time-card-radio">
+              <input type="radio" name="minutes" value="5" checked>
+              <div class="time-num">5 min</div>
+              <div class="time-desc">~8 verified stories · Quick morning scan</div>
+            </label>
+            <label class="time-card-radio">
+              <input type="radio" name="minutes" value="10">
+              <div class="time-num">10 min</div>
+              <div class="time-desc">~15 stories · Balanced overview</div>
+            </label>
+            <label class="time-card-radio">
+              <input type="radio" name="minutes" value="20">
+              <div class="time-num">20 min</div>
+              <div class="time-desc">Full 20-story broadsheet · Deep dive</div>
+            </label>
+          </div>
+        </div>
 
-    <!-- Minimal Footer -->
-    <footer class="text-center py-8 border-t border-stone-200/60 font-inter text-xs text-ink-400">
-        <p>ZOK &nbsp;·&nbsp; ذوق &nbsp;·&nbsp; FAST-NUCES Silver Jubilee Hackathon &nbsp;·&nbsp; 2026</p>
-    </footer>
+        <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; padding: 14px; margin-top: 20px; font-size: 0.85rem; color: #065F46;">
+          🌿 <strong>Zero spam guarantee:</strong> Your edition is generated once a day at dawn. No mid-day notification spam.
+        </div>
 
-</div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-outline" onclick="prevStep(4)">← Back</button>
+          <button type="submit" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
+            Create My Morning Paper →
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function nextStep(current) {
+    if (current === 1) {
+      const name = document.querySelector('input[name="name"]').value.trim();
+      const email = document.querySelector('input[name="email"]').value.trim();
+      const pw = document.querySelector('input[name="password"]').value;
+      if (!name || !email || !pw) {
+        showToast('Please fill in your name, email, and password.');
+        return;
+      }
+    }
+    document.getElementById(`step-${current}`).classList.remove('active');
+    document.getElementById(`bubble-${current}`).classList.remove('active');
+    
+    document.getElementById(`step-${current + 1}`).classList.add('active');
+    document.getElementById(`bubble-${current + 1}`).classList.add('active');
+  }
+
+  function prevStep(current) {
+    document.getElementById(`step-${current}`).classList.remove('active');
+    document.getElementById(`bubble-${current}`).classList.remove('active');
+    
+    document.getElementById(`step-${current - 1}`).classList.add('active');
+    document.getElementById(`bubble-${current - 1}`).classList.add('active');
+  }
+</script>
 {% endblock %}

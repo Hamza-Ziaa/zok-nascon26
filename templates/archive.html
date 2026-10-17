@@ -1,67 +1,167 @@
 {% extends "base.html" %}
 
-{% block title %}Zok — Edition Archive{% endblock %}
+{% block title %}Past Editions — ZOK{% endblock %}
+
+{% block nav_links %}
+  <a href="/paper">Today's Paper</a>
+  <a href="/archive" class="active">Past Papers</a>
+  <a href="/me">About You</a>
+  <a href="/paper.pdf" target="_blank">PDF Broadsheet</a>
+  <a href="/logout">Log out</a>
+{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+<style>
+  .archive-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 30px 1.5rem 80px;
+  }
 
-    <!-- Back Navigation -->
-    <div class="mb-8">
-        <a href="/edition/{{ user.id }}" class="font-meta-label text-ink-500 hover:text-ink-900 transition-colors inline-flex items-center gap-1.5">
-            &larr; Return to Today's Morning Broadside
-        </a>
+  .archive-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 20px auto 40px;
+  }
+  .archive-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4F46E5;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .archive-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    color: #0F172A;
+    margin-bottom: 10px;
+  }
+  .archive-sub {
+    font-size: 0.95rem;
+    color: #64748B;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  .edition-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #0F172A;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .edition-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+    border-color: #CBD5E1;
+  }
+  .edition-card.is-latest {
+    border-color: #A5B4FC;
+    background: #FAF5FF;
+  }
+  .edition-card.is-latest::after {
+    content: "LATEST";
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: #4F46E5;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .card-mast-header {
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .card-mast-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+  }
+  .card-date {
+    font-size: 0.78rem;
+    color: #64748B;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .card-headline {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #1E293B;
+    margin-bottom: 18px;
+  }
+
+  .card-footer-row {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #64748B;
+    border-top: 1px dashed #E2E8F0;
+    padding-top: 12px;
+  }
+  .card-open-link {
+    font-weight: 600;
+    color: #4F46E5;
+  }
+</style>
+
+<div class="archive-container">
+  <div class="archive-header animate-fade-in">
+    <span class="archive-eyebrow">Your Reading History</span>
+    <h1 class="archive-title">Past Editions</h1>
+    <p class="archive-sub">
+      Every completed morning paper is preserved here. Revisit stories or track your focus across time.
+    </p>
+  </div>
+
+  <div class="gallery-grid">
+    {% for d, pretty_date, headline, story_count in rows %}
+    <a href="/paper/{{ d }}" class="edition-card {% if loop.first %}is-latest{% endif %} animate-fade-up">
+      <div class="card-mast-header">
+        <div class="card-mast-title">ZOK</div>
+        <div class="card-date">{{ pretty_date }}</div>
+      </div>
+      <h3 class="card-headline">{{ headline }}</h3>
+      <div class="card-footer-row">
+        <span>{{ story_count }} stories</span>
+        <span class="card-open-link">Open paper →</span>
+      </div>
+    </a>
+    {% else %}
+    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #FFFFFF; border-radius: 20px; border: 1px dashed #CBD5E1;">
+      <p style="font-family: var(--font-serif); font-size: 1.4rem; color: #0F172A; margin-bottom: 8px;">
+        No past editions preserved yet.
+      </p>
+      <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 20px;">
+        Your daily morning papers will be saved here automatically each dawn.
+      </p>
+      <a href="/paper" class="btn btn-primary">Read Today's Paper →</a>
     </div>
-
-    <!-- Archive Canvas -->
-    <section class="broadsheet-canvas p-8 sm:p-12 border border-stone-200/80 shadow-xl" aria-label="Historical edition vault">
-        <header class="pb-6 border-b border-stone-200 mb-8">
-            <span class="font-meta-label text-ink-400 block mb-1">Permanent Record</span>
-            <h1 class="font-editorial-heading text-3xl sm:text-4xl font-bold text-ink-900">
-                Historical Edition Archive
-            </h1>
-            <p class="font-editorial-body text-base text-ink-600 mt-1">
-                Every customized morning edition preserved in full editorial fidelity for {{ user.name }}.
-            </p>
-        </header>
-
-        {% if editions %}
-        <div class="space-y-4">
-            {% for ed in editions %}
-            <a href="/edition/{{ user.id }}/{{ ed.id }}"
-               class="p-6 border border-stone-200 hover:border-ink-900 transition-all rounded bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                
-                <div class="flex items-baseline gap-4">
-                    <span class="font-inter font-semibold text-lg text-ink-400 w-12 shrink-0">{{ ed.month }} {{ ed.day }}</span>
-                    <div>
-                        <h3 class="font-editorial-heading text-xl font-bold text-ink-900 group-hover:text-terracotta transition-colors">
-                            {{ ed.title }}
-                        </h3>
-                        <div class="flex flex-wrap items-center gap-3 mt-1 font-inter text-xs text-ink-500">
-                            <span>{{ ed.article_count }} Curated Dispatches</span>
-                            <span>&bull;</span>
-                            <span>{{ ed.reading_budget }}m Budget</span>
-                            {% if ed.recall_score %}
-                            <span>&bull;</span>
-                            <span class="text-ink-700 font-medium">{{ ed.recall_score }}% Knowledge Retention</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="shrink-0 text-right">
-                    <span class="btn-pill-secondary text-xs px-3.5 py-1">
-                        Read Issue &rarr;
-                    </span>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-        {% else %}
-        <p class="font-editorial-body italic text-ink-400 py-12 text-center">
-            No historical editions archived yet.
-        </p>
-        {% endif %}
-    </section>
-
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

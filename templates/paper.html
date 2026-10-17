@@ -1,0 +1,814 @@
+{% extends "base.html" %}
+
+{% block title %}Today's Paper — ZOK{% endblock %}
+
+{% block nav_links %}
+  <a href="/paper" class="active">Today's Paper</a>
+  <a href="/archive">Past Papers</a>
+  <a href="/me">About You</a>
+  <a href="/paper.pdf" target="_blank">Download PDF</a>
+  <a href="/logout">Log out</a>
+{% endblock %}
+
+{% block content %}
+<style>
+  /* ── Paper Reading Experience ── */
+  .paper-wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 30px 1.5rem 80px;
+  }
+
+  /* Editorial Masthead */
+  .paper-masthead {
+    border-top: 2px solid #1E293B;
+    border-bottom: 2px solid #1E293B;
+    padding: 20px 0 16px;
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+  }
+  .masthead-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748B;
+  }
+  .masthead-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3.2rem, 7vw, 5.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #0F172A;
+    line-height: 1;
+    margin: 8px 0 6px;
+  }
+  .masthead-tagline {
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  /* Morning Greeting Bar */
+  .greeting-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .greeting-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: #0F172A;
+  }
+  .greeting-subtitle {
+    font-size: 0.92rem;
+    color: #64748B;
+    margin-top: 4px;
+  }
+  .paper-quick-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* Morning Editor Note */
+  .editor-note-card {
+    margin-top: 24px;
+    background: #FFFBEB;
+    border-left: 4px solid #F59E0B;
+    border-radius: 0 14px 14px 0;
+    padding: 16px 22px;
+    font-size: 0.95rem;
+    color: #78350F;
+    line-height: 1.6;
+    font-style: italic;
+    font-family: var(--font-serif);
+  }
+
+  /* Three Things Today Card */
+  .three-things-card {
+    margin-top: 32px;
+    background: #1E1B4B;
+    color: #FFFFFF;
+    border-radius: 20px;
+    padding: 32px 36px;
+    box-shadow: 0 12px 30px rgba(30, 27, 75, 0.25);
+  }
+  .three-things-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #FDE047;
+    margin-bottom: 20px;
+  }
+  .three-things-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .three-things-grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+  .three-thing-col {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+    padding-left: 18px;
+  }
+  .three-thing-col:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+  .three-thing-num {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #FDE047;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .three-thing-text {
+    font-size: 0.9rem;
+    color: #E2E8F0;
+    line-height: 1.55;
+  }
+
+  /* Story Cards Grid */
+  .stories-section {
+    margin-top: 40px;
+  }
+  .section-label-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 10px;
+  }
+  .section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #475569;
+  }
+
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 768px) {
+    .stories-grid { grid-template-columns: 1fr; }
+  }
+
+  .story-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 18px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .story-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: #CBD5E1;
+  }
+  .story-card.lead-story {
+    grid-column: 1 / -1;
+    background: #FAF9F6;
+    border: 1.5px solid #CBD5E1;
+    padding: 34px 36px;
+  }
+  .story-card.lead-story .story-headline {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1.25;
+  }
+  .story-card.lead-story .story-summary {
+    font-size: 1.05rem;
+  }
+
+  /* Metadata header */
+  .story-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .story-source-tag {
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4F46E5;
+    background: #EEF2FF;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .story-trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .trust-high {
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+  }
+  .trust-medium {
+    background: #FFFBEB;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+  }
+
+  .thread-tag {
+    background: #FEF3C7;
+    color: #B45309;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .story-headline {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.32;
+    margin-bottom: 10px;
+  }
+  .story-headline a {
+    color: inherit;
+  }
+  .story-headline a:hover {
+    color: #4F46E5;
+  }
+
+  .story-summary {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* Expandable Full Article Drawer */
+  .story-expand-box {
+    display: none;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    font-size: 0.92rem;
+    color: #334155;
+    line-height: 1.65;
+    animation: fadeIn 0.25s ease;
+  }
+  .story-expand-box.open {
+    display: block;
+  }
+
+  /* Simple Credibility Dropdown */
+  .cred-simple-details {
+    margin-bottom: 16px;
+    background: #FAF9F6;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+  }
+  .cred-simple-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cred-simple-body {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #E2E8F0;
+    display: grid;
+    gap: 6px;
+    color: #64748B;
+  }
+  .cred-bar-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .cred-bar-row strong {
+    color: #0F172A;
+  }
+
+  .story-why-blurb {
+    font-size: 0.82rem;
+    color: #059669;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  /* Story Action Buttons */
+  .story-actions-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+  }
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-action:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    color: #0F172A;
+  }
+  .btn-action.active-saved {
+    background: #ECFDF5;
+    border-color: #A7F3D0;
+    color: #065F46;
+  }
+  .btn-action.active-more {
+    background: #FEF3C7;
+    border-color: #FDE68A;
+    color: #92400E;
+  }
+  .btn-skip-ghost {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #94A3B8;
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 6px 8px;
+  }
+  .btn-skip-ghost:hover {
+    color: #EF4444;
+  }
+
+  /* Outside Your Lane Section */
+  .outside-lane-box {
+    margin-top: 48px;
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+    color: #FFFFFF;
+    border-radius: 24px;
+    padding: 36px 40px;
+    box-shadow: 0 16px 36px rgba(30, 27, 75, 0.2);
+  }
+  @media (max-width: 640px) {
+    .outside-lane-box { padding: 24px 20px; }
+  }
+  .lane-badge {
+    display: inline-block;
+    background: #FDE047;
+    color: #1E1B4B;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .lane-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    color: #FFFFFF;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .lane-desc {
+    font-size: 0.95rem;
+    color: #E2E8F0;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* Active Recall Quiz Section */
+  .quiz-container {
+    margin-top: 48px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .quiz-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #0F172A;
+    margin-bottom: 6px;
+  }
+  .quiz-subtitle {
+    font-size: 0.88rem;
+    color: #64748B;
+    margin-bottom: 24px;
+  }
+  .quiz-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .quiz-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .quiz-q-text {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1E293B;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .quiz-btn-opt {
+    width: 100%;
+    text-align: left;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.84rem;
+    color: #334155;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .quiz-btn-opt:hover {
+    background: #EEF2FF;
+    border-color: #6366F1;
+  }
+
+  /* Finish Ritual */
+  .finish-box {
+    margin-top: 50px;
+    text-align: center;
+    background: #FAF9F6;
+    border: 2px dashed #CBD5E1;
+    border-radius: 24px;
+    padding: 48px 24px;
+  }
+  .finish-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    color: #0F172A;
+    margin-bottom: 8px;
+  }
+  .finish-desc {
+    font-size: 0.95rem;
+    color: #64748B;
+    max-width: 480px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+</style>
+
+<div class="paper-wrapper">
+  <!-- Masthead -->
+  <header class="paper-masthead">
+    <div class="masthead-meta-row">
+      <span>Issue #{{ ed.issue_num|default('001') }}</span>
+      <span>{{ date }}</span>
+      <span>Made for {{ u.name }}</span>
+    </div>
+    <h1 class="masthead-title">ZOK</h1>
+    <div class="masthead-tagline">Your Personal Verified Morning Paper</div>
+  </header>
+
+  <!-- Greeting Bar -->
+  <div class="greeting-bar">
+    <div>
+      <h2 class="greeting-title">Good morning, {{ u.name }}.</h2>
+      <div class="greeting-subtitle">
+        Here is your {{ mins }}-minute edition · {{ stories|length }} verified stories selected for your focus.
+      </div>
+    </div>
+    <div class="paper-quick-actions">
+      <a href="/paper.pdf" target="_blank" class="btn btn-outline btn-sm">
+        ⎙ Printable Broadsheet (PDF)
+      </a>
+      <a href="/archive" class="btn btn-ghost btn-sm">Past Editions</a>
+    </div>
+  </div>
+
+  <!-- Editor Note / Reflection -->
+  {% if ed.note %}
+  <div class="editor-note-card">
+    “{{ ed.note }}”
+  </div>
+  {% endif %}
+
+  <!-- Three Things Today Box -->
+  {% if ed.three %}
+  <section class="three-things-card">
+    <div class="three-things-heading">
+      <span>✦ Three Things to Know This Morning</span>
+    </div>
+    <div class="three-things-grid">
+      {% for point in ed.three %}
+      <div class="three-thing-col">
+        <div class="three-thing-num">0{{ loop.index }}</div>
+        <p class="three-thing-text">{{ point }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Stories Section -->
+  <section class="stories-section">
+    <div class="section-label-bar">
+      <span class="section-label">Verified Morning Dispatches</span>
+      <span style="font-size: 0.8rem; color: #64748B;">
+        {{ stories|length }} of {{ ed.stories|length }} stories shown
+      </span>
+    </div>
+
+    <div class="stories-grid">
+      {% for s in stories %}
+      <article class="story-card {% if loop.first %}lead-story{% endif %}" id="card-{{ s.id }}">
+        <div class="story-top-row">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="story-source-tag">{{ s.source }} · {{ s.topic }}</span>
+            {% if s.is_thread %}
+              <span class="thread-tag">★ Continuing Story</span>
+            {% endif %}
+          </div>
+          <span class="story-trust-pill {% if s.cred_score >= 80 %}trust-high{% else %}trust-medium{% endif %}">
+            ● Verified {{ s.cred_score }}/100
+          </span>
+        </div>
+
+        <h3 class="story-headline">
+          <a href="{{ s.url }}" target="_blank" rel="noopener" onclick="trackAction('{{ s.id }}', 'open')">
+            {{ s.title }}
+          </a>
+        </h3>
+
+        <p class="story-summary">{{ s.plain }}</p>
+
+        <!-- Expandable Full Article Reader -->
+        <div class="story-expand-box" id="expand-{{ s.id }}">
+          {% if s.text %}
+            <p style="margin-bottom: 12px;">{{ s.text }}</p>
+          {% else %}
+            <p style="margin-bottom: 12px; font-style: italic; color: #64748B;">Full primary text available at source outlet.</p>
+          {% endif %}
+          <a href="{{ s.url }}" target="_blank" rel="noopener" class="btn btn-outline btn-sm" onclick="trackAction('{{ s.id }}', 'open')">
+            Read full dispatch at {{ s.source }} ↗
+          </a>
+        </div>
+
+        <!-- How We Checked This (Simple, Friendly Language) -->
+        <details class="cred-simple-details">
+          <summary>
+            <span>How we checked this ({{ s.cred_score }}/100)</span>
+            <span style="font-size: 0.72rem; color: #4F46E5;">Details ▾</span>
+          </summary>
+          <div class="cred-simple-body">
+            <div class="cred-bar-row">
+              <span>Publisher trust:</span>
+              <strong>{{ s.breakdown.pub_score|default(90) }}/100 ({{ s.source }})</strong>
+            </div>
+            <div class="cred-bar-row">
+              <span>Other outlets reporting this:</span>
+              <strong>{{ s.breakdown.peer_count|default(1) }} independent newsrooms</strong>
+            </div>
+            <div class="cred-bar-row">
+              <span>Evidence & quotes:</span>
+              <strong>{{ s.breakdown.evidence_count|default(2) }} data points / official statements</strong>
+            </div>
+            <div class="cred-bar-row">
+              <span>Freshness:</span>
+              <strong>Reported {{ s.breakdown.age_hrs|default(3) }} hours ago</strong>
+            </div>
+            {% if s.breakdown.peers %}
+              <div style="font-size: 0.75rem; color: #059669; margin-top: 4px;">
+                Confirmed by: {{ s.breakdown.peers|join(', ') }}
+              </div>
+            {% endif %}
+          </div>
+        </details>
+
+        <div class="story-why-blurb">
+          ✓ {{ s.why }}
+        </div>
+
+        <!-- Action Footer -->
+        <div class="story-actions-footer">
+          <button type="button" class="btn-action" onclick="toggleExpand('{{ s.id }}', this)">
+            <span>Read more ▾</span>
+          </button>
+          <button type="button" class="btn-action" onclick="markSave('{{ s.id }}', this)">
+            <span>♡ Save</span>
+          </button>
+          <button type="button" class="btn-action" onclick="markMore('{{ s.id }}', this)">
+            <span>★ More like this</span>
+          </button>
+          <a href="{{ s.url }}" target="_blank" rel="noopener" class="btn-action" onclick="trackAction('{{ s.id }}', 'open')">
+            <span>↗ Source</span>
+          </a>
+          <button type="button" class="btn-skip-ghost" onclick="skipStory('{{ s.id }}')">
+            ✕ Skip
+          </button>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Outside Your Lane Box -->
+  {% if ed.lane %}
+  <section class="outside-lane-box">
+    <span class="lane-badge">Outside Your Lane</span>
+    <h3 class="lane-title">{{ ed.lane.title }}</h3>
+    <p class="lane-desc">{{ ed.lane.plain }}</p>
+    <div style="font-size: 0.85rem; color: #C7D2FE; margin-bottom: 16px;">
+      {{ ed.lane.why }}
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="{{ ed.lane.url }}" target="_blank" rel="noopener" class="btn btn-portal-white btn-sm" onclick="trackAction('{{ ed.lane.id }}', 'open')">
+        Explore Story at {{ ed.lane.source }} ↗
+      </a>
+      <button type="button" class="btn btn-portal-ghost btn-sm" onclick="markSave('{{ ed.lane.id }}', this)">
+        Save for Later
+      </button>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Active Recall Quiz ("Did It Stick?") -->
+  {% if ed.quiz %}
+  <section class="quiz-container">
+    <h3 class="quiz-title">Did it stick?</h3>
+    <p class="quiz-subtitle">
+      A quick 10-second check on today's dispatches. Testing your recall helps news stick.
+    </p>
+
+    <div class="quiz-cards-grid">
+      {% for q in ed.quiz %}
+      <div class="quiz-card">
+        <p class="quiz-q-text">{{ q.q }}</p>
+        <div style="margin-top: auto;">
+          {% for opt in q.opts %}
+          <button type="button" class="quiz-btn-opt" onclick="answerQuiz(this, '{{ q.aid }}', {{ 'true' if opt == q.ans else 'false' }})">
+            {{ opt }}
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Finish Ritual -->
+  <section class="finish-box">
+    {% if more %}
+      <h3 class="finish-title">That wraps your {{ mins }}-minute paper.</h3>
+      <p class="finish-desc">
+        You've completed your daily news briefing. If you have extra time with your coffee, you can read five more stories.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="?mins={{ mins + 5 }}" class="btn btn-primary">Extend by 5 minutes</a>
+        <a href="/paper.pdf" target="_blank" class="btn btn-outline">Download PDF</a>
+      </div>
+    {% else %}
+      <h3 class="finish-title">You're completely caught up.</h3>
+      <p class="finish-desc">
+        No endless algorithms. No doomscrolling. That is the world today in verified clarity. Go have a productive day!
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="/me" class="btn btn-outline">View Your Reading Profile</a>
+        <a href="/paper.pdf" target="_blank" class="btn btn-primary">Download PDF Broadsheet</a>
+      </div>
+      <div style="margin-top: 16px; font-size: 0.8rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">
+        Next edition compiles tomorrow at dawn
+      </div>
+    {% endif %}
+  </section>
+</div>
+
+<script>
+  // Event tracking API
+  function trackAction(aid, action) {
+    fetch('/api/event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ aid, action }),
+      keepalive: true
+    });
+  }
+
+  // Dwell-time tracking (>15 seconds read time signals positive interest)
+  const dwellTimers = {};
+  function startDwell(aid) {
+    if (!dwellTimers[aid]) {
+      dwellTimers[aid] = setTimeout(() => {
+        fetch('/api/dwell', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ aid, seconds: 15 }),
+          keepalive: true
+        });
+      }, 15000);
+    }
+  }
+
+  function toggleExpand(aid, btn) {
+    const box = document.getElementById('expand-' + aid);
+    const isOpen = box.classList.toggle('open');
+    btn.innerHTML = isOpen ? '<span>Close ▴</span>' : '<span>Read more ▾</span>';
+    if (isOpen) {
+      trackAction(aid, 'read');
+      startDwell(aid);
+    }
+  }
+
+  function markSave(aid, btn) {
+    trackAction(aid, 'save');
+    btn.classList.add('active-saved');
+    btn.innerHTML = '<span>Saved ✓</span>';
+    btn.disabled = true;
+    showToast('Story saved to your profile.');
+  }
+
+  function markMore(aid, btn) {
+    trackAction(aid, 'more');
+    btn.classList.add('active-more');
+    btn.innerHTML = '<span>Following Topic ★</span>';
+    btn.disabled = true;
+    showToast('Zok will follow up on this developing topic tomorrow.');
+  }
+
+  function skipStory(aid) {
+    const card = document.getElementById('card-' + aid);
+    card.style.transition = 'all 0.25s ease';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.96) translateY(-8px)';
+    setTimeout(() => card.remove(), 260);
+    trackAction(aid, 'skip');
+    showToast('Story skipped. Fading from your morning mix.');
+  }
+
+  function answerQuiz(btn, aid, isCorrect) {
+    const card = btn.closest('.quiz-card');
+    card.querySelectorAll('button').forEach(b => b.disabled = true);
+    if (isCorrect) {
+      btn.style.background = '#ECFDF5';
+      btn.style.borderColor = '#10B981';
+      btn.style.color = '#065F46';
+      btn.innerHTML += ' ✓ Correct';
+      trackAction(aid, 'recall');
+      showToast('Correct! Active recall reinforced.');
+    } else {
+      btn.style.background = '#FEF2F2';
+      btn.style.borderColor = '#EF4444';
+      btn.style.color = '#991B1B';
+      btn.innerHTML += ' ✕';
+      trackAction(aid, 'miss');
+    }
+  }
+</script>
+{% endblock %}

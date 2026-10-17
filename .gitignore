@@ -1,31 +1,9 @@
-# Environment
 .env
-*.env.local
-
-# Python
+zok.db*
 __pycache__/
-*.py[cod]
-*.egg-info/
-dist/
-build/
-*.egg
-
-# Database
-*.db
-*.sqlite3
-
-# IDE
+*.pyc
+venv/
+.venv/
 .vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Vercel
-.vercel/
-
-# Generated PDFs
-generated_pdfs/
+*.pdf
+node_modules/
