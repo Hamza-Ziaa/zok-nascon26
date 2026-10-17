@@ -331,11 +331,11 @@
     /* Close mobile nav on link click */
     document.querySelectorAll('.zok-pills a').forEach(a => {
       a.addEventListener('click', () => {
-        document.querySelector('.zok-pills')?.classList.remove('open');
+      document.querySelector('.zok-pills')?.classList.remove('open');
       });
     });
-
-    {% block extra_js %}{% endblock %}
   </script>
+
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

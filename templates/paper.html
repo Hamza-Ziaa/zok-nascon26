@@ -341,6 +341,7 @@
     margin-top: auto;
     padding-top: 14px;
     border-top: 1px solid #F1F5F9;
+    
   }
   .btn-action {
     display: inline-flex;
@@ -640,6 +641,9 @@
           <button type="button" class="btn-action" onclick="toggleExpand('{{ s.id }}', this)">
             <span>Read more ▾</span>
           </button>
+          <button type="button" class="btn-action" onclick="zlOne('{{ s.id }}')">
+            <span>🔊 Listen</span>
+          </button>
           <button type="button" class="btn-action" onclick="markSave('{{ s.id }}', this)">
             <span>♡ Save</span>
           </button>
@@ -810,5 +814,41 @@
       trackAction(aid, 'miss');
     }
   }
+</script>
+<style>
+.zl-bar{position:fixed;z-index:999;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;
+ background:#17151C;color:#fff;padding:10px 16px;border-radius:999px;box-shadow:0 14px 40px -12px rgba(0,0,0,.6);font-size:14px;max-width:92vw}
+.zl-bar button,.zl-bar select{background:#ffffff1f;color:#fff;border:0;border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit}
+.zl-bar button:hover{background:#ffffff38}.zl-now{max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.8}
+.zl-active{outline:3px solid #7A84F4;outline-offset:4px;border-radius:20px;transition:.3s}
+</style>
+<div class="zl-bar" id="zl-bar">
+ <button onclick="zlAll()" id="zl-main">🔊 Listen to my paper</button>
+ <button onclick="zlPause()" id="zl-pp" hidden>⏸</button><button onclick="zlStop()" id="zl-stop" hidden>⏹</button>
+ <select id="zl-rate" onchange="zlRate=+this.value" title="Speed"><option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select>
+ <span class="zl-now" id="zl-now"></span>
+</div>
+<script>
+let zlRate=1,zlQ=[],zlI=0,zlRun=false;
+const zlS=window.speechSynthesis;
+if(!zlS)document.getElementById('zl-bar').style.display='none';
+function zlItem(card){const h=card.querySelector('.story-headline'),s=card.querySelector('.story-summary');
+ return{card,id:card.id.replace('card-',''),t:(h?h.innerText.trim():'')+'. '+(s?s.innerText.trim():'')}}
+function zlStart(items){zlStop();zlQ=items;zlI=0;zlRun=true;
+ document.getElementById('zl-main').hidden=true;['zl-pp','zl-stop'].forEach(i=>document.getElementById(i).hidden=false);zlNext()}
+function zlAll(){zlStart([...document.querySelectorAll('.story-card')].map(zlItem))}
+function zlOne(id){const c=document.getElementById('card-'+id);if(c)zlStart([zlItem(c)])}
+function zlNext(){
+ document.querySelectorAll('.zl-active').forEach(e=>e.classList.remove('zl-active'));
+ if(!zlRun||zlI>=zlQ.length){zlStop();return}
+ const it=zlQ[zlI];it.card.classList.add('zl-active');it.card.scrollIntoView({behavior:'smooth',block:'center'});
+ document.getElementById('zl-now').textContent=it.t.split('.')[0];
+ const u=new SpeechSynthesisUtterance(it.t);u.rate=zlRate;u.lang='en-US';
+ u.onend=()=>{if(zlRun){if(window.trackAction)trackAction(it.id,'read');zlI++;zlNext()}};
+ zlS.speak(u)}
+function zlPause(){const b=document.getElementById('zl-pp');if(zlS.paused){zlS.resume();b.textContent='⏸'}else{zlS.pause();b.textContent='▶'}}
+function zlStop(){zlRun=false;zlS.cancel();document.querySelectorAll('.zl-active').forEach(e=>e.classList.remove('zl-active'));
+ document.getElementById('zl-main').hidden=false;['zl-pp','zl-stop'].forEach(i=>document.getElementById(i).hidden=true);document.getElementById('zl-now').textContent=''}
+window.addEventListener('beforeunload',()=>zlS&&zlS.cancel());
 </script>
 {% endblock %}

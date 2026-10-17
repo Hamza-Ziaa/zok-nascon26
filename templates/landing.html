@@ -656,81 +656,62 @@
 </style>
 
 <!-- ── HERO SECTION (Portal-Style Dawn Gradient & Hills) ── -->
-<section class="portal-hero">
-  <div class="twilight-stars"></div>
-
-  <div class="hero-eyebrow animate-fade-in">
-    <span class="dot"></span>
-    NaSCon '26 AI Hackathon · FAST-NUCES Silver Jubilee
-  </div>
-
-  <h1 class="hero-title animate-fade-up">
-    Your calm morning paper.<br>
-    <em>From noise to clarity.</em>
-  </h1>
-
-  <p class="hero-subtitle animate-fade-up delay-1">
-    No infinite doomscrolling. Zok gathers verified dispatches from the world's most trusted newsrooms, removes clickbait, and gives you one finished paper every morning.
-  </p>
-
-  <div class="hero-cta-group animate-fade-up delay-2">
-    <a href="#join" class="btn btn-portal-white">Read Today's Paper</a>
-    <a href="#why" class="btn btn-portal-ghost">See How It Works</a>
-  </div>
-
-  <!-- Floating App Mockup (With Morning Newspaper Art instead of robot) -->
-  <div class="portal-preview-frame animate-fade-up delay-3">
-    <div class="preview-inner-canvas">
-      <div class="preview-topbar">
-        <div class="preview-badge-pill">
-          ● Verified Morning Edition · Issue #001
-        </div>
-        <div class="preview-meta">
-          5-minute read · Verified by 4 Independent Outlets
-        </div>
-      </div>
-
-      <div class="preview-body-grid">
-        <div class="preview-article-card">
-          <span class="preview-topic-tag">Technology & Science</span>
-          <h2 class="preview-article-title">
-            Global Chip Standard Finalized for Next-Generation Computing
-          </h2>
-          <p class="preview-article-summary">
-            Leading semiconductor laboratories and manufacturers announced a unified interconnect standard today. The agreement guarantees lower latency and significant energy efficiency improvements across high-performance computing clusters.
-          </p>
-          <div class="preview-trust-bar">
-            <span>✔ Verified 94/100</span>
-            <span>· Corroborated by Reuters, BBC & Dawn</span>
-            <span>· 0% Clickbait</span>
-          </div>
-        </div>
-
-        <!-- Illustrated Newspaper & Morning Mascot -->
-        <div class="newspaper-mascot">
-          <svg class="newspaper-mascot-art" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="18" y="22" width="64" height="60" rx="8" fill="#FFFFFF" stroke="#4F46E5" stroke-width="3"/>
-            <rect x="26" y="32" width="28" height="6" rx="2" fill="#4F46E5"/>
-            <rect x="26" y="44" width="48" height="3" rx="1.5" fill="#94A3B8"/>
-            <rect x="26" y="52" width="48" height="3" rx="1.5" fill="#94A3B8"/>
-            <rect x="26" y="60" width="34" height="3" rx="1.5" fill="#94A3B8"/>
-            <rect x="26" y="68" width="42" height="3" rx="1.5" fill="#CBD5E1"/>
-            <!-- Coffee cup -->
-            <rect x="66" y="30" width="12" height="10" rx="3" fill="#F59E0B"/>
-            <path d="M78 33 C81 33 81 37 78 37" stroke="#F59E0B" stroke-width="2" fill="none"/>
-          </svg>
-          <div class="newspaper-mascot-label">Your Morning Paper</div>
-          <div class="newspaper-mascot-caption">Finished in 5 minutes</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SVG Horizon Silhouette of Mountain Ridges -->
-  <svg class="portal-horizon" preserveAspectRatio="none" viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 120 C320 80 540 140 840 95 C1140 50 1320 110 1440 85 L1440 180 L0 180 Z" fill="#FAF9F6"/>
-    <path opacity="0.4" d="M0 135 C380 95 620 160 920 115 C1220 70 1360 130 1440 105 L1440 180 L0 180 Z" fill="#F1F5F9"/>
-  </svg>
+<style>
+.ph{position:relative;overflow:hidden;text-align:center;color:#fff;padding:150px 20px 0;
+ background:linear-gradient(180deg,#5B7CFA 0%,#7A84F4 28%,#A98AF0 52%,#E78FC0 78%,#F8B49B 100%)}
+.ph-stars{position:absolute;inset:0;opacity:.9;pointer-events:none;
+ background-image:radial-gradient(1.6px 1.6px at 40px 50px,#fff,transparent),radial-gradient(1px 1px at 130px 110px,#fff,transparent),
+ radial-gradient(1.4px 1.4px at 230px 40px,#fff,transparent),radial-gradient(1px 1px at 310px 150px,#fff,transparent),radial-gradient(1.2px 1.2px at 80px 170px,#fff,transparent);
+ background-size:340px 210px;-webkit-mask-image:linear-gradient(#000 30%,transparent 75%);mask-image:linear-gradient(#000 30%,transparent 75%)}
+.ph-copy{position:relative;z-index:3;max-width:760px;margin:0 auto}
+.ph h1{font-family:var(--font-serif,Georgia,serif);font-weight:500;font-size:clamp(34px,5.4vw,60px);line-height:1.08;margin:0;letter-spacing:-.01em}
+.ph p{margin:18px auto 0;max-width:560px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.92)}
+.ph-btn{display:inline-block;margin-top:28px;background:#fff;color:#33376e;font-weight:600;padding:13px 30px;border-radius:999px;box-shadow:0 10px 30px -10px rgba(30,30,90,.5);transition:.2s}
+.ph-btn:hover{transform:translateY(-2px)}
+.ph-frame{position:relative;z-index:2;max-width:940px;margin:70px auto -90px;padding:10px;border-radius:38px 38px 0 0;
+ background:rgba(255,255,255,.55);box-shadow:0 30px 80px -30px rgba(40,30,110,.6);backdrop-filter:blur(8px)}
+.ph-screen{border-radius:30px 30px 0 0;padding:22px 24px 0;height:420px;overflow:hidden;text-align:left;color:#1C1B19;
+ background:linear-gradient(160deg,#EEF0FF,#F6E9F5 60%,#FDEBDD)}
+.ph-bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#6b6b80;margin-bottom:16px}
+.ph-bar b{font-family:var(--font-serif,Georgia,serif);letter-spacing:.3em;color:#1C1B19;font-size:15px}
+.ph-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.ph-card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 24px -16px rgba(60,50,120,.5)}
+.ph-card small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7a7a90}
+.ph-card h3{font-family:var(--font-serif,Georgia,serif);font-size:23px;line-height:1.15;margin:8px 0;font-weight:600}
+.ph-card p{font-size:13.5px;color:#4b4b5c;margin:0;max-width:none}
+.ph-pill{display:inline-block;margin-top:12px;font-size:12px;font-weight:600;color:#0b6b46;background:#DDF6EA;padding:4px 12px;border-radius:999px}
+.ph-row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-top:1px solid #eee}.ph-row b{color:#0b6b46}
+.ph-hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:230px;z-index:1}
+.ph-news{position:absolute;z-index:4;right:max(4%,calc(50% - 560px));bottom:20px;width:190px;filter:drop-shadow(0 18px 24px rgba(30,20,80,.45));animation:phf 4.5s ease-in-out infinite}
+@keyframes phf{50%{transform:translateY(-14px) rotate(2deg)}}
+@media(max-width:800px){.ph-grid{grid-template-columns:1fr}.ph-news{width:120px;right:4%}.ph-screen{height:360px}}
+</style>
+<section class="ph">
+ <div class="ph-stars"></div>
+ <div class="ph-copy">
+  <h1>Your beautiful morning paper.<br>From scattered news to one clear page.</h1>
+  <p>Zok gathers verified news that matters to you, scores every story for trust, and hands you one finished paper a day. Read it online, listen to it, or print it as a PDF.</p>
+  <a href="#join" class="ph-btn">Make my paper</a>
+ </div>
+ <div class="ph-frame"><div class="ph-screen">
+  <div class="ph-bar"><b>ZOK</b><span>Sample edition · made for you</span><span>5 min · 8 stories</span></div>
+  <div class="ph-grid">
+   <div class="ph-card"><small>Sample · Technology</small><h3>How a new chip standard could cut your phone's energy use</h3>
+    <p>Chipmakers agreed on one shared design rule. Devices could run longer on one charge.</p><span class="ph-pill">✔ Verified · scored by Zok</span></div>
+   <div class="ph-card"><small>How we checked it</small>
+    <div class="ph-row"><span>Other outlets agree</span><b>3</b></div><div class="ph-row"><span>Publisher trust</span><b>High</b></div>
+    <div class="ph-row"><span>Clickbait</span><b>None</b></div><div class="ph-row"><span>Listen to it</span><b>🔊</b></div></div>
+  </div></div></div>
+ <svg class="ph-hills" viewBox="0 0 1440 230" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#3B6E78" d="M0 120C160 70 260 80 380 110S600 60 760 100 1040 70 1200 100 1380 90 1440 110V230H0Z"/>
+  <path fill="#244B57" d="M0 170C200 130 340 140 520 165S860 130 1040 160 1330 140 1440 160V230H0Z"/></svg>
+ <svg class="ph-news" viewBox="0 0 220 260" aria-hidden="true"><g transform="rotate(-8 110 130)">
+  <rect x="30" y="20" width="160" height="210" rx="9" fill="#FBF8F1" stroke="#1C1B19" stroke-width="3"/>
+  <text x="110" y="62" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="30" letter-spacing="4" fill="#1C1B19">ZOK</text>
+  <line x1="44" y1="74" x2="176" y2="74" stroke="#1C1B19" stroke-width="2.5"/>
+  <rect x="44" y="86" width="72" height="50" rx="4" fill="#F2A65A"/>
+  <g stroke="#1C1B19" stroke-width="3" stroke-linecap="round" opacity=".5"><path d="M126 92h50M126 104h50M126 116h40M126 128h50M44 152h132M44 166h132M44 180h100M44 194h132M44 208h80"/></g>
+  <circle cx="178" cy="212" r="15" fill="#2E9E6B"/><path d="M171 212l5 5 9-10" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
 </section>
 
 <!-- ── WHY PEOPLE SUBSCRIBE TO ZOK ── -->
