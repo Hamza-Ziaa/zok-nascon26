@@ -17,7 +17,7 @@ That's not reading. That's doomscrolling.
 
 **ZOK** is a personal morning newspaper that:
 
-- **Ends.** Every edition has a finish line — 5, 10, or 20 minutes. Then you're done.
+- **Ends.** Every edition has a finish line: 5, 10, or 20 minutes. Then you're done.
 - **Checks its sources.** Every story gets a trust score from 0 to 100. Low-quality stuff never reaches you.
 - **Gets better over time.** The more you read, the smarter your paper becomes tomorrow.
 - **Listen while making your morning tea.** It has a feature, allowing to listen the news while you do your morning duties, with speed options.
