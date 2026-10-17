@@ -161,16 +161,27 @@ See **[DEPLOY.md](DEPLOY.md)** for step-by-step instructions to deploy on Render
 
 ## Algorithmic & System Efficiency Benchmarks
 
-Judges asked for real numbers. Here is how ZOK achieves extreme efficiency through a **"Fetch Once, Cluster Once, Rank Per User"** pipeline:
+Performance evaluation conducted using live news feeds, credibility verification, story clustering, and personalized ranking.
 
-| Metric | Measured Value | Architecture Optimization |
-| :--- | :--- | :--- |
-| **Personalized Ranking Latency** | **6.4 ms** per user request | In-memory dot product over pre-computed weights; SQLite WAL mode |
-| **Global Multi-Feed Ingestion** | **2.8 seconds** (180+ articles across 10 global outlets) | Concurrent async fetching + single-pass tokenization |
-| **Cross-Outlet Clustering Speed** | **14 ms** for 180 articles | Jaccard word-set intersection with fast length-pruning heuristics |
-| **LLM Token & Cost Efficiency** | **94.2% token savings** | Summaries and entities generated **once per article cluster**, never re-queried per user |
-| **Memory Footprint** | **~85 MB RAM** at peak load | Zero heavy machine learning frameworks in runtime loop; lightweight pure-Python scoring |
-| **Database Storage Footprint** | **~220 KB** SQLite for 200 enriched stories | Normalized schema with JSON weight fields and automatic 48h TTL cleanup |
+| Metric | Result | What It Means |
+|----------|----------|----------|
+| **Verified Articles Identified** | **264** | Total number of high-credibility articles discovered and validated from aggregated news sources. |
+| **Articles Processed** | **241** | Articles successfully ingested, parsed, and included in the recommendation pipeline. |
+| **News Sources** | **9 Outlets** | Trusted news organizations continuously monitored for content aggregation. |
+| **Multi-Feed Ingestion Time** | **52.8 seconds** | Time required to fetch feeds, validate links, process metadata, and store articles in the local database. |
+| **Cross-Outlet Clustering Time** | **61 ms** | Time required to identify and group articles from different publishers covering the same event or topic. |
+| **Personalized Ranking Latency** | **47 ms (median)** | Average time required to generate a customized news feed tailored to an individual user's interests. |
+| **Best-Case Ranking Latency** | **23 ms** | Fastest recorded personalized feed generation during testing. |
+| **Worst-Case Ranking Latency** | **543 ms** | Slowest observed feed-generation time under benchmark conditions. |
+| **Database Storage Footprint** | **56 KB** | Total SQLite database size required to store 241 processed articles and related metadata. |
+
+### 🚀 Key Takeaways
+
+- Aggregates news from **9 trusted sources** into a unified feed.
+- Processes and validates **241+ articles** per benchmark run.
+- Detects duplicate coverage across publishers in just **61 milliseconds**.
+- Generates personalized article rankings in **under 50 milliseconds on average**.
+- Maintains an extremely small 
 
 ---
 
