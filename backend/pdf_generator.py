@@ -1,16 +1,16 @@
 """
-Zok (ذوق) — Authentic Broadsheet PDF Generator
+Zok (ذوق) — Luxury Broadsheet PDF Generator
 Creates an heirloom-quality printable morning newspaper PDF using ReportLab.
 Features:
-- Broadsheet double-line perimeter border
-- Grand masthead with Urdu calligraphy seal
-- Left & Right masthead ears (Islamabad weather + edition motto)
-- "Three Things to Know Today" summary index
+- Broadsheet perimeter hairline border
+- Grand centered serif masthead with Urdu title
+- Left & Right folio ears (Islamabad weather + subscriber profile)
+- "Three Things to Know Today" executive index
 - Signed Letter from the Intelligence Editor
 - Lead story with drop-cap and justified multi-column typesetting
-- Room to Explore: The Devil's Advocate (Anti-Echo Chamber)
+- Room to Explore: The Contrarian Perspective (Anti-Echo Chamber)
 - Daily 5x5 entity crossword puzzle grid
-- Evening recall challenge & broadside footer
+- Pure luxury typography with zero tacky emojis
 """
 
 from __future__ import annotations
@@ -37,12 +37,12 @@ def generate_pdf(
     devils_advocate: Optional[Article] = None,
 ) -> bytes:
     """
-    Generate an authentic broadsheet newspaper PDF.
+    Generate an authentic luxury broadsheet newspaper PDF.
     Returns bytes of the compiled PDF.
     """
     buffer = io.BytesIO()
 
-    # Standard Letter size, 0.45-inch margins for dense, elegant broadsheet layout
+    # Standard Letter size, 32pt margins for dense, elegant broadsheet layout
     doc = SimpleDocTemplate(
         buffer,
         pagesize=letter,
@@ -56,14 +56,13 @@ def generate_pdf(
 
     styles = getSampleStyleSheet()
 
-    # ── Color Palette: Ink & Newsprint ─────────────────────────────────────────
-    c_ink = colors.HexColor("#191816")
+    # ── Color Palette: Ink & Paper ─────────────────────────────────────────────
+    c_ink = colors.HexColor("#121212")
     c_ink_muted = colors.HexColor("#57534e")
-    c_terracotta = colors.HexColor("#991b1b")
-    c_amber_tint = colors.HexColor("#fef3c7")
-    c_paper_tint = colors.HexColor("#f5f5f4")
-    c_border_dark = colors.HexColor("#292524")
-    c_border_light = colors.HexColor("#d6d3d1")
+    c_terracotta = colors.HexColor("#943d24")
+    c_tint = colors.HexColor("#faf9f6")
+    c_border = colors.HexColor("#e7e5e4")
+    c_border_dark = colors.HexColor("#1c1917")
 
     # ── Typography Hierarchy ──────────────────────────────────────────────────
     style_masthead = ParagraphStyle(
@@ -91,11 +90,11 @@ def generate_pdf(
         "SubMotto",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.5,
-        leading=10,
+        fontSize=7,
+        leading=9.5,
         alignment=1,
         textColor=c_ink_muted,
-        spaceAfter=4,
+        spaceAfter=3,
     )
 
     style_ear_text = ParagraphStyle(
@@ -111,8 +110,8 @@ def generate_pdf(
         "BannerDate",
         parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.5,
-        leading=10,
+        fontSize=7,
+        leading=9.5,
         textColor=c_ink,
         alignment=1,
     )
@@ -131,8 +130,8 @@ def generate_pdf(
         "ArticleTitle",
         parent=styles["Normal"],
         fontName="Times-Bold",
-        fontSize=11.5,
-        leading=14.5,
+        fontSize=11,
+        leading=14,
         textColor=c_ink,
         spaceAfter=2,
     )
@@ -173,15 +172,15 @@ def generate_pdf(
     # ── 1. MASTHEAD WITH EARS ─────────────────────────────────────────────────
     left_ear_content = [
         Paragraph("<b>ISLAMABAD EDITION</b>", style_ear_text),
-        Paragraph("🌤 24°C • Morning Mist", style_ear_text),
-        Paragraph("Vol. XXV • NaSCon Jubilee", style_ear_text),
+        Paragraph("24 C -- Morning Mist", style_ear_text),
+        Paragraph("Vol. XXV -- NaSCon Jubilee", style_ear_text),
         Paragraph("<b>FAST National University</b>", style_ear_text),
     ]
 
     center_masthead = [
         Paragraph("Z O K &nbsp; (ذوق)", style_masthead),
         Paragraph("THE LIVING MORNING BROADSIDE", style_sub_motto),
-        Paragraph("<i>The Only Newspaper with an Edition of One • Finite by Design</i>", style_urdu_seal),
+        Paragraph("<i>The Only Newspaper with an Edition of One -- Finite by Design</i>", style_urdu_seal),
     ]
 
     right_ear_content = [
@@ -197,10 +196,10 @@ def generate_pdf(
         ('ALIGN', (0, 0), (0, -1), 'LEFT'),
         ('ALIGN', (1, 0), (1, -1), 'CENTER'),
         ('ALIGN', (2, 0), (2, -1), 'RIGHT'),
-        ('BOX', (0, 0), (0, 0), 0.5, c_border_light),
-        ('BOX', (2, 0), (2, 0), 0.5, c_border_light),
-        ('BACKGROUND', (0, 0), (0, 0), c_paper_tint),
-        ('BACKGROUND', (2, 0), (2, 0), c_paper_tint),
+        ('BOX', (0, 0), (0, 0), 0.5, c_border),
+        ('BOX', (2, 0), (2, 0), 0.5, c_border),
+        ('BACKGROUND', (0, 0), (0, 0), c_tint),
+        ('BACKGROUND', (2, 0), (2, 0), c_tint),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
@@ -212,25 +211,25 @@ def generate_pdf(
     # Double rule date bar
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_border_dark, spaceBefore=1, spaceAfter=2))
     date_str = edition.created_at.strftime("%A, %B %d, %Y") if hasattr(edition, "created_at") else datetime.utcnow().strftime("%A, %B %d, %Y")
-    banner_text = f"SATURDAY DISPATCH &nbsp;•&nbsp; {date_str.upper()} &nbsp;•&nbsp; FAST-NUCES 25TH JUBILEE CONVENTION &nbsp;•&nbsp; ISLAMABAD, PAKISTAN"
+    banner_text = f"SATURDAY DISPATCH &nbsp;--&nbsp; {date_str.upper()} &nbsp;--&nbsp; FAST-NUCES 25TH JUBILEE CONVENTION &nbsp;--&nbsp; ISLAMABAD, PAKISTAN"
     story.append(Paragraph(banner_text, style_banner))
     story.append(HRFlowable(width="100%", thickness=1, color=c_border_dark, spaceBefore=2, spaceAfter=6))
 
     # ── 2. THREE THINGS INDEX & EDITORIAL LETTER ──────────────────────────────
-    tt_html = "<b>❖ THREE THINGS TO KNOW TODAY</b><br/><br/>"
+    tt_html = "<b>THREE THINGS TO KNOW TODAY</b><br/><br/>"
     for i, t in enumerate(edition.three_things or []):
-        tt_html += f"<b>{i+1}.</b> {t}<br/>"
+        tt_html += f"<b>0{i+1}.</b> {t}<br/>"
     tt_p = Paragraph(tt_html, ParagraphStyle("TT", parent=styles["Normal"], fontName="Times-Roman", fontSize=8, leading=11, textColor=c_ink))
 
-    ed_html = f"<b>❖ LETTER FROM THE EDITOR</b><br/><br/><i>Dear {user.name},</i><br/>{edition.editorial_note}<br/><br/><b>— The Intelligence Editor</b>"
+    ed_html = f"<b>FROM THE DESK OF THE EDITOR</b><br/><br/><i>Dear {user.name},</i><br/>{edition.editorial_note}<br/><br/><b>-- Intelligence Editor</b>"
     ed_p = Paragraph(ed_html, ParagraphStyle("ED", parent=styles["Normal"], fontName="Times-Roman", fontSize=8, leading=11, textColor=c_ink))
 
     summary_table = Table([[tt_p, ed_p]], colWidths=[274, 274])
     summary_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (0, 0), c_amber_tint),
-        ('BACKGROUND', (1, 0), (1, 0), c_paper_tint),
+        ('BACKGROUND', (0, 0), (0, 0), c_tint),
+        ('BACKGROUND', (1, 0), (1, 0), colors.white),
         ('BOX', (0, 0), (0, 0), 1, c_border_dark),
-        ('BOX', (1, 0), (1, 0), 1, c_border_light),
+        ('BOX', (1, 0), (1, 0), 0.5, c_border),
         ('TOPPADDING', (0, 0), (-1, -1), 5),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
         ('LEFTPADDING', (0, 0), (-1, -1), 8),
@@ -243,29 +242,29 @@ def generate_pdf(
     # ── 3. LEAD STORY ─────────────────────────────────────────────────────────
     if articles:
         lead = articles[0]
-        story.append(Paragraph(f"<b>{lead.category.upper()}</b> &nbsp;•&nbsp; {lead.source.upper()}", style_source_tag))
+        story.append(Paragraph(f"<b>{lead.category.upper()}</b> &nbsp;--&nbsp; {lead.source.upper()}", style_source_tag))
         story.append(Paragraph(lead.title, style_lead_title))
         
         # 2-column split for lead story
         lead_left = [
-            Paragraph(f"<b>ISLAMABAD — </b>{lead.summary}", style_body),
+            Paragraph(f"<b>ISLAMABAD -- </b>{lead.summary}", style_body),
             Paragraph(f"<b>Why this is in your edition:</b> Calibrated directly to your active taste profile in {lead.category.lower()}.", style_why_it_matters),
         ]
         lead_right = [
             Paragraph(lead.content[:380] + "..." if lead.content else lead.summary, style_body),
-            Paragraph("<i>Source: Verified wire dispatch • Archived for evening recall check.</i>", style_source_tag),
+            Paragraph("<i>Source: Verified wire dispatch -- Archived for evening recall check.</i>", style_source_tag),
         ]
         lead_table = Table([[lead_left, lead_right]], colWidths=[270, 270])
         lead_table.setStyle(TableStyle([
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
             ('RIGHTPADDING', (0, 0), (0, 0), 6),
             ('LEFTPADDING', (1, 0), (1, 0), 6),
-            ('LINEBEFORE', (1, 0), (1, 0), 0.5, c_border_light),
+            ('LINEBEFORE', (1, 0), (1, 0), 0.5, c_border),
             ('TOPPADDING', (0, 0), (-1, -1), 0),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
         ]))
         story.append(lead_table)
-        story.append(HRFlowable(width="100%", thickness=0.5, color=c_border_light, spaceBefore=4, spaceAfter=6))
+        story.append(HRFlowable(width="100%", thickness=0.5, color=c_border, spaceBefore=4, spaceAfter=6))
 
     # ── 4. SECONDARY STORIES (2-COLUMN GRID) ──────────────────────────────────
     sec_articles = articles[1:5] if len(articles) > 1 else []
@@ -274,10 +273,10 @@ def generate_pdf(
         col_b = []
         for i, a in enumerate(sec_articles):
             item = [
-                Paragraph(f"<b>{a.category.upper()}</b> &nbsp;•&nbsp; {a.source}", style_source_tag),
+                Paragraph(f"<b>{a.category.upper()}</b> &nbsp;--&nbsp; {a.source}", style_source_tag),
                 Paragraph(a.title, style_article_title),
                 Paragraph(a.summary, style_body),
-                Paragraph(f"↳ {a.category} • High relevance to your reading budget.", style_why_it_matters),
+                Paragraph(f"-- {a.category} -- High relevance to your reading budget.", style_why_it_matters),
                 Spacer(1, 3),
             ]
             if i % 2 == 0:
@@ -290,7 +289,7 @@ def generate_pdf(
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
             ('RIGHTPADDING', (0, 0), (0, 0), 6),
             ('LEFTPADDING', (1, 0), (1, 0), 6),
-            ('LINEBEFORE', (1, 0), (1, 0), 0.5, c_border_light),
+            ('LINEBEFORE', (1, 0), (1, 0), 0.5, c_border),
             ('TOPPADDING', (0, 0), (-1, -1), 0),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
         ]))
@@ -302,7 +301,7 @@ def generate_pdf(
 
     da_content = []
     if devils_advocate:
-        da_title = Paragraph("<b>ROOM TO EXPLORE: THE DISSENTING OPINION (ANTI-ECHO CHAMBER)</b>", ParagraphStyle(
+        da_title = Paragraph("<b>ROOM TO EXPLORE: THE CONTRARIAN PERSPECTIVE</b>", ParagraphStyle(
             "DAT", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=7, leading=9, textColor=c_terracotta
         ))
         da_body = Paragraph(
@@ -327,7 +326,7 @@ def generate_pdf(
     bottom_table = Table([[da_content, cw_text]], colWidths=[330, 218])
     bottom_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (0, 0), colors.HexColor("#fff1f2")),
-        ('BACKGROUND', (1, 0), (1, 0), c_paper_tint),
+        ('BACKGROUND', (1, 0), (1, 0), c_tint),
         ('BOX', (0, 0), (0, 0), 1, c_terracotta),
         ('BOX', (1, 0), (1, 0), 0.5, c_border_dark),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
@@ -338,10 +337,10 @@ def generate_pdf(
     ]))
     story.append(bottom_table)
 
-    # ── 6. FOOTER COMPLETION SEAL ─────────────────────────────────────────────
+    # ── 6. FOOTER COMPLETION FOLIO ────────────────────────────────────────────
     story.append(Spacer(1, 4))
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_border_dark, spaceBefore=2, spaceAfter=3))
-    footer_text = f"❖ YOU'RE ALL CAUGHT UP. THAT'S THE NEWS FOR TODAY. ❖ &nbsp;•&nbsp; ZOK (ذوق) EDITION #{edition.id[-6:]} &nbsp;•&nbsp; RETURN TOMORROW AT 6:30 AM ☕"
+    footer_text = f"YOU ARE INFORMED. THAT CONCLUDES TODAY'S BROADSIDE. &nbsp;--&nbsp; ZOK (ذوق) EDITION #{edition.id[-6:]} &nbsp;--&nbsp; NEXT EDITION AT 06:30 PKT"
     story.append(Paragraph(footer_text, ParagraphStyle(
         "Foot", parent=styles["Normal"], fontName="Helvetica-Bold", fontSize=6.5, leading=8.5, alignment=1, textColor=c_ink_muted
     )))

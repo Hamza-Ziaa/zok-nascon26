@@ -1,29 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}Zok — Edition Archive Vault{% endblock %}
+{% block title %}Zok — Edition Archive{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
 
-    <!-- Back Bar -->
-    <div class="mb-6">
-        <a href="/edition/{{ user.id }}" class="inline-flex items-center gap-2 text-xs font-inter text-stone-300 hover:text-amber-300 transition-colors uppercase tracking-widest font-semibold">
-            ← Return to Today's Morning Broadside
+    <!-- Back Navigation -->
+    <div class="mb-8">
+        <a href="/edition/{{ user.id }}" class="font-meta-label text-ink-500 hover:text-ink-900 transition-colors inline-flex items-center gap-1.5">
+            &larr; Return to Today's Morning Broadside
         </a>
     </div>
 
-    <!-- Archive Paper Sheet -->
-    <section class="broadsheet-paper p-8 sm:p-12 border-2 border-stone-300 shadow-2xl" aria-label="Edition archive vault">
-        
-        <header class="text-center pb-6 border-b-2 border-stone-800 mb-8">
-            <span class="font-cinzel text-xs font-bold uppercase tracking-widest text-stone-600 block mb-1">
-                ✦ PERMANENT MORNING RECORDS ✦
-            </span>
-            <h1 class="font-playfair text-3xl sm:text-4xl font-bold text-stone-900">
-                The Historical Edition Vault
+    <!-- Archive Canvas -->
+    <section class="broadsheet-canvas p-8 sm:p-12 border border-stone-200/80 shadow-xl" aria-label="Historical edition vault">
+        <header class="pb-6 border-b border-stone-200 mb-8">
+            <span class="font-meta-label text-ink-400 block mb-1">Permanent Record</span>
+            <h1 class="font-editorial-heading text-3xl sm:text-4xl font-bold text-ink-900">
+                Historical Edition Archive
             </h1>
-            <p class="font-newsreader italic text-stone-600 text-sm mt-1">
-                Every customized morning edition preserved in full broadsheet fidelity for {{ user.name }}.
+            <p class="font-editorial-body text-base text-ink-600 mt-1">
+                Every customized morning edition preserved in full editorial fidelity for {{ user.name }}.
             </p>
         </header>
 
@@ -31,51 +28,40 @@
         <div class="space-y-4">
             {% for ed in editions %}
             <a href="/edition/{{ user.id }}/{{ ed.id }}"
-               class="newspaper-card p-5 sm:p-6 flex items-center gap-6 group cursor-pointer block border border-stone-300 hover:border-amber-800 transition-all">
+               class="p-6 border border-stone-200 hover:border-ink-900 transition-all rounded bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
                 
-                <!-- Date Woodcut Badge -->
-                <div class="shrink-0 text-center w-20 py-2 bg-stone-100 border border-stone-300 rounded-sm">
-                    <div class="font-playfair text-3xl font-black text-amber-900 leading-none">
-                        {{ ed.day }}
-                    </div>
-                    <div class="text-[10px] font-cinzel font-bold text-stone-600 uppercase tracking-widest mt-1">
-                        {{ ed.month }}
-                    </div>
-                </div>
-
-                <!-- Edition Meta -->
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-playfair text-xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
-                        {{ ed.title }}
-                    </h3>
-                    <div class="flex flex-wrap items-center gap-3 mt-1.5 text-xs font-inter text-stone-500">
-                        <span>{{ ed.article_count }} Curated Stories</span>
-                        <span>·</span>
-                        <span>{{ ed.reading_budget }}m Budget</span>
-                        {% if ed.recall_score %}
-                        <span>·</span>
-                        <span class="text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                            {{ ed.recall_score }}% Knowledge Retention
-                        </span>
-                        {% endif %}
+                <div class="flex items-baseline gap-4">
+                    <span class="font-inter font-semibold text-lg text-ink-400 w-12 shrink-0">{{ ed.month }} {{ ed.day }}</span>
+                    <div>
+                        <h3 class="font-editorial-heading text-xl font-bold text-ink-900 group-hover:text-terracotta transition-colors">
+                            {{ ed.title }}
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-3 mt-1 font-inter text-xs text-ink-500">
+                            <span>{{ ed.article_count }} Curated Dispatches</span>
+                            <span>&bull;</span>
+                            <span>{{ ed.reading_budget }}m Budget</span>
+                            {% if ed.recall_score %}
+                            <span>&bull;</span>
+                            <span class="text-ink-700 font-medium">{{ ed.recall_score }}% Knowledge Retention</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 
-                <!-- Unfold Arrow -->
-                <div class="text-right shrink-0">
-                    <span class="btn-outline-broadsheet text-xs">
-                        Read Issue →
+                <div class="shrink-0 text-right">
+                    <span class="btn-pill-secondary text-xs px-3.5 py-1">
+                        Read Issue &rarr;
                     </span>
                 </div>
             </a>
             {% endfor %}
         </div>
         {% else %}
-        <div class="text-center py-12 text-stone-500 font-newsreader italic">
+        <p class="font-editorial-body italic text-ink-400 py-12 text-center">
             No historical editions archived yet.
-        </div>
+        </p>
         {% endif %}
-
     </section>
+
 </div>
 {% endblock %}

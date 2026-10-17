@@ -1,59 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Zok — {{ user.name }}'s Morning Broadside{% endblock %}
+{% block title %}Zok — {{ user.name }}'s Morning Edition{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 pb-16">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
 
-    <!-- FLOATING UTILITY BAR (Controls & Persona Switcher) -->
-    <header class="flex flex-wrap items-center justify-between gap-3 mb-6 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2.5 rounded-full text-white text-xs font-inter shadow-lg">
-        <!-- Persona Quick Switcher -->
-        <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-white/40 uppercase tracking-widest text-[10px] hidden sm:inline">Edition for:</span>
+    <!-- FLOATING EDITORIAL NAVIGATION BAR (Portal & Huly Inspired) -->
+    <header class="floating-nav sticky top-4 z-40 px-5 py-3 rounded-full flex flex-wrap items-center justify-between gap-4 mb-8">
+        
+        <!-- Left: Persona Tabs -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="font-meta-label text-[10px] text-ink-400 mr-1 hidden sm:inline">Edition for:</span>
             {% for persona in personas %}
             <a href="/api/switch-persona/{{ persona.id }}"
-               class="px-3 py-1 rounded-full transition-all duration-200 font-medium
+               class="px-3.5 py-1 rounded-full font-inter text-xs transition-all duration-150
                       {% if persona.id == user.id %}
-                      bg-amber-400 text-stone-900 shadow-md font-semibold
+                      bg-ink-900 text-white font-medium shadow-sm
                       {% else %}
-                      bg-white/10 text-white/70 hover:bg-white/20 hover:text-white
+                      text-ink-600 hover:text-ink-900 hover:bg-black/5
                       {% endif %}">
                 {{ persona.name }}
             </a>
             {% endfor %}
         </div>
 
-        <!-- Action Tools -->
-        <div class="flex items-center gap-2 sm:gap-3 ml-auto">
-            <!-- Reading Budget Pills -->
-            <div class="flex items-center bg-black/20 rounded-full p-0.5 border border-white/10">
+        <!-- Right: Controls -->
+        <div class="flex items-center gap-3 ml-auto">
+            <!-- Reading Budget Slicer -->
+            <div class="flex items-center bg-stone-100 p-0.5 rounded-full border border-stone-200">
                 {% for b in [5, 10, 20] %}
-                <button class="budget-toggle px-2.5 py-0.5 rounded-full text-[11px] transition-all
-                        {% if user.reading_budget == b %}bg-white/20 text-white font-semibold{% else %}text-white/50 hover:text-white{% endif %}"
+                <button class="budget-toggle px-2.5 py-0.5 rounded-full font-inter text-[11px] transition-all
+                        {% if user.reading_budget == b %}bg-white text-ink-900 font-semibold shadow-xs{% else %}text-ink-400 hover:text-ink-700{% endif %}"
                         data-budget="{{ b }}">
                     {{ b }}m
                 </button>
                 {% endfor %}
             </div>
 
-            <!-- Audio Briefing Button -->
-            <button id="audio-briefing-btn" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600/80 hover:bg-emerald-500 text-white transition-all">
-                <span>▶ Listen (2m)</span>
+            <!-- Audio Briefing -->
+            <button id="audio-briefing-btn" class="btn-pill-secondary text-xs px-3 py-1">
+                <span>Listen (2m)</span>
             </button>
 
-            <!-- Broadsheet PDF -->
-            <a href="/edition/{{ user.id }}/pdf" target="_blank" class="flex items-center gap-1 px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white transition-all font-medium">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                PDF
+            <!-- PDF Download -->
+            <a href="/edition/{{ user.id }}/pdf" target="_blank" class="btn-pill-primary text-xs px-3.5 py-1">
+                Print Broadsheet
             </a>
 
-            <!-- Taste Profile -->
-            <a href="/taste/{{ user.id }}" class="px-2.5 py-1 rounded-full hover:bg-white/15 text-white/70 hover:text-white transition-all">
+            <!-- Archive & Taste -->
+            <a href="/taste/{{ user.id }}" class="font-inter text-xs text-ink-600 hover:text-ink-900 transition-colors">
                 Taste
             </a>
-
-            <!-- Archive Vault -->
-            <a href="/archive/{{ user.id }}" class="px-2.5 py-1 rounded-full hover:bg-white/15 text-white/70 hover:text-white transition-all">
+            <a href="/archive/{{ user.id }}" class="font-inter text-xs text-ink-600 hover:text-ink-900 transition-colors">
                 Archive
             </a>
         </div>
@@ -61,182 +59,151 @@
 
 
     <!-- ====================================================================
-         THE TACTILE NEWSPAPER BROADSIDE SHEET
+         THE LUXURY MORNING BROADSIDE CANVAS
          ==================================================================== -->
-    <article class="broadsheet-paper p-6 sm:p-10 lg:p-12 border-2 border-stone-300 paper-fresh-reveal shadow-2xl relative" id="broadsheet-sheet">
+    <article class="broadsheet-canvas p-8 sm:p-12 lg:p-16 border border-stone-200/80 shadow-xl" id="broadsheet-canvas">
         
-        <!-- Dust Wipe Interactive Bar -->
-        <div class="flex items-center justify-between border-b border-stone-300 pb-2 mb-4 text-[11px] font-inter text-stone-600 no-print">
-            <span class="flex items-center gap-1.5 font-medium">
-                <span class="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
-                Fresh Ink Edition • Pressed for {{ user.name }}
-            </span>
-            <button id="brush-dust-btn" class="hover:text-stone-900 transition-colors flex items-center gap-1 text-[11px] font-semibold text-amber-800">
-                <span>🧹 Brush Morning Dust</span>
-            </button>
-        </div>
-
-        <!-- ── 1. MASTHEAD ANATOMY ────────────────────────────────────────── -->
-        <header class="text-center pt-2 pb-4">
+        <!-- ── 1. FOLIO & GRAND MASTHEAD ──────────────────────────────────── -->
+        <header class="text-center pb-6">
             
-            <!-- Ears & Center Brand Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center mb-4 text-left">
-                <!-- Left Ear: Weather & Volume -->
-                <div class="newspaper-ear hidden md:block">
-                    <p class="font-bold text-stone-900 uppercase">Islamabad Edition</p>
-                    <p class="text-stone-600">🌤 24°C • Morning Mist</p>
-                    <p class="text-stone-500 text-[10px] mt-0.5">Vol. XXV • NaSCon Jubilee</p>
-                </div>
-
-                <!-- Grand Masthead Center -->
-                <div class="md:col-span-2 text-center">
-                    <h1 class="masthead-title text-6xl sm:text-7xl md:text-8xl font-black leading-none mb-1">
-                        Z O K
-                    </h1>
-                    <div class="flex items-center justify-center gap-3">
-                        <span class="h-px w-12 bg-stone-400"></span>
-                        <span class="masthead-urdu text-3xl font-normal leading-none">ذوق</span>
-                        <span class="h-px w-12 bg-stone-400"></span>
-                    </div>
-                    <p class="font-cinzel text-xs tracking-[0.25em] text-stone-600 uppercase mt-2 font-bold">
-                        The Only Newspaper with an Edition of One
-                    </p>
-                </div>
-
-                <!-- Right Ear: Motto & Finite Design -->
-                <div class="newspaper-ear hidden md:block text-right">
-                    <p class="font-bold text-stone-900 uppercase">Finite By Design</p>
-                    <p class="text-stone-600">Budget: {{ user.reading_budget }} Minutes</p>
-                    <p class="text-stone-500 text-[10px] mt-0.5">Zero Infinite Doomscroll</p>
-                </div>
+            <!-- Top Folio Ear Line -->
+            <div class="flex flex-wrap items-center justify-between font-meta-label text-ink-400 text-[10px] pb-3 mb-6 border-b border-stone-200/80">
+                <span>Islamabad &nbsp;·&nbsp; 24°C Morning Mist &nbsp;·&nbsp; Barometer 1014 hPa</span>
+                <span>NaSCon Silver Jubilee Edition &nbsp;·&nbsp; FAST-NUCES</span>
+                <span>Reading Budget: {{ user.reading_budget }} Minutes</span>
             </div>
 
-            <!-- Double-rule Date & Dispatch Bar -->
-            <div class="newspaper-double-rule"></div>
-            <div class="flex flex-wrap items-center justify-between text-xs font-inter font-bold uppercase tracking-wider text-stone-700 px-2 py-1">
+            <!-- Masthead Title -->
+            <h1 class="masthead-title text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none mb-1">
+                Z O K
+            </h1>
+            <div class="flex items-center justify-center gap-3 my-2">
+                <span class="h-px w-12 bg-stone-300"></span>
+                <span class="masthead-urdu text-3xl leading-none">ذوق</span>
+                <span class="h-px w-12 bg-stone-300"></span>
+            </div>
+            <p class="font-meta-label text-ink-600 tracking-[0.25em] mt-2">
+                The Only Newspaper with an Edition of One &nbsp;·&nbsp; Finite by Design
+            </p>
+
+            <!-- Double Rule Banner -->
+            <div class="editorial-double-rule my-4"></div>
+            <div class="flex flex-wrap items-center justify-between font-meta-label text-ink-700 text-[11px] px-1">
                 <span>{{ edition.date | default("Saturday, October 17, 2026") }}</span>
-                <span class="hidden sm:inline">25 Years in Motion • National Solutions Convention</span>
-                <span>Price: Your Undivided Morning Attention</span>
+                <span>Prepared Exclusively for {{ user.name }}</span>
+                <span>City Morning Edition</span>
             </div>
-            <div class="newspaper-double-rule"></div>
+            <div class="editorial-double-rule my-4"></div>
         </header>
 
 
-        <!-- ── 2. THREE THINGS TO KNOW TODAY & EDITORIAL LETTER ──────────── -->
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-6 items-start">
+        <!-- ── 2. THREE THINGS TO KNOW TODAY & FROM THE EDITOR ───────────── -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 items-start">
             
-            <!-- Three Things Box (Index) -->
-            <div class="lg:col-span-7 three-things-box p-6 rounded-sm">
-                <h2 class="font-cinzel text-sm font-bold text-stone-900 tracking-wider mb-3 flex items-center gap-2">
-                    <span class="text-amber-700">✦</span> THREE THINGS TO KNOW TODAY
+            <!-- Three Things Executive Summary -->
+            <div class="lg:col-span-7 bg-stone-50/70 p-6 sm:p-7 border border-stone-200 rounded">
+                <span class="font-meta-label text-ink-400 block mb-3">Executive Summary &nbsp;·&nbsp; Index of the Day</span>
+                <h2 class="font-editorial-heading text-xl font-bold text-ink-900 mb-4">
+                    Three Things to Know Today
                 </h2>
-                <ol class="space-y-3 font-newsreader text-base text-stone-800 leading-snug">
+                <ol class="space-y-3 font-editorial-body text-base text-ink-800">
                     {% for thing in edition.three_things %}
-                    <li class="flex items-start gap-2.5">
-                        <span class="font-playfair font-bold text-amber-800 text-base shrink-0">{{ loop.index }}.</span>
+                    <li class="flex items-start gap-3">
+                        <span class="font-inter font-semibold text-ink-400 text-xs mt-1 shrink-0">0{{ loop.index }}.</span>
                         <span>{{ thing }}</span>
                     </li>
                     {% endfor %}
                 </ol>
             </div>
 
-            <!-- Signed Editorial Column -->
-            <div class="lg:col-span-5 bg-stone-100/70 p-5 border border-stone-300 rounded-sm">
-                <p class="font-cinzel text-[11px] font-bold text-stone-600 tracking-widest uppercase mb-1">From the Editor's Desk</p>
-                <p class="font-newsreader italic text-stone-700 text-sm leading-relaxed mb-3">
+            <!-- From the Editor's Desk -->
+            <div class="lg:col-span-5 p-6 border border-stone-200/80 rounded bg-white">
+                <span class="font-meta-label text-ink-400 block mb-2">Editor's Dispatch</span>
+                <p class="font-editorial-body italic text-sm text-ink-700 leading-relaxed mb-4">
                     "Dear {{ user.name }}, {{ edition.editorial }}"
                 </p>
-                <div class="text-right">
-                    <span class="editor-signature text-base text-amber-900 block">— The Intelligence Editor</span>
-                    <span class="text-[10px] font-inter text-stone-500 block uppercase">Curated via Bayesian Taste Model</span>
+                <div class="border-t border-stone-200/60 pt-3 flex items-center justify-between text-xs font-inter text-ink-500">
+                    <span class="font-semibold text-ink-800">— Intelligence Editor</span>
+                    <span>Bayesian Calibration</span>
                 </div>
             </div>
         </section>
 
-        <div class="newspaper-thick-rule"></div>
+        <div class="editorial-thick-rule my-8"></div>
 
 
-        <!-- ── 3. MAIN BROADSHEET ARTICLES SECTION ───────────────────────── -->
+        <!-- ── 3. MAIN BROADSHEET ARTICLES ───────────────────────────────── -->
         {% if edition.articles %}
         {% set lead = edition.articles[0] %}
 
-        <!-- Lead Story -->
-        <article class="my-6 pb-6 border-b border-stone-300" data-article-id="{{ lead.id }}">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="category-tag tag-tech">{{ lead.category }}</span>
-                <span class="text-xs font-inter text-stone-500 font-semibold uppercase">{{ lead.source }}</span>
-                <span class="text-xs font-inter text-stone-400 ml-auto">{{ lead.read_time }} min read</span>
+        <!-- Lead Investigation -->
+        <article class="my-8 pb-8 border-b border-stone-200" data-article-id="{{ lead.id }}">
+            <div class="flex items-center gap-2 mb-2 font-inter text-xs text-ink-400">
+                <span class="editorial-category text-ink-900 font-semibold">{{ lead.category }}</span>
+                <span>&bull;</span>
+                <span>{{ lead.source }}</span>
+                <span class="ml-auto">{{ lead.read_time }} min read</span>
             </div>
 
-            <h2 class="font-playfair text-3xl sm:text-4xl md:text-5xl font-black text-stone-900 leading-tight mb-4 tracking-tight hover:text-amber-900 transition-colors">
+            <h2 class="font-editorial-heading text-3xl sm:text-4xl md:text-5xl font-bold text-ink-900 mb-5 tracking-tight hover:text-terracotta transition-colors">
                 {{ lead.title }}
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 text-stone-800 font-newsreader text-lg leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 text-ink-800">
                 <div class="md:col-span-8">
-                    <p class="lead-drop-cap text-justify">
+                    <p class="editorial-drop-cap font-editorial-body text-lg text-justify leading-relaxed">
                         {{ lead.summary }}
                     </p>
-                    <div class="mt-4 p-3 bg-amber-50 border-l-2 border-amber-700 text-xs font-inter text-stone-700">
-                        <span class="font-bold text-amber-900 uppercase tracking-wide">Why this is here:</span>
+                    <div class="mt-5 p-4 border-l-2 border-ink-900 bg-stone-50/70 font-inter text-xs text-ink-700 leading-relaxed">
+                        <span class="font-semibold text-ink-900 uppercase tracking-wider block mb-0.5">Editorial Rationale</span>
                         {{ lead.why_it_matters }}
                     </div>
                 </div>
 
-                <!-- Editorial Woodcut / Stamp -->
-                <div class="md:col-span-4 bg-stone-100 p-4 border border-stone-300 flex flex-col justify-between rounded-sm">
+                <!-- Secondary Column Dispatches -->
+                <div class="md:col-span-4 border-l border-stone-200/80 pl-6 flex flex-col justify-between">
                     <div>
-                        <div class="w-full h-24 bg-gradient-to-br from-stone-200 to-stone-300 flex items-center justify-center border border-stone-400/50 mb-3 text-stone-600 text-center p-2">
-                            <span class="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-700">
-                                FAST-NUCES 25 Years<br>Silver Jubilee Engraving
-                            </span>
-                        </div>
-                        <p class="text-xs font-garamond italic text-stone-600 text-center">
-                            "Where talent meets opportunity • ایک نئی پہچان"
+                        <span class="font-meta-label text-ink-400 block mb-2">Context Note</span>
+                        <p class="font-editorial-body text-sm text-ink-600 leading-relaxed mb-4">
+                            Archived into your daily personal broadside. Micro-dwell telemetry and recall reflections are automatically synthesized to calibrate tomorrow's morning edition.
                         </p>
                     </div>
                     {% if lead.url %}
-                    <a href="{{ lead.url }}" target="_blank" rel="noopener" class="mt-4 text-center text-xs font-inter font-bold text-amber-900 hover:underline block click-out" data-article-id="{{ lead.id }}">
-                        Read Full Investigation →
+                    <a href="{{ lead.url }}" target="_blank" rel="noopener" class="font-inter text-xs font-semibold text-ink-900 hover:text-terracotta transition-colors click-out inline-flex items-center gap-1" data-article-id="{{ lead.id }}">
+                        Full Investigation &rarr;
                     </a>
                     {% endif %}
                 </div>
             </div>
         </article>
 
-        <!-- Secondary Articles: 2-Column Newspaper Layout -->
+        <!-- Secondary Stories: 2-Column Balanced Grid -->
         {% if edition.articles | length > 1 %}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-8">
             {% for article in edition.articles[1:] %}
-            <article class="border-b md:border-b-0 pb-6 md:pb-0 {% if loop.index0 % 2 == 0 %}md:border-r md:pr-8 border-stone-300{% else %}md:pl-2{% endif %}" data-article-id="{{ article.id }}">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="category-tag 
-                        {% if article.category == 'Finance' %}tag-finance
-                        {% elif article.category == 'Climate' %}tag-climate
-                        {% elif article.category == 'Pakistan' %}tag-pakistan
-                        {% elif article.category == 'Science' %}tag-science
-                        {% else %}tag-tech{% endif %}">
-                        {{ article.category }}
-                    </span>
-                    <span class="text-xs font-inter text-stone-500 font-semibold">{{ article.source }}</span>
-                    <span class="text-xs font-inter text-stone-400 ml-auto">{{ article.read_time }}m</span>
+            <article class="{% if loop.index0 % 2 == 0 %}md:border-r md:pr-10 border-stone-200/80{% else %}md:pl-2{% endif %}" data-article-id="{{ article.id }}">
+                <div class="flex items-center gap-2 mb-2 font-inter text-xs text-ink-400">
+                    <span class="editorial-category text-ink-900 font-semibold">{{ article.category }}</span>
+                    <span>&bull;</span>
+                    <span>{{ article.source }}</span>
+                    <span class="ml-auto">{{ article.read_time }}m</span>
                 </div>
 
-                <h3 class="font-playfair text-xl sm:text-2xl font-bold text-stone-900 leading-snug mb-2 hover:text-amber-900 transition-colors">
+                <h3 class="font-editorial-heading text-xl sm:text-2xl font-bold text-ink-900 leading-snug mb-2.5 hover:text-terracotta transition-colors">
                     {{ article.title }}
                 </h3>
 
-                <p class="font-newsreader text-stone-700 text-base leading-relaxed mb-3">
+                <p class="font-editorial-body text-base text-ink-700 leading-relaxed mb-3">
                     {{ article.summary }}
                 </p>
 
-                <p class="text-xs font-inter text-amber-800 italic mb-2">
-                    ↳ {{ article.why_it_matters }}
+                <p class="font-inter text-xs text-ink-500 italic mb-3">
+                    {{ article.why_it_matters }}
                 </p>
 
                 {% if article.url %}
-                <a href="{{ article.url }}" target="_blank" rel="noopener" class="text-xs font-inter font-bold text-stone-900 hover:text-amber-800 transition-colors click-out" data-article-id="{{ article.id }}">
-                    Full Report →
+                <a href="{{ article.url }}" target="_blank" rel="noopener" class="font-inter text-xs font-semibold text-ink-900 hover:text-terracotta transition-colors click-out" data-article-id="{{ article.id }}">
+                    Complete dispatch &rarr;
                 </a>
                 {% endif %}
             </article>
@@ -247,70 +214,61 @@
         {% endif %}
 
 
-        <!-- ── 4. ROOM TO EXPLORE & DAILY INTELLECTUAL PUZZLE ────────────── -->
-        <div class="newspaper-thick-rule mt-8 mb-6"></div>
+        <!-- ── 4. ROOM TO EXPLORE & DAILY CROSSWORD ──────────────────────── -->
+        <div class="editorial-thick-rule my-10"></div>
 
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 items-start">
             
-            <!-- Devil's Advocate (Contrarian Op-Ed) -->
+            <!-- Devil's Advocate / Contrarian Op-Ed -->
             {% if edition.devils_advocate %}
-            <div class="lg:col-span-7 devils-advocate-box p-6">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="font-cinzel text-xs font-bold text-red-900 uppercase tracking-widest flex items-center gap-1.5">
-                        ⚖️ ROOM TO EXPLORE: THE DISSENTING OPINION
-                    </span>
-                    <span class="text-[10px] font-inter font-semibold uppercase px-2 py-0.5 bg-red-100 text-red-800 rounded">
-                        Anti-Echo Chamber
-                    </span>
-                </div>
-
-                <h3 class="font-playfair text-xl sm:text-2xl font-bold text-stone-900 mb-2">
+            <div class="lg:col-span-7 contrarian-panel rounded">
+                <span class="font-meta-label text-terracotta block mb-2">Room to Explore &nbsp;·&nbsp; Contrarian Perspective</span>
+                <h3 class="font-editorial-heading text-2xl font-bold text-ink-900 mb-3">
                     {{ edition.devils_advocate.title }}
                 </h3>
-
-                <p class="font-newsreader text-stone-800 text-base leading-relaxed mb-4">
+                <p class="font-editorial-body text-base text-ink-700 leading-relaxed mb-4">
                     {{ edition.devils_advocate.summary }}
                 </p>
-
-                <div class="p-3 bg-red-100/60 border border-red-200 rounded text-xs font-inter text-red-950 leading-relaxed">
-                    <span class="font-bold">Why you must read this:</span>
-                    Our algorithm deliberately selects this piece from outside your usual ideological orbit to stimulate lateral cognition and prevent confirmation bias.
+                <div class="border-t border-stone-200/80 pt-3 font-inter text-xs text-ink-600 leading-relaxed">
+                    <span class="font-semibold text-terracotta uppercase tracking-wide">Anti-Echo Chamber Guarantee:</span>
+                    Intentionally curated from outside your dominant interest vector to prevent confirmation bias and stimulate lateral inquiry.
                 </div>
             </div>
             {% endif %}
 
-            <!-- Daily News Mini-Crossword (Newspaper Delight) -->
-            <div class="lg:col-span-5 bg-stone-100 p-5 border border-stone-300 rounded-sm">
+            <!-- Daily News 5x5 Crossword Entity Grid -->
+            <div class="lg:col-span-5 p-6 border border-stone-200 rounded bg-stone-50/50">
                 <div class="flex items-center justify-between mb-2">
-                    <h3 class="font-cinzel text-xs font-bold text-stone-900 uppercase tracking-wider">
-                        ✦ The Morning 5x5 Crossword
-                    </h3>
-                    <span class="text-[10px] font-inter text-stone-500 uppercase">Daily Entity Word-Grid</span>
+                    <span class="font-meta-label text-ink-500">Intellectual Challenge</span>
+                    <span class="font-inter text-[10px] text-ink-400">Daily Entity Grid</span>
                 </div>
-                <p class="text-xs font-newsreader text-stone-600 mb-3">
-                    Solved from today's news dispatch. Click any cell to inspect clues.
+                <h3 class="font-editorial-heading text-lg font-bold text-ink-900 mb-3">
+                    The Morning Crossword
+                </h3>
+                <p class="font-editorial-body text-xs text-ink-600 mb-4">
+                    Derived from today's active news entities. Click any cell to inspect clues.
                 </p>
 
-                <!-- 5x5 Crossword Grid -->
+                <!-- Grid & Clues -->
                 <div class="flex gap-4 items-start">
                     <div class="crossword-grid" id="daily-crossword">
                         <!-- Row 1: R A A S T -->
-                        <div class="crossword-cell active" data-clue="1-Across"><span class="crossword-cell-num">1</span>R</div>
-                        <div class="crossword-cell" data-clue="1-Across">A</div>
-                        <div class="crossword-cell" data-clue="1-Across">A</div>
-                        <div class="crossword-cell" data-clue="1-Across">S</div>
-                        <div class="crossword-cell" data-clue="1-Across">T</div>
+                        <div class="crossword-cell active"><span class="crossword-cell-num">1</span>R</div>
+                        <div class="crossword-cell">A</div>
+                        <div class="crossword-cell">A</div>
+                        <div class="crossword-cell">S</div>
+                        <div class="crossword-cell">T</div>
                         <!-- Row 2 -->
-                        <div class="crossword-cell" data-clue="2-Down"><span class="crossword-cell-num">2</span>A</div>
+                        <div class="crossword-cell"><span class="crossword-cell-num">2</span>A</div>
                         <div class="crossword-cell blocked"></div>
-                        <div class="crossword-cell" data-clue="3-Down"><span class="crossword-cell-num">3</span>I</div>
+                        <div class="crossword-cell"><span class="crossword-cell-num">3</span>I</div>
                         <div class="crossword-cell blocked"></div>
                         <div class="crossword-cell">E</div>
                         <!-- Row 3: F A S T -->
-                        <div class="crossword-cell" data-clue="4-Across"><span class="crossword-cell-num">4</span>F</div>
-                        <div class="crossword-cell" data-clue="4-Across">A</div>
-                        <div class="crossword-cell" data-clue="4-Across">S</div>
-                        <div class="crossword-cell" data-clue="4-Across">T</div>
+                        <div class="crossword-cell"><span class="crossword-cell-num">4</span>F</div>
+                        <div class="crossword-cell">A</div>
+                        <div class="crossword-cell">S</div>
+                        <div class="crossword-cell">T</div>
                         <div class="crossword-cell blocked"></div>
                         <!-- Row 4 -->
                         <div class="crossword-cell">T</div>
@@ -320,19 +278,19 @@
                         <div class="crossword-cell">C</div>
                         <!-- Row 5: G R I D -->
                         <div class="crossword-cell blocked"></div>
-                        <div class="crossword-cell" data-clue="5-Across"><span class="crossword-cell-num">5</span>G</div>
-                        <div class="crossword-cell" data-clue="5-Across">R</div>
-                        <div class="crossword-cell" data-clue="5-Across">I</div>
-                        <div class="crossword-cell" data-clue="5-Across">D</div>
+                        <div class="crossword-cell"><span class="crossword-cell-num">5</span>G</div>
+                        <div class="crossword-cell">R</div>
+                        <div class="crossword-cell">I</div>
+                        <div class="crossword-cell">D</div>
                     </div>
 
-                    <!-- Clues List -->
-                    <div class="text-[11px] font-inter text-stone-700 space-y-1.5 flex-1">
-                        <p class="font-bold text-stone-900 uppercase">Clues:</p>
-                        <p><b>1-Ac:</b> Pakistan's instant digital rail (5)</p>
-                        <p><b>4-Ac:</b> Silver Jubilee Host Univ (4)</p>
-                        <p><b>5-Ac:</b> National AI compute network (4)</p>
-                        <p><b>3-Dn:</b> Indus basin river system (5)</p>
+                    <!-- Minimal Clues -->
+                    <div class="font-inter text-[11px] text-ink-600 space-y-1.5 flex-1">
+                        <p class="font-semibold text-ink-900 uppercase text-[10px]">Clues:</p>
+                        <p><b>1-Ac:</b> Pakistan instant digital payment rail (5)</p>
+                        <p><b>4-Ac:</b> Host University Convention (4)</p>
+                        <p><b>5-Ac:</b> Sovereign AI compute cluster (4)</p>
+                        <p><b>3-Dn:</b> Indus river basin system (5)</p>
                     </div>
                 </div>
             </div>
@@ -341,44 +299,43 @@
 
         <!-- ── 5. EVENING RECALL CHALLENGE (COGNITIVE RETENTION) ─────────── -->
         {% if edition.recall_questions %}
-        <div class="newspaper-double-rule my-8"></div>
+        <div class="editorial-double-rule my-10"></div>
 
-        <section class="bg-stone-50 p-6 sm:p-8 border border-stone-300 rounded-sm" id="recall-quiz-container" data-edition-id="{{ edition.id }}">
-            <div class="flex items-center justify-between mb-4">
+        <section class="p-8 sm:p-10 border border-stone-200 rounded bg-white" id="recall-quiz-container" data-edition-id="{{ edition.id }}">
+            <div class="border-b border-stone-200/80 pb-4 mb-6 flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <h3 class="font-cinzel text-base font-bold text-stone-900 tracking-wider">
-                        ✦ EVENING RECALL CHALLENGE
+                    <span class="font-meta-label text-ink-400 block mb-1">Cognitive Retention Metric</span>
+                    <h3 class="font-editorial-heading text-2xl font-bold text-ink-900">
+                        Evening Recall Challenge
                     </h3>
-                    <p class="text-xs font-newsreader text-stone-600">
-                        "Still can't name three things you learned?" Test your memory consolidation now.
-                    </p>
                 </div>
-                <span class="text-xs font-inter font-semibold text-amber-800 uppercase px-2 py-1 bg-amber-100 rounded">
-                    Retention Metric
+                <span class="font-inter text-xs text-ink-500">
+                    Measures knowledge retention over clicks
                 </span>
             </div>
 
             <div class="space-y-6">
                 {% for q in edition.recall_questions %}
                 {% set q_idx = loop.index0 %}
-                <div class="recall-q-block p-4 bg-white border border-stone-200 rounded" data-correct="{{ q.answer }}" data-question-text="{{ q.question }}">
-                    <p class="font-newsreader text-base font-semibold text-stone-900 mb-2">
-                        {{ loop.index }}. {{ q.question }}
+                <div class="recall-q-block pb-5 border-b border-stone-100 last:border-b-0" data-correct="{{ q.answer }}" data-question-text="{{ q.question }}">
+                    <p class="font-editorial-body text-base font-semibold text-ink-900 mb-3">
+                        <span class="font-inter text-xs text-ink-400 mr-2">0{{ loop.index }}.</span>
+                        {{ q.question }}
                     </p>
-                    <div class="space-y-1.5">
+                    <div class="space-y-2">
                         {% for opt in q.options %}
-                        <label class="flex items-center gap-2.5 text-sm font-inter text-stone-700 cursor-pointer hover:text-stone-900">
-                            <input type="radio" name="q_{{ q_idx }}" value="{{ opt }}" class="accent-amber-800">
+                        <label class="flex items-center gap-3 font-inter text-xs text-ink-700 cursor-pointer hover:text-ink-900 p-2 rounded hover:bg-stone-50 transition-colors">
+                            <input type="radio" name="q_{{ q_idx }}" value="{{ opt }}" class="accent-ink-900">
                             <span>{{ opt }}</span>
                         </label>
                         {% endfor %}
                     </div>
-                    <p class="q-feedback text-xs mt-2"></p>
+                    <p class="q-feedback font-inter text-xs mt-2"></p>
                 </div>
                 {% endfor %}
 
-                <button id="submit-recall" class="btn-broadsheet">
-                    Submit & Record Retention Signals
+                <button id="submit-recall" class="btn-pill-primary text-xs px-6 py-2.5 mt-2">
+                    Submit Reflection & Record Signals &rarr;
                 </button>
             </div>
 
@@ -387,16 +344,16 @@
         {% endif %}
 
 
-        <!-- ── 6. THE CLOSING PAPER FOLD (COMPLETION) ────────────────────── -->
-        <footer class="mt-12 pt-6 border-t-2 border-stone-800 text-center text-xs font-inter text-stone-600">
-            <p class="font-cinzel text-sm font-bold text-stone-900 tracking-widest uppercase mb-1">
-                ❖ YOU'RE ALL CAUGHT UP. THAT'S THE NEWS FOR TODAY. ❖
+        <!-- ── 6. COMPLETION SEAL & FOOTER ───────────────────────────────── -->
+        <footer class="mt-16 pt-8 border-t border-stone-200 text-center font-inter text-xs text-ink-400">
+            <p class="font-meta-label text-ink-700 tracking-[0.2em] mb-1">
+                You are informed. That concludes today's broadside.
             </p>
-            <p class="font-newsreader italic text-stone-500 text-sm mb-3">
-                No endless scroll. No addictive anxiety loops. Return tomorrow morning for your next edition.
+            <p class="font-editorial-body italic text-sm text-ink-500 mb-4">
+                No infinite doomscroll. Your next edition arrives tomorrow morning at 06:30 PKT.
             </p>
-            <p class="text-[10px] text-stone-400 uppercase tracking-widest">
-                ZOK (ذوق) • EDITION #{{ edition.id }} • PRINTED DIGITALLY IN ISLAMABAD
+            <p class="text-[10px] text-ink-400 uppercase tracking-widest">
+                ZOK &nbsp;·&nbsp; ذوق &nbsp;·&nbsp; Edition #{{ edition.id[-6:] }} &nbsp;·&nbsp; Islamabad
             </p>
         </footer>
 

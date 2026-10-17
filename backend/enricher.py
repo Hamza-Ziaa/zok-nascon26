@@ -40,7 +40,7 @@ def _call_gemini(prompt: str, retries: int = 1) -> str:
     for attempt in range(retries + 1):
         try:
             response = client.models.generate_content(
-                model="gemini-2.0-flash",
+                model="gemini-3.8-flash",
                 contents=prompt,
             )
             return response.text or ""

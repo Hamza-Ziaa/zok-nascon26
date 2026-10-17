@@ -5,92 +5,91 @@
 {% block content %}
 <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
 
-    <!-- Back Bar -->
-    <div class="mb-6">
-        <a href="/edition/{{ user.id }}" class="inline-flex items-center gap-2 text-xs font-inter text-stone-300 hover:text-amber-300 transition-colors uppercase tracking-widest font-semibold">
-            ← Return to Today's Morning Broadside
+    <!-- Back Navigation -->
+    <div class="mb-8">
+        <a href="/edition/{{ user.id }}" class="font-meta-label text-ink-500 hover:text-ink-900 transition-colors inline-flex items-center gap-1.5">
+            &larr; Return to Today's Morning Broadside
         </a>
     </div>
 
     <!-- Taste Ledger Sheet -->
-    <section class="broadsheet-paper p-8 sm:p-12 border-2 border-stone-300 shadow-2xl" aria-label="Taste profile and learning ledger">
-        
-        <header class="text-center pb-6 border-b-2 border-stone-800 mb-8">
-            <span class="font-cinzel text-xs font-bold uppercase tracking-widest text-stone-600 block mb-1">
-                ✦ EXPLAINABLE AI & ADAPTIVE LEARNING ✦
-            </span>
-            <h1 class="font-playfair text-3xl sm:text-4xl font-bold text-stone-900">
+    <section class="broadsheet-canvas p-8 sm:p-12 border border-stone-200/80 shadow-xl" aria-label="Subscriber taste ledger">
+        <header class="pb-6 border-b border-stone-200 mb-8">
+            <span class="font-meta-label text-ink-400 block mb-1">Explainable AI & Adaptive Learning</span>
+            <h1 class="font-editorial-heading text-3xl sm:text-4xl font-bold text-ink-900">
                 Subscriber Cognitive Ledger: {{ user.name }}
             </h1>
-            <p class="font-newsreader italic text-stone-600 text-sm mt-1">
-                How Zok's multi-armed bandit models your interest vector from micro-dwell telemetry and recall quizzes.
+            <p class="font-editorial-body text-base text-ink-600 mt-1">
+                How Zok's multi-armed bandit models your interest vector from micro-dwell telemetry and recall reflections.
             </p>
         </header>
 
-        <!-- Reading Telemetry Metrics Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <div class="bg-stone-100 p-4 border border-stone-300 text-center rounded-sm">
-                <div class="font-playfair text-3xl font-black text-stone-900">{{ stats.total_articles }}</div>
-                <div class="text-[10px] font-cinzel font-bold text-stone-600 uppercase tracking-widest mt-1">Articles Read</div>
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+            <div class="p-5 border border-stone-200 rounded bg-stone-50/40 text-center">
+                <div class="font-editorial-heading text-3xl font-bold text-ink-900">{{ stats.total_articles }}</div>
+                <div class="font-meta-label text-[10px] text-ink-500 mt-1">Articles Read</div>
             </div>
-            <div class="bg-stone-100 p-4 border border-stone-300 text-center rounded-sm">
-                <div class="font-playfair text-3xl font-black text-stone-900">{{ stats.avg_dwell }}</div>
-                <div class="text-[10px] font-cinzel font-bold text-stone-600 uppercase tracking-widest mt-1">Avg Dwell Depth</div>
+            <div class="p-5 border border-stone-200 rounded bg-stone-50/40 text-center">
+                <div class="font-editorial-heading text-3xl font-bold text-ink-900">{{ stats.avg_dwell }}</div>
+                <div class="font-meta-label text-[10px] text-ink-500 mt-1">Avg Dwell Depth</div>
             </div>
-            <div class="bg-stone-100 p-4 border border-stone-300 text-center rounded-sm">
-                <div class="font-playfair text-3xl font-black text-amber-900">{{ stats.recall_accuracy }}</div>
-                <div class="text-[10px] font-cinzel font-bold text-stone-600 uppercase tracking-widest mt-1">Recall Accuracy</div>
+            <div class="p-5 border border-stone-200 rounded bg-stone-50/40 text-center">
+                <div class="font-editorial-heading text-3xl font-bold text-terracotta">{{ stats.recall_accuracy }}</div>
+                <div class="font-meta-label text-[10px] text-ink-500 mt-1">Recall Accuracy</div>
             </div>
-            <div class="bg-stone-100 p-4 border border-stone-300 text-center rounded-sm">
-                <div class="font-playfair text-3xl font-black text-stone-900">{{ stats.editions_read }}</div>
-                <div class="text-[10px] font-cinzel font-bold text-stone-600 uppercase tracking-widest mt-1">Editions Pressed</div>
+            <div class="p-5 border border-stone-200 rounded bg-stone-50/40 text-center">
+                <div class="font-editorial-heading text-3xl font-bold text-ink-900">{{ stats.editions_read }}</div>
+                <div class="font-meta-label text-[10px] text-ink-500 mt-1">Editions Pressed</div>
             </div>
         </div>
 
-        <div class="newspaper-rule my-6"></div>
+        <div class="editorial-hairline my-8"></div>
 
-        <!-- Semantic Category Weights -->
-        <div class="mb-10">
-            <h2 class="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider mb-4">
-                Current 200-Dimensional Cluster Distribution
+        <!-- Semantic Category Distribution -->
+        <div class="mb-12">
+            <span class="font-meta-label text-ink-400 block mb-2">Vector Weights</span>
+            <h2 class="font-editorial-heading text-xl font-bold text-ink-900 mb-6">
+                Active 200-Dimensional Cluster Weights
             </h2>
-            <div class="space-y-4 font-inter text-xs">
+            <div class="space-y-5 font-inter text-xs">
                 {% for cat in categories %}
                 <div>
-                    <div class="flex justify-between font-semibold text-stone-800 mb-1">
+                    <div class="flex justify-between font-medium text-ink-800 mb-1.5">
                         <span>{{ cat.name }}</span>
-                        <span class="text-amber-800">{{ cat.weight }}% Weight</span>
+                        <span class="text-ink-500 font-semibold">{{ cat.weight }}%</span>
                     </div>
-                    <div class="w-full bg-stone-200 h-2.5 rounded-sm overflow-hidden border border-stone-300">
-                        <div class="bg-gradient-to-r from-stone-700 to-amber-700 h-full rounded-sm" style="width: {{ cat.weight }}%"></div>
+                    <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden border border-stone-200">
+                        <div class="bg-ink-900 h-full rounded-full transition-all duration-500" style="width: {{ cat.weight }}%"></div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
-        <div class="newspaper-double-rule my-6"></div>
+        <div class="editorial-double-rule my-8"></div>
 
-        <!-- 7-Day Simulation Engine (Judges Proof of Learning) -->
-        <div class="bg-stone-100 p-6 sm:p-8 border-2 border-stone-300 rounded-sm">
-            <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+        <!-- 7-Day Adaptation Simulator (Judges Proof of Learning) -->
+        <div class="p-8 border border-stone-200 rounded bg-stone-50/50">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
                 <div>
-                    <h3 class="font-cinzel text-sm font-bold text-stone-900 uppercase tracking-wider">
-                        ✦ 7-Day Bandit Adaptation Simulator
+                    <span class="font-meta-label text-ink-400 block mb-0.5">Algorithmic Demonstration</span>
+                    <h3 class="font-editorial-heading text-xl font-bold text-ink-900">
+                        7-Day Bandit Adaptation Simulator
                     </h3>
-                    <p class="font-newsreader text-stone-600 text-xs mt-0.5">
-                        Simulate 7 mornings of reading with synthetic micro-dwell signals to witness Bayesian convergence.
+                    <p class="font-editorial-body text-xs text-ink-600 mt-0.5">
+                        Simulate 7 mornings of reading with synthetic micro-dwell signals to demonstrate Bayesian vector convergence.
                     </p>
                 </div>
-                <button id="trigger-simulation-btn" data-user-id="{{ user.id }}" class="btn-broadsheet">
-                    ▶ Simulate 7 Days of Reading
+                <button id="trigger-simulation-btn" data-user-id="{{ user.id }}" class="btn-pill-primary text-xs px-5 py-2.5">
+                    Run 7-Day Adaptation Simulation &rarr;
                 </button>
             </div>
 
             <!-- Chart Container -->
             <div id="simulation-chart-container">
-                <div class="p-6 text-center text-xs font-inter text-stone-500 border border-dashed border-stone-300 rounded bg-white">
-                    Click "Simulate 7 Days of Reading" above to run the Thompson Sampling convergence algorithm.
+                <div class="p-8 text-center font-inter text-xs text-ink-400 border border-dashed border-stone-200 rounded bg-white">
+                    Click "Run 7-Day Adaptation Simulation" to compute Thompson Sampling precision over 7 reading cycles.
                 </div>
             </div>
         </div>
