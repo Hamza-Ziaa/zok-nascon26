@@ -56,10 +56,10 @@ TIER = {
     "DW": 0.90,
     "Al Jazeera": 0.82,
     "Express Tribune": 0.80,
-    "TechCrunch": 0.75
+    "TechCrunch": 0.75,
+    "Financial Times": 0.81
 }
 
-TRUSTED_SOURCES = set(TIER) | {"Financial Times"}
 
 PK = re.compile(r"pakistan|karachi|lahore|islamabad|peshawar|quetta|punjab|sindh|khyber|balochistan|rupee|PSX|SBP|nawaz|shehbaz|imran|dar", re.I)
 HEDGE = re.compile(r"\b(reportedly|allegedly|sources say|rumou?rs?|unconfirmed|it is said|claims?|purported|insiders say|speculation)\b", re.I)
