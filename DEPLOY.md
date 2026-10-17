@@ -1,4 +1,4 @@
-# 🚀 Deploying ZOK — Step by Step
+# Deploying ZOK — Step by Step
 
 This guide walks you through putting ZOK online so anyone can use it.
 
