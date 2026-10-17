@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Zok — ذوق | The Living Morning Broadside{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+
+    <!-- HERO HEADER: THE DAWN ARRIVAL -->
+    <header class="text-center mb-10 text-white">
+        <p class="font-cinzel text-xs tracking-[0.3em] uppercase text-amber-300/80 mb-2 font-bold">
+            NaSCon '26 Silver Jubilee Edition • FAST Islamabad
+        </p>
+        <h1 class="font-playfair text-7xl sm:text-8xl md:text-9xl font-black tracking-tight leading-none mb-2" title="ZOK">
+            Z O K
+        </h1>
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <span class="h-px w-16 bg-amber-400/40"></span>
+            <span class="text-4xl text-amber-400 font-normal leading-none">ذوق</span>
+            <span class="h-px w-16 bg-amber-400/40"></span>
+        </div>
+        <p class="font-newsreader italic text-xl sm:text-2xl text-stone-200/90 max-w-lg mx-auto leading-relaxed">
+            "A feed never ends. A newspaper does."
+        </p>
+        <p class="font-inter text-xs text-white/50 uppercase tracking-widest mt-2">
+            ZOK — The only newspaper with an edition of one.
+        </p>
+    </header>
+
+
+    <!-- ── 1. ONBOARDING REGISTRY BROADSHEET ────────────────────────────── -->
+    <section class="broadsheet-paper p-8 sm:p-12 border-2 border-stone-300 shadow-2xl mb-12 relative" aria-label="Onboarding broadside">
+        
+        <!-- Header Ribbon -->
+        <div class="text-center pb-4 border-b border-stone-300 mb-6">
+            <span class="font-cinzel text-xs font-bold uppercase tracking-widest text-stone-700 block">
+                ✦ OFFICIAL SUBSCRIBER REGISTRY ✦
+            </span>
+            <h2 class="font-playfair text-2xl sm:text-3xl font-bold text-stone-900 mt-1">
+                Commission Your Morning Broadside
+            </h2>
+            <p class="font-newsreader italic text-sm text-stone-600 mt-1">
+                Tell our intelligence editor who you are. We compose an edition calibrated strictly to your mind.
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form action="/onboard" method="POST" class="space-y-6">
+            
+            <!-- Name -->
+            <div>
+                <label for="name" class="block font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 mb-1">
+                    Subscriber Name / Masthead Title
+                </label>
+                <input type="text" id="name" name="name" required placeholder="e.g. Dr. Ayesha Malik"
+                       class="w-full bg-white border border-stone-300 px-4 py-2.5 rounded-sm text-stone-900 font-newsreader text-base focus:outline-none focus:border-amber-800 focus:ring-1 focus:ring-amber-800">
+            </div>
+
+            <!-- Natural Language Context -->
+            <div>
+                <label for="context" class="block font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 mb-1">
+                    What do you do, and what is on your mind today?
+                </label>
+                <textarea id="context" name="context" rows="3" required placeholder="e.g. Freelance AI engineer in Islamabad building robotics pipelines; also tracking cricket injuries and rupee exchange rates..."
+                          class="w-full bg-white border border-stone-300 px-4 py-2.5 rounded-sm text-stone-900 font-newsreader text-base focus:outline-none focus:border-amber-800 focus:ring-1 focus:ring-amber-800 resize-none"></textarea>
+                <p class="text-[11px] font-inter text-stone-500 mt-1">
+                    Our TF-IDF & Gemini semantic parser turns your sentence into an initial 200-dimensional interest vector.
+                </p>
+            </div>
+
+            <!-- Reading Budget Selector -->
+            <div>
+                <label class="block font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 mb-2">
+                    Reading Time Budget (Finite By Design)
+                </label>
+                <div class="grid grid-cols-3 gap-3">
+                    <label class="border border-stone-300 bg-white p-3 text-center rounded-sm cursor-pointer hover:border-amber-800 transition-all flex flex-col items-center">
+                        <input type="radio" name="reading_budget" value="5" class="accent-amber-800 mb-1">
+                        <span class="font-cinzel text-xs font-bold text-stone-900">5 Minutes</span>
+                        <span class="text-[10px] font-inter text-stone-500">3 Top Briefs</span>
+                    </label>
+                    <label class="border-2 border-amber-800 bg-amber-50/50 p-3 text-center rounded-sm cursor-pointer transition-all flex flex-col items-center">
+                        <input type="radio" name="reading_budget" value="10" checked class="accent-amber-800 mb-1">
+                        <span class="font-cinzel text-xs font-bold text-amber-900">10 Minutes</span>
+                        <span class="text-[10px] font-inter text-amber-800/80">5 Balanced Stories</span>
+                    </label>
+                    <label class="border border-stone-300 bg-white p-3 text-center rounded-sm cursor-pointer hover:border-amber-800 transition-all flex flex-col items-center">
+                        <input type="radio" name="reading_budget" value="20" class="accent-amber-800 mb-1">
+                        <span class="font-cinzel text-xs font-bold text-stone-900">20 Minutes</span>
+                        <span class="text-[10px] font-inter text-stone-500">8 Deep Dives</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full btn-broadsheet py-3.5 text-center text-sm font-bold uppercase tracking-widest mt-4">
+                Press & Unfold My Morning Edition →
+            </button>
+        </form>
+    </section>
+
+
+    <!-- ── 2. PRE-SEEDED PERSONAS (INSTANT JUDGE EVALUATION) ──────────── -->
+    <section class="mt-14" aria-label="Pre-calibrated personas">
+        <div class="text-center mb-6">
+            <span class="font-cinzel text-xs font-bold text-amber-300 uppercase tracking-widest">
+                ✦ 1-CLICK INSTANT DEMO EVALUATION ✦
+            </span>
+            <h3 class="font-playfair text-2xl sm:text-3xl font-bold text-white mt-1">
+                Or Examine Seeded Personas Side-by-Side
+            </h3>
+            <p class="font-newsreader italic text-stone-300 text-sm mt-1">
+                Notice how the same day's news produces completely different front pages, hierarchies, and crossword clues.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Persona 1: Dr. Ayesha Malik -->
+            <a href="/edition/ayesha" class="broadsheet-paper p-6 border border-stone-300 hover:border-amber-700 transition-all block group">
+                <div class="text-center border-b border-stone-200 pb-3 mb-3">
+                    <span class="text-3xl block mb-1">🔬</span>
+                    <h4 class="font-playfair text-lg font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
+                        Dr. Ayesha Malik
+                    </h4>
+                    <p class="text-[11px] font-inter text-stone-500 uppercase tracking-wider">AI Researcher • NUST Islamabad</p>
+                </div>
+                <p class="font-newsreader text-xs text-stone-700 leading-relaxed mb-3">
+                    Focus: Sovereign compute clusters, neuromorphic hardware architectures, and open-source models.
+                </p>
+                <div class="text-right">
+                    <span class="font-cinzel text-xs font-bold text-amber-800 group-hover:underline">Open Edition →</span>
+                </div>
+            </a>
+
+            <!-- Persona 2: Hamza Khan -->
+            <a href="/edition/hamza" class="broadsheet-paper p-6 border border-stone-300 hover:border-amber-700 transition-all block group">
+                <div class="text-center border-b border-stone-200 pb-3 mb-3">
+                    <span class="text-3xl block mb-1">💹</span>
+                    <h4 class="font-playfair text-lg font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
+                        Hamza Khan
+                    </h4>
+                    <p class="text-[11px] font-inter text-stone-500 uppercase tracking-wider">Fintech Founder • Karachi</p>
+                </div>
+                <p class="font-newsreader text-xs text-stone-700 leading-relaxed mb-3">
+                    Focus: Raast payment interoperability, macroeconomic reserves, central banks, and venture capital.
+                </p>
+                <div class="text-right">
+                    <span class="font-cinzel text-xs font-bold text-amber-800 group-hover:underline">Open Edition →</span>
+                </div>
+            </a>
+
+            <!-- Persona 3: Zara Ahmed -->
+            <a href="/edition/zara" class="broadsheet-paper p-6 border border-stone-300 hover:border-amber-700 transition-all block group">
+                <div class="text-center border-b border-stone-200 pb-3 mb-3">
+                    <span class="text-3xl block mb-1">🌍</span>
+                    <h4 class="font-playfair text-lg font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
+                        Zara Ahmed
+                    </h4>
+                    <p class="text-[11px] font-inter text-stone-500 uppercase tracking-wider">Climate Journalist • Lahore</p>
+                </div>
+                <p class="font-newsreader text-xs text-stone-700 leading-relaxed mb-3">
+                    Focus: Glacial lake flood telemetry, solid-state sodium battery grids, and algorithmic echo chambers.
+                </p>
+                <div class="text-right">
+                    <span class="font-cinzel text-xs font-bold text-amber-800 group-hover:underline">Open Edition →</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

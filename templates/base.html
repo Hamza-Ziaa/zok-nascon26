@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zok (ذوق) — The Living Morning Broadside. The only newspaper with an edition of one.">
+    <title>{% block title %}Zok — ذوق | The Living Morning Broadside{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'Georgia', 'serif'],
+                        'cinzel': ['"Cinzel"', 'serif'],
+                        'garamond': ['"EB Garamond"', 'serif'],
+                        'newsreader': ['"Newsreader"', 'Georgia', 'serif'],
+                        'inter': ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        ink: {
+                            900: '#191816',
+                            800: '#2b2925',
+                            700: '#4a463e',
+                            600: '#787265',
+                        },
+                        parchment: {
+                            50: '#fdfcf9',
+                            100: '#fbf7ee',
+                            200: '#f4eee1',
+                            300: '#e8dec9',
+                        },
+                        terracotta: '#b84a22',
+                        heritage: '#c28e2b',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/public/css/style.css">
+
+    {% block head %}{% endblock %}
+</head>
+<body class="min-h-screen antialiased selection:bg-amber-200 selection:text-stone-900 pb-16">
+
+    <!-- Portal-inspired Morning Dawn Horizon Atmosphere -->
+    <div class="fixed top-0 left-0 right-0 h-96 pointer-events-none -z-10 opacity-75 overflow-hidden" aria-hidden="true">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#312e81] via-[#4f46e5]/40 to-transparent"></div>
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-r from-amber-300/25 via-rose-300/20 to-purple-400/20 blur-3xl rounded-full"></div>
+    </div>
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-[#b84a22] to-[#c28e2b] z-50 transition-all duration-150" style="width: 0%"></div>
+
+    <!-- Main Content Slot -->
+    <main id="main-content" class="relative z-10 pt-4 sm:pt-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Scripts -->
+    <script src="/public/js/animations.js"></script>
+    <script src="/public/js/tracking.js"></script>
+    <script src="/public/js/app.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
