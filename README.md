@@ -52,9 +52,9 @@ Every article is checked against **4 pillars** before it can appear in your pape
 | **Freshness & Transparency** | 15% | Is it recent? Is the author named? Is the link working and secure? |
 
 **Trust badges at a glance:**
-- ★ **Verified Gold** (78+): Multiple outlets confirm, with hard evidence.
-- ✔ **Reliable Silver** (64–77): Reputable source with clear attribution.
-- ⚠ **Developing** (52–63): One source so far, waiting for confirmation.
+-  **Verified Gold** (78+): Multiple outlets confirm, with hard evidence.
+-  **Reliable Silver** (64–77): Reputable source with clear attribution.
+-  **Developing** (52–63): One source so far, waiting for confirmation.
 - Below 52: **Thrown out.** You never see it.
 
 ---
