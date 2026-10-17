@@ -158,18 +158,6 @@ See **[DEPLOY.md](DEPLOY.md)** for step-by-step instructions to deploy on Render
 
 ---
 
-## Business Model
-
-| Tier | Price | What You Get |
-| :--- | :--- | :--- |
-| **Free** | PKR 0 | 5-minute morning brief, basic trust scores, 7-day archive |
-| **Plus** | PKR 999/mo | Custom edition length, Developing Stories, Museum, PDF downloads, Reader's Mirror |
-| **Executive** | PKR 4,999/mo | Sector briefings, entity monitoring, team broadsheet |
-
-*People pay for focus, clarity, and 45 minutes of their morning back.*
-
----
-
 ## Algorithmic & System Efficiency Benchmarks
 
 Judges asked for real numbers. Here is how ZOK achieves extreme efficiency through a **"Fetch Once, Cluster Once, Rank Per User"** pipeline:
@@ -185,15 +173,5 @@ Judges asked for real numbers. Here is how ZOK achieves extreme efficiency throu
 
 ---
 
-## NaSCon Evaluation Mapping
-
-| Criterion | Score Target | How ZOK Delivers |
-| :--- | :---: | :--- |
-| **Innovation & Originality** | 9.5 / 10 | A news app with an intentional finish line. Cross-day Developing Story Threads. Active memory recall quiz. Outside Your Lane serendipity engine. |
-| **Technical Complexity** | 9.0 / 10 | 4-pillar credibility scoring (Publisher, Corroboration, Evidence, Freshness). Cross-outlet clustering. Dwell-time reading affinity tracking. Playwright headless PDF broadsheet compiler. |
-| **Practical Impact & Usability** | 9.5 / 10 | Directly solves doomscrolling. Time-budgeted editions (5m ≈ 8 stories, 10m ≈ 15, 20m ≈ 20). Saves ~45 mins of daily wasted time. Guaranteed zero clickbait. |
-| **Model & Algorithm Efficiency** | 9.5 / 10 | **Sub-10ms** personalized ranking. Ingestion runs once globally; LLM cost cut by **94%** via clustering. Benchmarks verified. |
-| **Presentation Clarity** | 9.0 / 10 | *"A feed never ends. A newspaper does."* Live credibility breakdowns, interactive reader reflection, and complete deployment guide. |
-| **Team Collaboration** | 9.0 / 10 | Fully initialized Git repository, clean commit history, modular separation (`core.py`, `main.py`, `templates/`), full Render deploy configuration. |
-| **UI/UX & Visual Design** | 9.5 / 10 | Portal-grade dawn gradient sky, clean cards, newspaper mascot illustration, expandable "Read more" drawers, and iconic broadsheet PDF layout. |
+0 | Portal-grade dawn gradient sky, clean cards, newspaper mascot illustration, expandable "Read more" drawers, and iconic broadsheet PDF layout. |
 
