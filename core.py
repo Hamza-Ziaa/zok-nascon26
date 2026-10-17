@@ -212,12 +212,16 @@ def extract_entities(title, text):
     return out[:4] or ["Current Affairs"]
 
 # ---------- accounts & LLM ----------
+_client = None
 def llm_json(prompt):
+    global _client
     k = os.environ.get("GEMINI_API_KEY")
     if not k: return None
     try:
         from google import genai
-        r = genai.Client(api_key=k).models.generate_content(
+        if _client is None:
+            _client = genai.Client(api_key=k)
+        r = _client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt,
             config={"response_mime_type": "application/json"}
@@ -254,7 +258,7 @@ def make_user(email, pw, name, work, topics, minutes, bio="", preferred_sources=
     W = {"t": {t: (1.4 if t in topics else 0.3) for t in TOPICS}, "w": {}, "s": {}}
     if preferred_sources:
         for src in preferred_sources:
-            if src in TRUSTED_SOURCES:
+            if src in TIER:
                 W["s"][src] = 1.6
     kws = make_keywords(full_work)
     arch = determine_archetype(W, kws)
