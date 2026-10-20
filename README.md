@@ -172,7 +172,7 @@ Performance evaluation conducted using live news feeds, credibility verification
 | **Worst-Case Ranking Latency** | **543 ms** | Slowest observed feed-generation time under benchmark conditions. |
 | **Database Storage Footprint** | **56 KB** | Total SQLite database size required to store 241 processed articles and related metadata. |
 
-### 🚀 Key Takeaways
+### Key Takeaways
 
 - Aggregates news from **9 trusted sources** into a unified feed.
 - Processes and validates **241+ articles** per benchmark run.
