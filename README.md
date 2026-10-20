@@ -4,7 +4,6 @@ Your Calm Morning Paper
 ### *"A feed never ends. A newspaper does."*
 
 ---
-
 ## The Problem
 
 News today is scattered across dozens of apps. Social media mixes real stories with rage-bait and rumors. Most people scroll for 45 minutes and **still can't name three things they actually learned**.
