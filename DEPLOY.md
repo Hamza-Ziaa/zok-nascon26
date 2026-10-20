@@ -52,7 +52,7 @@ Go to the **Environment** tab and add:
 ### 6. Click "Create Web Service"
 Render will start building your app. This takes about **3 minutes**.
 
-### 7. You're Live! 🎉
+### 7. You're Live! 
 Once the build finishes, your app will be available at:
 
 ```
