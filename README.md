@@ -3,8 +3,6 @@ Your Calm Morning Paper
 
 ### *"A feed never ends. A newspaper does."*
 
-**NaSCon '26 AI Hackathon | Sponsored by Eynvision | FAST-NUCES Islamabad**
-
 ---
 
 ## The Problem
